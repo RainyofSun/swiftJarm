@@ -11,6 +11,14 @@ class YTShouyeT1TableViewCell: UITableViewCell {
     
     let bottomView = UIView()
     
+    let logoimageView: UIImageView = {
+        let view = UIImageView(frame: CGRectZero)
+        view.layer.cornerRadius = 4
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.white.cgColor
+        return view
+    }()
+    
     let name = UILabel.init(title: "",textColor: .white,font: .systemFont(ofSize: 20,weight: .semibold))
     
     let subName = UILabel.init(title: YTTools.areaTitle(a: "Loan amount", b: "Jumlah pinjaman"),textColor: .white,font: .systemFont(ofSize: 16))
@@ -38,12 +46,14 @@ class YTShouyeT1TableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
-        backgroundColor = .init(hex: "#F2F4F4")
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
         
-        let image = UIImageView.init(image: UIImage.init(named: "homebg"))
+        let image = UIImageView.init(image: UIImage.init(named: "home_top"))
         contentView.add(image) { v in
             v.snp.makeConstraints { make in
                 make.top.equalToSuperview()
+                make.height.equalTo(UIScreen.main.bounds.width * 1.23)
                 make.left.right.equalToSuperview()
             }
         }
@@ -60,7 +70,7 @@ class YTShouyeT1TableViewCell: UITableViewCell {
         
         buttonicon.isHidden = true
         
-       lyBox.isHidden = true
+        lyBox.isHidden = true
         
         icon1.isHidden = true
         l1t.isHidden = true

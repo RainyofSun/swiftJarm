@@ -11,8 +11,8 @@ class YTFirstScreenViewControllercell: UICollectionViewCell {
     
     
     let imageV = UIImageView()
-    let t2 = UILabel.init(title:"",textColor: .black,font: .systemFont(ofSize: 28,weight: .bold))
-    let t3 = UILabel.init(title:"",textColor: .black,font: .systemFont(ofSize: 18))
+    let t2 = UILabel.init(title:"",textColor: .white,font: .systemFont(ofSize: 28,weight: .bold), alignment: .center)
+    let t3 = UILabel.init(title:"",textColor: .white,font: .systemFont(ofSize: 18), alignment: .center)
     
     var imageName: String? {
         didSet {
@@ -42,7 +42,7 @@ class YTFirstScreenViewControllercell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
+        imageV.contentMode = .scaleAspectFill
         contentView.addSubview(imageV)
         imageV.snp.makeConstraints { make in
             if YTTools.isIPhone6Series() {
@@ -51,6 +51,7 @@ class YTFirstScreenViewControllercell: UICollectionViewCell {
                 make.top.equalToSuperview()
             }
             make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         contentView.add(t2) { v in
@@ -108,7 +109,7 @@ class YTFirstScreenViewController: UIViewController,UICollectionViewDataSource,U
     }()
                                            
     fileprivate var pages:[String] {
-        return ["fewfewfwe1", "fwe12323f"]
+        return ["guide_one", "guide_two"]
     }
 
     fileprivate var pages1:[String] {

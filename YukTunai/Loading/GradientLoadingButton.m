@@ -48,10 +48,6 @@
      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     self.indicator.hidesWhenStopped = YES;
     [self addSubview:self.indicator];
-
-    [self addTarget:self
-             action:@selector(handleTap)
-   forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Layout
@@ -93,7 +89,7 @@
 
 #pragma mark - Action
 
-- (void)handleTap {
+- (void)startLoading {
     if (self.loading) {
         return; // 👈 拦截重复点击
     }
@@ -103,9 +99,6 @@
 
     self.titleLabel.hidden = YES;
     [self.indicator startAnimating];
-
-    // 向外抛出事件
-    [self sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

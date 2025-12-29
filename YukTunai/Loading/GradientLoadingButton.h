@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 停止 loading（对外暴露）
 - (void)stopLoading;
+- (void)startLoading;
 
 @end
 

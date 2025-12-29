@@ -2,6 +2,12 @@
 
 #import "YTBaseViewController.h"
 
+@interface YTBaseViewController ()
+
+@property (nonatomic, strong) UIImageView *bgImgView;
+
+@end
+
 @implementation YTBaseViewController
 
 - (void)viewDidLoad {
@@ -9,7 +15,8 @@
     [self setupCustomNavigationBar];
     
     self.backB.hidden = self.navigationController.viewControllers.count == 1 ? YES : NO;
-
+    self.bgImgView.frame = self.view.bounds;
+    [self.view addSubview:self.bgImgView];
 }
 
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
@@ -113,6 +120,14 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleDarkContent;
+}
+
+- (UIImageView *)bgImgView {
+    if (!_bgImgView) {
+        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_bg"]];
+        _bgImgView.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    return _bgImgView;
 }
 
 @end

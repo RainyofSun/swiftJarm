@@ -37,6 +37,8 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         
         NotificationCenter.default.addObserver(self, selector: #selector(logout), name: Notification.Name(rawValue: "logout"), object: nil)
         
+        tableView.backgroundColor = UIColor.init(hex: "#2864D7")
+        
         view.add(tableView) { v in
             v.snp.makeConstraints { make in
                 make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 0, left: 0, bottom: YTTools.isIPhone6Series() ? 55 : 90, right: 0))
@@ -71,8 +73,6 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             }
         }
         //}
-        
-        tableView.backgroundColor = .init(hex: "#F2F4F4")
         
         reloadDataS()
         
@@ -273,7 +273,6 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             return 4
         }
         
-        tableView.backgroundColor = .init(hex: "#5E84F4")
         return 1+(item.first?.marched ?? []).count
     }
     
