@@ -1,0 +1,6 @@
+framework module Pods_YukTunai {
+  umbrella header "Pods-YukTunai-umbrella.h"
+
+  export *
+  module * { export * }
+}
