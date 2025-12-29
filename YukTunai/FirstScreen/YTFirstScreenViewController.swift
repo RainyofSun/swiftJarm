@@ -55,7 +55,7 @@ class YTFirstScreenViewControllercell: UICollectionViewCell {
         
         contentView.add(t2) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(24)
+                make.horizontalEdges.equalToSuperview().inset(24)
                 make.top.equalToSuperview().offset(statusBarHeight+88)
             }
         }
@@ -63,9 +63,8 @@ class YTFirstScreenViewControllercell: UICollectionViewCell {
         t3.numberOfLines = 4
         contentView.add(t3) { v in
             v.snp.makeConstraints { make in
-                make.left.equalToSuperview().offset(24)
-                make.right.equalToSuperview().inset(34)
-                make.top.equalTo(t2.snp.bottom).offset(22)
+                make.horizontalEdges.equalToSuperview().inset(34)
+                make.top.equalTo(t2.snp.bottom).offset(16)
             }
         }
     }
@@ -101,22 +100,25 @@ class YTFirstScreenViewController: UIViewController,UICollectionViewDataSource,U
         return collectionView
     }()
 
-    @objc let nextButton = UIButton.init(title: YTTools.areaTitle(a: "Next", b: "Berikutnya"), font: .systemFont(ofSize: 18, weight: .bold), color: .white)
+    @objc let nextButton = {
+        let view = GradientLoadingButton.init(frame: CGRectZero)
+        view.setGradientColors([UIColor(hex: "#F9DE6F"), UIColor(hex: "#FF8827")])
+        view.setTitle(LocalizationManager.shared().localizedString(forKey: "auth_btn"))
+        return view
+    }()
                                            
     fileprivate var pages:[String] {
-        return ["fewfewfwe1", "fwe12323f", "12323fwewfew"]
+        return ["fewfewfwe1", "fwe12323f"]
     }
-    
+
     fileprivate var pages1:[String] {
-        return [YTTools.areaTitle(a: "Convenient and fast", b: "Nyaman dan cepat"),
-                YTTools.areaTitle(a: "Professional loan", b: "Pinjaman profesional"),
-                YTTools.areaTitle(a: "Safe and reliable", b: "Aman dan dapat diandalkan"),]
+        return [LocalizationManager.shared().localizedString(forKey: "guide_one_t"),
+                LocalizationManager.shared().localizedString(forKey: "guide_two_t")]
     }
     
     fileprivate var pages2:[String] {
-        return [YTTools.areaTitle(a: "It only takes a few minutes to complete Online operation is convenient and fast", b: "Hanya perlu beberapa menit untuk menyelesaikan operasi online lebih nyaman dan cepat"),
-                YTTools.areaTitle(a: "If you have any financial difficulties, then we are your best choice", b: "Jika Anda memiliki kesulitan keuangan, maka kami adalah pilihan terbaik Anda"),
-                YTTools.areaTitle(a: "We have a very complete privacy protection mechanism, so don't worry about your privacy leakage", b: "Kami memiliki mekanisme perlindungan privasi yang sangat lengkap, jadi jangan khawatir tentang kebocoran privasi Anda"),]
+        return [LocalizationManager.shared().localizedString(forKey: "guide_one_content"),
+                LocalizationManager.shared().localizedString(forKey: "guide_two_content"),]
     }
     
     override func viewDidLoad() {
@@ -131,34 +133,25 @@ class YTFirstScreenViewController: UIViewController,UICollectionViewDataSource,U
                 make.edges.equalToSuperview()
             }
         }
-
-
-        nextButton.setBgColor(color: .init(hex: "#6D90F5"))
-       
-        pageControl = UIPageControl()
-        pageControl.numberOfPages = pages.count
-        pageControl.currentPage = 0
-        pageControl.currentPageIndicatorTintColor = UIColor.init(hex: "#5771F9")
-        pageControl.pageIndicatorTintColor = UIColor.init(hex: "#DBDBDB")
-        view.add(pageControl) { v in
-            v.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                if YTTools.isIPhone6Series() {
-                    make.bottom.equalToSuperview().offset(-12)
-                } else {
-                    make.bottom.equalToSuperview().offset(-52)
-                }
-            }
-        }
         
-        
-        nextButton.cornersSet(by: .allCorners, radius: 50/2)
         nextButton.addTarget(self, action: #selector(scrollToNext), for: .touchUpInside)
         view.add(nextButton) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(36)
+                make.horizontalEdges.equalToSuperview().inset(36)
                 make.height.equalTo(50)
-                make.bottom.equalTo(pageControl.snp.top).offset(-16)
+                make.bottom.equalToSuperview().offset(-75)
+            }
+        }
+        
+        pageControl = UIPageControl()
+        pageControl.numberOfPages = pages.count
+        pageControl.currentPage = 0
+        pageControl.currentPageIndicatorTintColor = UIColor.init(hex: "#FEC95D")
+        pageControl.pageIndicatorTintColor = UIColor.init(hex: "#FFFFFF")
+        view.add(pageControl) { v in
+            v.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.bottom.equalTo(nextButton.snp.top).offset(-50)
             }
         }
     }
@@ -200,7 +193,7 @@ class YTFirstScreenViewController: UIViewController,UICollectionViewDataSource,U
     
     private func updatePageControl() {
         pageControl.currentPage = currentIndex % pages.count
-       nextButton.setTitle(title: currentIndex == pages.count-1 ? YTTools.areaTitle(a:"Start", b: "Awal") : YTTools.areaTitle(a:"Next", b: "Langkah berikutnya"))
+        nextButton.setTitle(currentIndex == pages.count-1 ? LocalizationManager.shared().localizedString(forKey: "guide_com") : LocalizationManager.shared().localizedString(forKey: "auth_btn"))
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

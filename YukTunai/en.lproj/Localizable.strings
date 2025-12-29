@@ -1,0 +1,91 @@
+/* 
+  Localizable.strings
+  YukTunai
+
+  Created by 一刻 on 2025/12/29.
+  
+*/
+
+"start_try"="Try again";
+"guide_one_t" = "Accelerator of dreams";
+"guide_one_content" = "Loans are not just a numbers game, they are an accelerator of dreams!";
+"guide_two_t" = "Personalized service";
+"guide_two_content" = "Personalized loan service to meet your needs。";
+"guide_com"="Enter";
+
+"login_text1"="Welcome to Dana Terpilih！";
+"login_phone"="Phone number";
+"login_phone_p"="Enter your phone number";
+"login_v_code"="Verification code";
+"login_v_code_t"="Verification code is empty";
+"login_v_code_btn"="Get code";
+"login_v_voice"="Voice verification";
+"login_privicy"="I have read and agree ";
+"login_ppp"="Privacy Agreement";
+"login_btn"="Login";
+"login_yinsi"="Please confirm the Privacy Agreement";
+
+"order_tip"="Here is a centralized display of all your completed, in-progress, or overdue order information.";
+"order_repay"="Repayment";
+"order_apply"="Apply";
+"order_finis"="Finished";
+"order_empty"="You don't have any order information yet. Go to the homepage and apply now";
+"order_title"="Order list";
+"order_enklw"="Order entry";
+
+"mine_tip"="With 7x24-hour professional support, all issues are resolved, leaving you at ease and worry-free.";
+"mine_fun"="More functions";
+
+"setting_tip"="Borrow and repay flexibly, with flexible turnover - your pocket financial manager.";
+"setting_cance"="Account cancellation";
+"setting_lot"="Sign out";
+"setting_lot_alert"="You'll have your loan in no time! Sure you want out?";
+"setting_confirm"="Confirm";
+"settitle_wk"="Setting";
+"setting_skw"="Payment Reminder";
+"setting_wkskq"="Setup success";
+
+"cancel_wel_tip"="Welcome~ ";
+"ccancel_del"="Delete account\n";
+"cancel_del1"="Deleting your account will result in the permanent loss of the following data and features:";
+"cancel_tip1"="Personal Information: This includes your profile.preferences, and other personal data.";
+"cancel_tip2"="History: All historical records will be deleted and cannot be recovered.";
+"cancel_tip3"="App Permissions: You will no longer be able to use any features and services of this application.";
+"cancel_priss"="I have read and agreed to the above";
+
+"produc_tip"="We are here to help you realize your dreams in every journey - entrepreneurship, education, and travel.";
+"product_tip2"="List of certifications";
+
+"auth_btn"="Next";
+"auth_un"="Unverified";
+"auth_com"="Certified";
+"auth_confirm_tip"="Please confirm the agreement";
+"auth_qews"="Single Choice Question";
+"auth_ques_tip"="Please complete the questionnaire";
+"auth_fail_tip"="Submission failed, please try again";
+"auth_uoslwo"="Upload";
+"auth_uoslwo1"="Uploaded";
+"auth_card_tis"="Please upload a photo of your ID first";
+
+"camera_tip1"="To ensure a smooth review, please pay attention to the following points when taking photos:";
+"camera_tip2"="Please place the four corners of your ID card inside the photo frame and take a complete photo.";
+"camera_tip3"="The text should be clearly visible, avoiding blurring and keeping away from strong light and dark places.";
+"camera_tip4"="It must be an identity document recognized by the state and it must belong to the person himself/herself.";
+"camera_tip5"="Keep the lens clean, hold it with both hands facing your face, and avoid shaking.";
+"camera_tip6"="Take off your hat, glasses, and other items to avoid obscuring your face.";
+"camera_tip7"="Maintain sufficient lighting and avoid both darkness and direct sunlight.";
+
+"info_confirm_tip"="Please confirm the information";
+"info_confirm_name"="Full Name";
+"info_confirm_id"="ID number";
+"info_confirm_bir"="Birthday";
+"info_confirm_bto"="Please check your lD information correctly, once submitted it is not changed again";
+
+"address_tip"="Please select an address";
+"address_sel"="please choose";
+
+"time_tip"="Please select a time";
+"mine_title" = "My";
+"order_title" = "Order list";
+"const_tip"="The APP applies to access the contact list. Easily upload contact information to simplify steps and accelerate the loan application.";
+"neiw_tswp"="Network error, please check";

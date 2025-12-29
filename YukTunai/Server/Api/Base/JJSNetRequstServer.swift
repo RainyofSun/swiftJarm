@@ -7,11 +7,15 @@ import Alamofire
 
 extension CKService {
     
-    func fetchData<M: CKNetModelProtocol>(target: T, responseClass: M.Type, completion: @escaping (Model<M>) -> Void){
+    func fetchData<M: CKNetModelProtocol>(target: T, showLoading: Bool = true, responseClass: M.Type, completion: @escaping (Model<M>) -> Void){
        
         guard isConnectedToInternet else {
             completion(.failure(.UnKnow))
             return
+        }
+       
+        if showLoading {
+            SVProgressHUD.show()
         }
         
         let method = Alamofire.HTTPMethod(rawValue: target.method.rawValue)
@@ -36,6 +40,10 @@ extension CKService {
             }
             .validate(statusCode: 200..<500)
             .responseData {[weak self] result in
+                if showLoading {
+                    SVProgressHUD.dismiss()
+                }
+                
                 guard let _weakSelf = self else {
                    
                     return

@@ -1,0 +1,91 @@
+/* 
+  Localizable.strings
+  YukTunai
+
+  Created by 一刻 on 2025/12/29.
+  
+*/
+
+"start_try"="Coba lagi";
+"guide_one_t" = "Akselerator Mimpi";
+"guide_one_content" = "Pinjaman bukan hanya permainan angka,mereka adalah akselerator mimpi!";
+"guide_two_t" = "Layanan yang dipersonalisasi";
+"guide_two_content" = "Layanan pinjaman yang dipersonalisasi untuk memenuhi kebutuhan Anda.";
+"guide_com"="Memasuki";
+
+"login_text1"="Selamat datang di Dana Terpilih!";
+"login_phone"="Nomor telepon";
+"login_phone_p"="Masukkan nomor telepon Anda";
+"login_v_code"="Kode verifikasi";
+"login_v_code_t"="Kode verifikasi kosong";
+"login_v_code_btn"="Dapatkan kode";
+"login_v_voice"="Verifikasi suara";
+"login_privicy"="Saya telah membaca dan menyetujui ";
+"login_ppp"="Perjanjian Privasi";
+"login_btn"="Masuk";
+"login_yinsi"="Mohon konfirmasi Perjanjian Privasi.";
+
+"order_tip"="Ini menampilkan informasi tentang semua pesanan Anda yang telah selesai, sedang berlangsung, atau sudah melewati batas waktu.";
+"order_repay"="Pembayaran kembali";
+"order_apply"="Menerapkan";
+"order_finis"="Selesai";
+"order_empty"="Anda belum memiliki informasi pesanan. Kunjungi halaman utama dan ajukan permohonan sekarang.";
+"order_title"="Daftar pesanan";
+"order_enklw"="Entri pesanan";
+
+"mine_tip"="Dengan dukungan profesional 7x24 jam, semua masalah akan teratasi, sehingga Anda merasa tenang dan bebas khawatir.";
+"mine_fun"="Fungsi lainnya";
+
+"setting_tip"="Pinjam dan bayar kembali secara fleksibel, dengan perputaran yang fleksibel - manajer keuangan saku Anda.";
+"setting_cance"="Pembatalan akun";
+"setting_lot"="Keluar";
+"setting_lot_alert"="Anda akan segera mendapatkan pinjaman Anda! Yakin ingin keluar?";
+"setting_confirm"="Mengonfirmasi";
+"settitle_wk"="Pengaturan";
+"setting_skw"="Pengingat Pembayaran";
+"setting_wkskq"="Pengaturan berhasil";
+
+"cancel_wel_tip"="Selamat datang~ ";
+"ccancel_del"="Hapus akun\n";
+"cancel_del1"="Menghapus akun Anda akan mengakibatkan hilangnya data dan fitur berikut secara permanen:";
+"cancel_tip1"="Informasi Pribadi: Ini termasuk profil, preferensi, dan data pribadi lainnya.";
+"cancel_tip2"="Riwayat: Semua catatan historis akan dihapus dan tidak dapat dipulihkan.";
+"cancel_tip3"="Izin Aplikasi: Anda tidak akan lagi dapat menggunakan fitur dan layanan apa pun dari aplikasi ini.";
+"cancel_priss"="Saya telah membaca dan menyetujui hal-hal di atas.";
+
+"produc_tip"="Kami hadir untuk membantu Anda mewujudkan impian Anda dalam setiap perjalanan - kewirausahaan, pendidikan, dan wisata.";
+"product_tip2"="Daftar sertifikasi";
+
+"auth_btn"="Berikutnya";
+"auth_un"="Tidak terverifikasi";
+"auth_com"="Bersertifikat";
+"auth_confirm_tip"="Mohon konfirmasikan kesepakatan tersebut.";
+"auth_qews"="Pertanyaan Pilihan Tunggal";
+"auth_ques_tip"="Mohon lengkapi kuesioner ini.";
+"auth_fail_tip"="Pengiriman gagal, silakan coba lagi.";
+"auth_uoslwo"="Mengunggah";
+"auth_uoslwo1"="Selesai";
+"auth_card_tis"="Harap unggah foto kartu identitas Anda terlebih dahulu.";
+
+"camera_tip1"="Untuk memastikan proses peninjauan berjalan lancar, mohon perhatikan poin-poin berikut saat mengambil foto:";
+"camera_tip2"="Harap letakkan keempat sudut kartu identitas Anda di dalam bingkai foto dan ambil foto secara keseluruhan.";
+"camera_tip3"="Teks harus terlihat jelas, hindari gambar buram dan jauhkan dari cahaya yang terlalu terang serta tempat gelap.";
+"camera_tip4"="Dokumen tersebut harus merupakan dokumen identitas yang diakui oleh negara dan harus milik orang yang bersangkutan.";
+"camera_tip5"="Jaga kebersihan lensa, pegang dengan kedua tangan menghadap wajah Anda, dan hindari menggoyangkannya.";
+"camera_tip6"="Lepaskan topi, kacamata, dan barang-barang lainnya agar wajah Anda tidak tertutupi.";
+"camera_tip7"="Pastikan pencahayaan cukup dan hindari kegelapan serta sinar matahari langsung.";
+
+"info_confirm_tip"="Mohon konfirmasi informasinya.";
+"info_confirm_name"="Nama Lengkap";
+"info_confirm_id"="Nomor identitas";
+"info_confirm_bir"="Hari ulang tahun";
+"info_confirm_bto"="Mohon periksa kembali informasi ID Anda dengan benar, setelah dikirimkan informasi tersebut tidak dapat diubah lagi.";
+
+"address_tip"="Silakan pilih alamat";
+"address_sel"="silakan pilih";
+
+"time_tip"="Silakan pilih waktu";
+"mine_title" = "Milikku";
+"order_title" = "Daftar pesanan";
+"const_tip"="Aplikasi ini digunakan untuk mengakses daftar kontak. Unggah informasi kontak dengan mudah untuk menyederhanakan langkah dan mempercepat pengajuan pinjaman.";
+"neiw_tswp"="Terjadi kesalahan jaringan, mohon periksa.";

@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         applaunchOptions = launchOptions
         
-
+        SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.dark)
+        SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.clear)
+        SVProgressHUD.setRingRadius(3)
+        SVProgressHUD.setCornerRadius(10)
+        SVProgressHUD.setMinimumDismissTimeInterval(0.3)
+        
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = YTLunchScreenViewController()
@@ -145,7 +150,7 @@ class YTAddressTools {
     private var db: FMDatabase!
     
     private let service = upapisServices()
-
+    
     func load(){
         service.full { retul in
             switch retul {

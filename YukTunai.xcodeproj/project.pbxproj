@@ -23,6 +23,8 @@
 		33753ECA2F02281400F897B4 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33753EC62F02281400F897B4 /* EmptyView.swift */; };
 		33753ED12F0228BD00F897B4 /* GuideAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 33753ECC2F0228BD00F897B4 /* GuideAlert.m */; };
 		33753ED22F0228BD00F897B4 /* LocalizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 33753ECF2F0228BD00F897B4 /* LocalizationManager.m */; };
+		33753ED72F024E6D00F897B4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33753ED52F024E6D00F897B4 /* Localizable.strings */; };
+		33753FF02F02517300F897B4 /* GradientLoadingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 33753FEF2F02517300F897B4 /* GradientLoadingButton.m */; };
 		5A0313572CEF32960016C788 /* YTProductFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0313562CEF32950016C788 /* YTProductFaceViewController.swift */; };
 		5A0313592CEF403A0016C788 /* YTSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0313582CEF403A0016C788 /* YTSelectViewController.swift */; };
 		5A03135B2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A03135A2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift */; };
@@ -101,6 +103,12 @@
 		33753ECC2F0228BD00F897B4 /* GuideAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuideAlert.m; sourceTree = "<group>"; };
 		33753ECE2F0228BD00F897B4 /* LocalizationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizationManager.h; sourceTree = "<group>"; };
 		33753ECF2F0228BD00F897B4 /* LocalizationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizationManager.m; sourceTree = "<group>"; };
+		33753ED32F024E5400F897B4 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
+		33753ED42F024E5500F897B4 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		33753ED62F024E6D00F897B4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		33753ED82F024E7300F897B4 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		33753FEE2F02517300F897B4 /* GradientLoadingButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientLoadingButton.h; sourceTree = "<group>"; };
+		33753FEF2F02517300F897B4 /* GradientLoadingButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientLoadingButton.m; sourceTree = "<group>"; };
 		5A0313562CEF32950016C788 /* YTProductFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTProductFaceViewController.swift; sourceTree = "<group>"; };
 		5A0313582CEF403A0016C788 /* YTSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTSelectViewController.swift; sourceTree = "<group>"; };
 		5A03135A2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTUserInfoAlertViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +251,15 @@
 			path = Language;
 			sourceTree = "<group>";
 		};
+		33753FF22F02518900F897B4 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				33753FEE2F02517300F897B4 /* GradientLoadingButton.h */,
+				33753FEF2F02517300F897B4 /* GradientLoadingButton.m */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
 		5AAEA3B02CECCC94000E2992 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +397,7 @@
 		5AC6E3882CEAC19100496263 /* YukTunai */ = {
 			isa = PBXGroup;
 			children = (
+				33753FF22F02518900F897B4 /* Loading */,
 				33753ECD2F0228BD00F897B4 /* GuideAlert */,
 				33753ED02F0228BD00F897B4 /* Language */,
 				33753EC72F02281400F897B4 /* EmptyView */,
@@ -405,6 +423,7 @@
 				5AC6E3922CEAC19300496263 /* Assets.xcassets */,
 				5AC6E3942CEAC19300496263 /* LaunchScreen.storyboard */,
 				5AC6E3972CEAC19300496263 /* Info.plist */,
+				33753ED52F024E6D00F897B4 /* Localizable.strings */,
 			);
 			path = YukTunai;
 			sourceTree = "<group>";
@@ -548,6 +567,7 @@
 			knownRegions = (
 				en,
 				Base,
+				id,
 			);
 			mainGroup = 5AC6E37D2CEAC19100496263;
 			productRefGroup = 5AC6E3872CEAC19100496263 /* Products */;
@@ -565,6 +585,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AC6E3962CEAC19300496263 /* LaunchScreen.storyboard in Resources */,
+				33753ED72F024E6D00F897B4 /* Localizable.strings in Resources */,
 				5AC6E3932CEAC19300496263 /* Assets.xcassets in Resources */,
 				5AC6E3912CEAC19100496263 /* Main.storyboard in Resources */,
 			);
@@ -623,6 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33753FF02F02517300F897B4 /* GradientLoadingButton.m in Sources */,
 				5AB3315E2CEB481600BEC200 /* YTShouyeViewController.swift in Sources */,
 				5AB3317D2CEB541B00BEC200 /* InitApiServices.swift in Sources */,
 				5AAEA3BB2CECCC94000E2992 /* CKService.swift in Sources */,
@@ -697,10 +719,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		33753ED52F024E6D00F897B4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				33753ED62F024E6D00F897B4 /* en */,
+				33753ED82F024E7300F897B4 /* id */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		5AC6E38F2CEAC19100496263 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5AC6E3902CEAC19100496263 /* Base */,
+				33753ED32F024E5400F897B4 /* id */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -709,6 +741,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5AC6E3952CEAC19300496263 /* Base */,
+				33753ED42F024E5500F897B4 /* id */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -720,6 +753,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -780,6 +814,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

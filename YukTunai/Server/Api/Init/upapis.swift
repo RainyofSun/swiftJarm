@@ -89,6 +89,7 @@ protocol upapisServicesp {
 
 class upapisServices: CKService<upapis>, upapisServicesp {
     
+    // 城市列表
     func full(completion: @escaping (Result<CKBaseNetModel<[followedModels]>?, YKError>) -> Void) {
         fetchData(target: upapis.full, responseClass: CKBaseNetModel<[followedModels]>.self) { result in
             completion(result)
@@ -96,25 +97,25 @@ class upapisServices: CKService<upapis>, upapisServicesp {
     }
     
     func tumult(avp: [String : String], completion: @escaping (Result<CKBaseNetModel<EmptyModel>?, YKError>) -> Void) {
-        fetchData(target: upapis.tumult(avp), responseClass: CKBaseNetModel<EmptyModel>.self) { result in
+        fetchData(target: upapis.tumult(avp), showLoading: false, responseClass: CKBaseNetModel<EmptyModel>.self) { result in
             completion(result)
         }
     }
     
     func courageous(avp: [String : String], completion: @escaping (Result<CKBaseNetModel<EmptyModel>?, YKError>) -> Void) {
-        fetchData(target: upapis.courageous(avp), responseClass: CKBaseNetModel<EmptyModel>.self) { result in
+        fetchData(target: upapis.courageous(avp), showLoading: false, responseClass: CKBaseNetModel<EmptyModel>.self) { result in
             completion(result)
         }
     }
     
     func approach(avp: [String : String], completion: @escaping (Result<CKBaseNetModel<EmptyModel>?, YKError>) -> Void) {
-        fetchData(target: upapis.approach(avp), responseClass: CKBaseNetModel<EmptyModel>.self) { result in
+        fetchData(target: upapis.approach(avp), showLoading: false, responseClass: CKBaseNetModel<EmptyModel>.self) { result in
             completion(result)
         }
     }
     
     func crushing(avp: [String : String], completion: @escaping (Result<CKBaseNetModel<EmptyModel>?, YKError>) -> Void) {
-        fetchData(target: upapis.crushing(avp), responseClass: CKBaseNetModel<EmptyModel>.self) { result in
+        fetchData(target: upapis.crushing(avp), showLoading: false, responseClass: CKBaseNetModel<EmptyModel>.self) { result in
             completion(result)
         }
     }
@@ -123,7 +124,7 @@ class upapisServices: CKService<upapis>, upapisServicesp {
     static let shard:upapisServices = upapisServices()
     
     func googleMarket(avp: [String:String],completion: @escaping(Result<CKBaseNetModel<EmptyModel>?, YKError>) -> Void){
-        fetchData(target: upapis.googleMarket(avp), responseClass: CKBaseNetModel<EmptyModel>.self) { result in
+        fetchData(target: upapis.googleMarket(avp), showLoading: false, responseClass: CKBaseNetModel<EmptyModel>.self) { result in
             completion(result)
         }
     }

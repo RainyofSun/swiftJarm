@@ -165,14 +165,21 @@ class ApiViewModel: NSObject {
 class YTLunchScreenViewController: UIViewController {
     
     let viewModel = ApiViewModel()
-
-    var button: UIButton = UIButton.init(title: "Try again", font: .systemFont(ofSize: 18), color: .white)
+    let imgView: UIImageView = UIImageView(image: UIImage(named: "launchs"))
+    var button: GradientLoadingButton = {
+        let view = GradientLoadingButton.init(frame: CGRectZero)
+        view.setGradientColors([UIColor(hex: "#F9DE6F"), UIColor(hex: "#FF8827")])
+        view.setTitle(LocalizationManager.shared().localizedString(forKey: "start_try"))
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.init(hex: "#EDF0FE")
         
-       
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.LocalizationLanguageDidChange, object: nil, queue: OperationQueue.main) { _ in
+            self.button.setTitle(LocalizationManager.shared().localizedString(forKey: "start_try"))
+        }
         
         let monitor = NWPathMonitor()
 
@@ -188,30 +195,19 @@ class YTLunchScreenViewController: UIViewController {
 
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
-
         
-
-        
-        let image = UIImageView.init(image: UIImage.init(named: "image 26"))
-        view.add(image) { v in
-            v.snp.makeConstraints { make in
-                make.width.height.equalTo(128)
-                make.top.equalToSuperview().offset(216)
-                make.centerX.equalToSuperview()
-            }
+        view.addSubview(imgView)
+        imgView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        
     
         button.isHidden = true
-        button.setBgColor(color: .init(hex: "#6D90F5"))
-        button.cornersSet(by: .allCorners, radius: 52/2)
         button.addTarget(self, action: #selector(agin), for: .touchUpInside)
         view.add(button) { v in
             v.snp.makeConstraints { make in
-                make.height.equalTo(52)
-                make.width.equalTo(272)
-                make.centerX.equalToSuperview()
-                make.top.equalTo(image.snp.bottom).offset(171)
+                make.height.equalTo(48)
+                make.horizontalEdges.equalToSuperview().inset(30)
+                make.bottom.equalToSuperview().offset(-80)
             }
         }
         
@@ -224,84 +220,71 @@ class YTLunchScreenViewController: UIViewController {
     
     @objc func agin(){
         button.isHidden = true
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        startApp(need: true)
+        startApp()
     }
     
     func initApi(){
       
-                 button.isHidden = true
-                        let firstScreen = YTFirstScreenViewController()
-                                if !YTUserDefaults.shared.firstStart {
-                                    SVProgressHUD.dismiss()
-                                    firstScreen.handle = {
-                                       
-                                        YTUserDefaults.shared.firstStart = true
-                                        let tabViewC = YTBaseTabBarViewController.init()
-        
-                                        let home =  YTZhongJianViewController()
-                                        home.tabBarItem.image = UIImage.init(named: "Property 1=order-off")!.withRenderingMode(.alwaysOriginal)
-                                        home.tabBarItem.selectedImage = UIImage.init(named: "Property 1=order-on")!.withRenderingMode(.alwaysOriginal)
-                                        let homeVc = YTBaseNavigationController.init(rootViewController: home)
-                                        tabViewC.addChild(homeVc)
-        
-                                        let order =  YTShouyeViewController()
-                                        let orderVc = YTBaseNavigationController.init(rootViewController: order)
-                                        order.tabBarItem.image = UIImage.init(named: "home1232dd")!.withRenderingMode(.alwaysOriginal)
-                                        order.tabBarItem.selectedImage = UIImage.init(named: "home")!.withRenderingMode(.alwaysOriginal)
-                                        tabViewC.addChild(orderVc)
-        
-                                        let center =  YKWoViewController()
-                                        center.tabBarItem.image = UIImage.init(named: "Property 1=me-off")!.withRenderingMode(.alwaysOriginal)
-                                        center.tabBarItem.selectedImage = UIImage.init(named: "Property 1=me-on")!.withRenderingMode(.alwaysOriginal)
-                                        let centerVc = YTBaseNavigationController.init(rootViewController: center)
-                                        tabViewC.addChild(centerVc)
-        
-        
-        
-                                        UIApplication.shared.windows.first?.rootViewController  = tabViewC
-        
-                                        tabViewC.selectedIndex = 1
-                                    }
-                                    UIApplication.shared.windows.first?.rootViewController = firstScreen
-                                } else {
-                                    SVProgressHUD.dismiss()
-                                    let tabViewC = YTBaseTabBarViewController.init()
-        
-                                    let home =  YTZhongJianViewController()
-                                    home.tabBarItem.image = UIImage.init(named: "Property 1=order-off")!.withRenderingMode(.alwaysOriginal)
-                                    home.tabBarItem.selectedImage = UIImage.init(named: "Property 1=order-on")!.withRenderingMode(.alwaysOriginal)
-                                    let homeVc = YTBaseNavigationController.init(rootViewController: home)
-                                    tabViewC.addChild(homeVc)
-        
-                                    let order =  YTShouyeViewController()
-                                    let orderVc = YTBaseNavigationController.init(rootViewController: order)
-                                    order.tabBarItem.image = UIImage.init(named: "home1232dd")!.withRenderingMode(.alwaysOriginal)
-                                    order.tabBarItem.selectedImage = UIImage.init(named: "home")!.withRenderingMode(.alwaysOriginal)
-                                    tabViewC.addChild(orderVc)
-        
-                                    let center =  YKWoViewController()
-                                    center.tabBarItem.image = UIImage.init(named: "Property 1=me-off")!.withRenderingMode(.alwaysOriginal)
-                                    center.tabBarItem.selectedImage = UIImage.init(named: "Property 1=me-on")!.withRenderingMode(.alwaysOriginal)
-                                    let centerVc = YTBaseNavigationController.init(rootViewController: center)
-                                    tabViewC.addChild(centerVc)
-                                    UIApplication.shared.windows.first?.rootViewController  = tabViewC
-        
-                                    tabViewC.selectedIndex = 1
-                                }
-                    }
-                
+        button.isHidden = true
+        let firstScreen = YTFirstScreenViewController()
+        if !YTUserDefaults.shared.firstStart {
+            firstScreen.handle = {
+               
+                YTUserDefaults.shared.firstStart = true
+                let tabViewC = YTBaseTabBarViewController.init()
+
+                let home =  YTZhongJianViewController()
+                home.tabBarItem.image = UIImage.init(named: "Property 1=order-off")!.withRenderingMode(.alwaysOriginal)
+                home.tabBarItem.selectedImage = UIImage.init(named: "Property 1=order-on")!.withRenderingMode(.alwaysOriginal)
+                let homeVc = YTBaseNavigationController.init(rootViewController: home)
+                tabViewC.addChild(homeVc)
+
+                let order =  YTShouyeViewController()
+                let orderVc = YTBaseNavigationController.init(rootViewController: order)
+                order.tabBarItem.image = UIImage.init(named: "home1232dd")!.withRenderingMode(.alwaysOriginal)
+                order.tabBarItem.selectedImage = UIImage.init(named: "home")!.withRenderingMode(.alwaysOriginal)
+                tabViewC.addChild(orderVc)
+
+                let center =  YKWoViewController()
+                center.tabBarItem.image = UIImage.init(named: "Property 1=me-off")!.withRenderingMode(.alwaysOriginal)
+                center.tabBarItem.selectedImage = UIImage.init(named: "Property 1=me-on")!.withRenderingMode(.alwaysOriginal)
+                let centerVc = YTBaseNavigationController.init(rootViewController: center)
+                tabViewC.addChild(centerVc)
 
 
-    
-   
-    func startApp(need: Bool = false){
-        if need {
-            SVProgressHUD.show()
+
+                UIApplication.shared.windows.first?.rootViewController  = tabViewC
+
+                tabViewC.selectedIndex = 1
+            }
+            UIApplication.shared.windows.first?.rootViewController = firstScreen
+        } else {
+            let tabViewC = YTBaseTabBarViewController.init()
+
+            let home =  YTZhongJianViewController()
+            home.tabBarItem.image = UIImage.init(named: "Property 1=order-off")!.withRenderingMode(.alwaysOriginal)
+            home.tabBarItem.selectedImage = UIImage.init(named: "Property 1=order-on")!.withRenderingMode(.alwaysOriginal)
+            let homeVc = YTBaseNavigationController.init(rootViewController: home)
+            tabViewC.addChild(homeVc)
+
+            let order =  YTShouyeViewController()
+            let orderVc = YTBaseNavigationController.init(rootViewController: order)
+            order.tabBarItem.image = UIImage.init(named: "home1232dd")!.withRenderingMode(.alwaysOriginal)
+            order.tabBarItem.selectedImage = UIImage.init(named: "home")!.withRenderingMode(.alwaysOriginal)
+            tabViewC.addChild(orderVc)
+
+            let center =  YKWoViewController()
+            center.tabBarItem.image = UIImage.init(named: "Property 1=me-off")!.withRenderingMode(.alwaysOriginal)
+            center.tabBarItem.selectedImage = UIImage.init(named: "Property 1=me-on")!.withRenderingMode(.alwaysOriginal)
+            let centerVc = YTBaseNavigationController.init(rootViewController: center)
+            tabViewC.addChild(centerVc)
+            UIApplication.shared.windows.first?.rootViewController  = tabViewC
+
+            tabViewC.selectedIndex = 1
         }
-         
+    }
+                
+    func startApp(){
         viewModel.schlaeger(h:HOST,avp: [
             "schlaeger":"\(DeviceInformationModel.getCurrentLanguage())",
             "suabian":"\(DeviceInformationModel.isProxyEnabled() ? 1:0)",
@@ -316,7 +299,10 @@ class YTLunchScreenViewController: UIViewController {
                 }
                 
                 YTUserDefaults.shared.gash = "\(m.gash!)"
-
+                LocalizationManager.shared().setLanguage(m.gash == 1 ? "en" : "id")
+                
+                #if DEBUG
+                #else
                 if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                     let launchOptions = appDelegate.applaunchOptions
                     Settings.shared.appID = m.fought?.duels ?? ""
@@ -325,18 +311,16 @@ class YTLunchScreenViewController: UIViewController {
                     Settings.shared.appURLSchemeSuffix = m.fought?.hands ?? ""
                     ApplicationDelegate.shared.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions)
                 }
-
-                self.button.isHidden = true
-
-               // if YTUserDefaults.shared.gash == 2 {
+                
+                if YTUserDefaults.shared.gash == "2" {
                     YTAddressTools.shared.load()
-                //}r
+                }
+                #endif
+                self.button.isHidden = true
                 
                 self.initApi()
                 
-                SVProgressHUD.dismiss()
-                
-            case .failure(let e):
+            case .failure(_):
                 
                 self.viewModel.service.defaultjsons(lj: HOMEJSON) {[weak self] result in
                     switch result {
@@ -348,12 +332,8 @@ class YTLunchScreenViewController: UIViewController {
                             self?.button.isHidden = true
                         })
                         break
-                    case .failure(let failure):
+                    case .failure(_):
                         self?.button.isHidden = false
-                        SVProgressHUD.setDefaultStyle(.dark)
-                        SVProgressHUD.setDefaultMaskType(.clear)
-                        SVProgressHUD.dismiss(withDelay: 1.5)
-                       
                         break
                     }
                 }

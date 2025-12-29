@@ -60,7 +60,7 @@
 }
 
 + (BOOL)isEnglish {
-    return [[OSLW_Defaults stringForKey:MainLeft] isEqualToString:@"1"];
+    return [[[NSUserDefaults standardUserDefaults] stringForKey:@"gash"] isEqualToString:@"1"];
 }
 
 @end
