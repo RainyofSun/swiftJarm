@@ -89,6 +89,15 @@ extension UIButton {
         sizeToFit()
     }
     
+    public convenience init (title: String, backimage: String) {
+        self.init(type: .custom)
+        setTitle(title, for: .normal)
+        setTitle(title, for: .highlighted)
+        // 设置图片
+        setBackgroundImage(UIImage(named: backimage), for: UIControl.State.normal)
+        sizeToFit()
+    }
+    
     
     /// 设置图片
     public func setImage(image: String){

@@ -56,24 +56,6 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         
-        //if YTUserDefaults.shared.gash == 2 {
-            //YTAddressTools.shared.load()
-        
-        uploadS.full { retul in
-            switch retul {
-            case .success(let success):
-//                SVProgressHUD.showInfo(withStatus: "获取地址骶椎成功")
-                (success?.upper)!.forEach {[weak self] item in
-                    YTAddressTools.shared.savefollowed(item)
-                }
-                break
-            case .failure(let failure):
-//                SVProgressHUD.showInfo(withStatus: "获取地址骶椎失败----\(failure)")
-                break
-            }
-        }
-        //}
-        
         reloadDataS()
         
         addOb()
@@ -363,6 +345,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                     return UITableViewCell()
                 }
                 
+                // 大卡位
                 if let item = model?.along?.filter({$0.directly == "suabian"}).first?.marched?.first {
                     
                     cell.bottomView.isHidden = false

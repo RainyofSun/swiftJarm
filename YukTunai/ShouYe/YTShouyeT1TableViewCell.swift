@@ -11,14 +11,6 @@ class YTShouyeT1TableViewCell: UITableViewCell {
     
     let bottomView = UIView()
     
-    let logoimageView: UIImageView = {
-        let view = UIImageView(frame: CGRectZero)
-        view.layer.cornerRadius = 4
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.white.cgColor
-        return view
-    }()
-    
     let name = UILabel.init(title: "",textColor: .white,font: .systemFont(ofSize: 20,weight: .semibold))
     
     let subName = UILabel.init(title: YTTools.areaTitle(a: "Loan amount", b: "Jumlah pinjaman"),textColor: .white,font: .systemFont(ofSize: 16))
@@ -29,7 +21,7 @@ class YTShouyeT1TableViewCell: UITableViewCell {
     
     let buttonname = UILabel.init(title: "",textColor: .white,font: .systemFont(ofSize: 24,weight: .semibold))
     
-    let buttonicon = UIImageView.init(image: UIImage.init(named: "Frame1d3"))
+    let buttonicon = UIButton(title: "", backimage: "home_apply")
     
     let lyBox = UIView.init(bgColor: .init(hex: "#FFFFFF",alpha: 0.18))
     
@@ -83,15 +75,11 @@ class YTShouyeT1TableViewCell: UITableViewCell {
         
         
         
-        bottomView.isHidden = true
-        bottomView.backgroundColor = .init(hex: "#F9962F")
-        bottomView.cornersSet(by: .allCorners, radius: 16)
-        contentView.add(bottomView) { v in
+        
+        contentView.add(buttonicon) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(28)
-                make.bottom.equalToSuperview().offset(-10)
-                make.height.equalTo(52)
-                make.top.equalTo(image.snp.bottom).offset(YTTools.isIPhone6Series() ? -30 : -20)
+                make.horizontalEdges.equalToSuperview().inset(28)
+                make.bottom.equalTo(image).offset(-10)
             }
             
             let box = UIView()
@@ -104,14 +92,6 @@ class YTShouyeT1TableViewCell: UITableViewCell {
             box.add(buttonname) { v in
                 v.snp.makeConstraints { make in
                     make.left.bottom.top.equalToSuperview()
-                }
-            }
-            
-            box.add(buttonicon) { v in
-                v.snp.makeConstraints { make in
-                    make.right.equalToSuperview()
-                    make.centerY.equalToSuperview()
-                    make.left.equalTo(buttonname.snp.right).offset(10)
                 }
             }
         }
