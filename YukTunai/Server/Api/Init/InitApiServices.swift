@@ -339,6 +339,7 @@ class marchedModel: SmartCodable {
     var lead: String?
     var sheet: String?
     var whistled: String?
+    var treatment: String?
     required init(){}
 }
 

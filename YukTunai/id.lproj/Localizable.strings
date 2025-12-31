@@ -13,6 +13,16 @@
 "guide_two_content" = "Layanan pinjaman yang dipersonalisasi untuk memenuhi kebutuhan Anda.";
 "guide_com"="Memasuki";
 
+"home_tip_big" = "Keunggulan kami";
+"Superiority" = "Keunggulan";
+"Longloanperiod" = "Periode pinjaman panjang";
+"Lowloaninterestrate" = "Suku bunga pinjaman rendah";
+"Highreviewrate" = "Tingkat ulasan tinggi";
+"Highsafety" = "Keamanan tinggi";
+"Nohiddanexpenses" = "Tidak ada biaya tersembunyi";
+"Other" = "Lainnya";
+"Our" = "Kita";
+
 "login_text1"="Selamat datang di Dana Terpilih!";
 "login_phone"="Nomor telepon";
 "login_phone_p"="Masukkan nomor telepon Anda";

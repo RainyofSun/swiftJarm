@@ -52,7 +52,6 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         tableView.register(YTShouyeListItemTableViewCell.self, forCellReuseIdentifier: YTShouyeListItemTableViewCell.identifier)
         tableView.register(YTShouyeListItemHeaderTableViewCell.self, forCellReuseIdentifier: YTShouyeListItemHeaderTableViewCell.identifier)
         
-        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -107,22 +106,22 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
              if let location = location {
                  let geocoder = CLGeocoder.init()
                  geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-                     guard let self = self else { return }
+                     guard self != nil else { return }
                      if let placemark = placemarks?.first {
                          let info =  YTLocationHelper.sharedInstance().locationDetail(placemark, loca: location) as! [String:String]
                          upapisServices.shard.courageous(avp: info) { r in
                              switch r {
-                             case .success(let success):
+                             case .success(_):
                                  print("shang bao weizhi xinxi chenggong ------------shang bao weizhi xinxi chenggong ------------shang bao weizhi xinxi chenggong ------------ ")
                                  break
-                             case .failure(let failure):
+                             case .failure(_):
                                  print("shang bao weizhi xinxi chu cuo ------------ ")
                                  break
                              }
                          }
                      }
                  }
-             } else if let error = error {
+             } else if error != nil {
                 print("shang bao weizhi xinxi chu cuo ")
              }
          }
@@ -268,7 +267,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                 
                 
                 if let item = model?.along?.filter({$0.directly == "dexterous"}).first?.marched?.first {
-                    
+                    // 小卡位
                     
                     cell.name.isHidden = false
                     
@@ -347,9 +346,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                 
                 // 大卡位
                 if let item = model?.along?.filter({$0.directly == "suabian"}).first?.marched?.first {
-                    
-                    cell.bottomView.isHidden = false
-                    
+                                        
                     cell.name.isHidden = false
                     
                     cell.subName.isHidden = false
@@ -358,18 +355,11 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                     
                     cell.icon.isHidden = false
                     
-                    cell.buttonname.isHidden = false
-                    
-                    cell.buttonicon.isHidden = false
-                    
                     cell.lyBox.isHidden = false
                     
-                    cell.icon1.isHidden = false
                     cell.l1t.isHidden = false
                     cell.l1tv.isHidden = false
                     
-                    
-                    cell.icon2.isHidden = false
                     cell.l2t.isHidden = false
                     cell.l2tv.isHidden = false
                     
@@ -379,17 +369,15 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                     
                     cell.price.text = item.smoky
                     
-                    cell.buttonname.text = item.coat
-                    
+                    cell.buttonicon.isHidden = false
+                    cell.buttonicon.setTitle(title: item.coat ?? "")
                     cell.l1t.text = item.drunk
                     cell.l1tv.text = item.stalking
                     
                     cell.l2tv.text = item.lead
                     cell.l2t.text = item.sheet
                     
-                    let t = UITapGestureRecognizer.init(target: self, action: #selector(dakaweidianji))
-                    cell.bottomView.isUserInteractionEnabled = true
-                    cell.bottomView.addGestureRecognizer(t)
+                    cell.buttonicon.addTarget(self, action: #selector(dakaweidianji), for: UIControl.Event.touchUpInside)
                 }
                 
                 return cell
@@ -398,13 +386,13 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                     return UITableViewCell()
                 }
                 
-                let t = UITapGestureRecognizer.init(target: self, action: #selector(z1))
-                cell.image1.isUserInteractionEnabled = true
-                cell.image1.addGestureRecognizer(t)
-                
-                let t2 = UITapGestureRecognizer.init(target: self, action: #selector(z2))
-                cell.image2.isUserInteractionEnabled = true
-                cell.image2.addGestureRecognizer(t2)
+//                let t = UITapGestureRecognizer.init(target: self, action: #selector(z1))
+//                cell.image1.isUserInteractionEnabled = true
+//                cell.image1.addGestureRecognizer(t)
+//                
+//                let t2 = UITapGestureRecognizer.init(target: self, action: #selector(z2))
+//                cell.image2.isUserInteractionEnabled = true
+//                cell.image2.addGestureRecognizer(t2)
                 
                 return cell
             }else if indexPath.row == 2 {
@@ -831,21 +819,7 @@ class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     /// 显示自定义弹窗，引导用户到设置页面
     private func showCustomAlert() {
         guard let presentingViewController = presentingViewController else { return }
-        
-        let alert = UIAlertController(
-            title: YTTools.areaTitle(a: "Location permission is not enabled", b: "Izin lokasi belum diaktifkan"),
-            message: YTTools.areaTitle(a: "Location permission is required to enable full functionality. Would you like to go to Settings to enable it?", b: "Izin lokasi diperlukan untuk memberikan fungsi penuh. Apakah Anda ingin pergi ke Pengaturan untuk mengaktifkannya?"),
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: YTTools.areaTitle(a: "Cancel", b: "Batal"), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: YTTools.areaTitle(a: "Settings", b: "Pengaturan"), style: .default, handler: { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url)
-            }
-        }))
-        
-        presentingViewController.present(alert, animated: true, completion: nil)
+        GuideAlert.show(presentingViewController, alertType: AlertType(0))
         recordPermissionPromptShown()
     }
     

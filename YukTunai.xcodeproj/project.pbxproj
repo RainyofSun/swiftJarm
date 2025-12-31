@@ -25,6 +25,7 @@
 		33753ED22F0228BD00F897B4 /* LocalizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 33753ECF2F0228BD00F897B4 /* LocalizationManager.m */; };
 		33753ED72F024E6D00F897B4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33753ED52F024E6D00F897B4 /* Localizable.strings */; };
 		33753FF02F02517300F897B4 /* GradientLoadingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 33753FEF2F02517300F897B4 /* GradientLoadingButton.m */; };
+		4B30A3AD2F048F9C00323C51 /* bigCardTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3AC2F048F9C00323C51 /* bigCardTipView.swift */; };
 		5A0313572CEF32960016C788 /* YTProductFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0313562CEF32950016C788 /* YTProductFaceViewController.swift */; };
 		5A0313592CEF403A0016C788 /* YTSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0313582CEF403A0016C788 /* YTSelectViewController.swift */; };
 		5A03135B2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A03135A2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift */; };
@@ -109,6 +110,7 @@
 		33753ED82F024E7300F897B4 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		33753FEE2F02517300F897B4 /* GradientLoadingButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientLoadingButton.h; sourceTree = "<group>"; };
 		33753FEF2F02517300F897B4 /* GradientLoadingButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientLoadingButton.m; sourceTree = "<group>"; };
+		4B30A3AC2F048F9C00323C51 /* bigCardTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bigCardTipView.swift; sourceTree = "<group>"; };
 		5A0313562CEF32950016C788 /* YTProductFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTProductFaceViewController.swift; sourceTree = "<group>"; };
 		5A0313582CEF403A0016C788 /* YTSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTSelectViewController.swift; sourceTree = "<group>"; };
 		5A03135A2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTUserInfoAlertViewController.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				5AEBB88F2CEDD62300F0A733 /* YTShouyeT4TableViewCell.swift */,
 				5AEBB8932CEDD67000F0A733 /* YTShouyeListItemHeaderTableViewCell.swift */,
 				5AEBB8912CEDD65800F0A733 /* YTShouyeListItemTableViewCell.swift */,
+				4B30A3AC2F048F9C00323C51 /* bigCardTipView.swift */,
 			);
 			path = ShouYe;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				33753EC92F02281400F897B4 /* EmptyProtocol.swift in Sources */,
 				33753ECA2F02281400F897B4 /* EmptyView.swift in Sources */,
 				5AC6E38A2CEAC19100496263 /* AppDelegate.swift in Sources */,
+				4B30A3AD2F048F9C00323C51 /* bigCardTipView.swift in Sources */,
 				5AB3317B2CEB538000BEC200 /* InitApis.swift in Sources */,
 				33753EB92F0227D700F897B4 /* UITapGestureRecognizer+Extension.swift in Sources */,
 				33753EBA2F0227D700F897B4 /* UIDevice+Extension.swift in Sources */,
@@ -915,9 +919,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = YukTunai/YukTunai.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YUQ352UGYJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YukTunai/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
@@ -938,9 +944,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = YukTunai.zw.coms;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yinni.testappid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = YinNiProfile;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
