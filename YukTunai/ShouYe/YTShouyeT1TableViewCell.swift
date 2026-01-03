@@ -35,7 +35,7 @@ class YTShouyeT1TableViewCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         let bgHeight = UIScreen.main.bounds.width * 1.23
-        
+        buttonicon.isUserInteractionEnabled = false
         let image = UIImageView.init(image: UIImage.init(named: "home_top"))
         contentView.add(image) { v in
             v.snp.makeConstraints { make in

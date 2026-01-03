@@ -121,21 +121,21 @@ class YTConfirmBankViewController: YTBaseViewController {
     }
     
     @objc func ccc(){
-          SVProgressHUD.show()
-          SVProgressHUD.setDefaultStyle(.dark)
-          SVProgressHUD.setDefaultMaskType(.clear)
+          
+          
+          
           viewModel.offensive(avp: l!) {[weak self] r in
               switch r {
               case .success(let success):
-                  SVProgressHUD.dismiss()
+                  
                   self?.dismiss(animated: false, completion: {
                       self?.onHandle?()
                   })
                   break
               case .failure(let failure):
-                  SVProgressHUD.setDefaultStyle(.dark)
-                  SVProgressHUD.setDefaultMaskType(.clear)
-                  SVProgressHUD.dismiss(withDelay: 1.5)
+                  
+                  
+                  
                   SVProgressHUD.showInfo(withStatus: failure.description)
                   break
               }

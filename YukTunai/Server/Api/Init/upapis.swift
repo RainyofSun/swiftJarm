@@ -91,7 +91,7 @@ class upapisServices: CKService<upapis>, upapisServicesp {
     
     // 城市列表
     func full(completion: @escaping (Result<CKBaseNetModel<[followedModels]>?, YKError>) -> Void) {
-        fetchData(target: upapis.full, responseClass: CKBaseNetModel<[followedModels]>.self) { result in
+        fetchData(target: upapis.full, showLoading: false, responseClass: CKBaseNetModel<[followedModels]>.self) { result in
             completion(result)
         }
     }

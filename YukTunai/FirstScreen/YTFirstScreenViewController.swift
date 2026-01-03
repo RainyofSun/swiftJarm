@@ -103,7 +103,6 @@ class YTFirstScreenViewController: UIViewController,UICollectionViewDataSource,U
 
     @objc let nextButton = {
         let view = GradientLoadingButton.init(frame: CGRectZero)
-        view.setGradientColors([UIColor(hex: "#F9DE6F"), UIColor(hex: "#FF8827")])
         view.setTitle(LocalizationManager.shared().localizedString(forKey: "auth_btn"))
         return view
     }()
@@ -124,7 +123,6 @@ class YTFirstScreenViewController: UIViewController,UICollectionViewDataSource,U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
         view.add(collectionView) { v in
             collectionView.dataSource = self

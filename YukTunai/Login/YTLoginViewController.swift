@@ -35,97 +35,79 @@ extension UITextField {
 class YTLoginViewController: YTBaseViewController {
     
     let viewModel = ApiViewModel()
-    
     var time: Date?
     
-    let code = YTTextField()
+    let phoneView: loginPhonView = loginPhonView(frame: CGRectZero)
+    let codeView: loginCodeView = loginCodeView(frame: CGRectZero)
     
-    let voice = UIButton.init(title: "", image: "语音输入")
-
-    let button = UIButton.init(title: YTTools.areaTitle(a: "Get code", b: "Ambil kode"), font: .systemFont(ofSize: 18, weight: .bold), color: .white)
+    let voice = UIButton.init(title: "ovz", image: "login_voi")
     
-    let pvB = UIButton.init(title: "", image: "勾选")
+    let pvB = UIButton.init(title: "", image: "pro_sel")
     
-    let close = UIButton.init(title: "", image: "bac")
+    let close = UIButton.init(title: "", image: "sett_arr")
+    let button = GradientLoadingButton()
+    var l1: String?
+    var l2: String?
+    let uploadS = upapisServices()
     
-    var phone: UILabel!
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        YTLocationHelper.sharedInstance().requestLocation(withTimeout: 15) {[weak self] location, error in
+            if let location = location {
+                let geocoder = CLGeocoder.init()
+                geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+                    guard let self = self else { return }
+                    self.l1 = YTLocationHelper.sharedInstance().latitude(from: location)
+                    self.l2 = YTLocationHelper.sharedInstance().longitude(from: location)
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .init(hex: "#7395F5")
-        
         setBarBgHidden()
         setNavigationBarHidden(true, animated: true)
         
-        let image = UIImageView.init(image: UIImage.init(named: "Frame 308"))
-        view.add(image) { v in
+        button.setTitle(LocalizationManager.shared().localizedString(forKey: "login_btn"))
+        phoneView.phoneText.keyboardType = .numberPad
+        codeView.codeText.keyboardType = .numberPad
+        close.imageView?.transform = CGAffineTransform(rotationAngle: Double.pi)
+        
+        let logoIms = UIImageView(image: UIImage(named: "login_logo"))
+        
+        view.add(logoIms) { v in
             v.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(statusBarHeight+17)
-                make.left.right.equalToSuperview()
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview().offset(144)
             }
         }
         
-        code.keyboardType = .numberPad
+        let bottomV = UIView.init(bgColor: .clear)
         
-        let t1 = UILabel.init(title: YTTools.areaTitle(a: "Hello!", b: "Halo!"),textColor: .white,font: .systemFont(ofSize: 40))
-        view.add(t1) { v in
-            v.snp.makeConstraints { make in
-                make.left.equalToSuperview().offset(24)
-                make.top.equalTo(cBar.snp.bottom).offset(12)
-            }
-        }
-        
-        
-        let t2 = UILabel.init(title:YTTools.areaTitle(a: "Welcome to YukTunai", b: "Selamat datang di YukTunai"),textColor: .white,font: .systemFont(ofSize: 16))
-        view.add(t2) { v in
-            v.snp.makeConstraints { make in
-                make.left.equalToSuperview().offset(24)
-                make.top.equalTo(t1.snp.bottom)
-            }
-        }
-        
-        let bottomV = UIView.init(bgColor: .white)
-        bottomV.cornersSet(by: [.topLeft,.topRight], radius: 22)
         view.add(bottomV) { v in
             v.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
-                make.top.equalTo(image.snp.bottom).offset(YTTools.isIPhone6Series() ? -80 : -54)
+                make.top.equalTo(logoIms.snp.bottom).offset(YTTools.isIPhone6Series() ? 60 : 60)
             }
         }
         
         
-        phone = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 18, weight: .bold))
-        bottomV.add(phone) { v in
+        bottomV.add(phoneView) { v in
             v.snp.makeConstraints { make in
-                make.left.equalToSuperview().offset(40)
-                make.top.equalToSuperview().offset(27)
+                make.top.equalToSuperview().offset(20)
+                make.horizontalEdges.equalToSuperview().inset(30)
+                make.height.equalTo(48)
             }
         }
         
-        
-        let box = UIView.init(bgColor: .init(hex: "#F4F8FF"))
-        box.cornersSet(by: .allCorners, radius: 16)
-        bottomV.add(box) { v in
+        bottomV.add(codeView) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(40)
-                make.top.equalTo(phone!.snp.bottom).offset(12)
-                make.height.equalTo(52)
+                make.horizontalEdges.height.equalTo(phoneView)
+                make.top.equalTo(phoneView.snp.bottom).offset(8)
             }
-            
-            
-           
-            
-            code.font = .systemFont(ofSize: 14, weight: .bold)
-            code.placeholder = YTTools.areaTitle(a: "Enter cell number", b: "Masukkan nomor sel")
-            box.add(code) { v in
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview().offset(12)
-                    make.top.bottom.equalToSuperview()
-                    make.right.equalToSuperview()
-                }
-            }
-            
         }
         
         
@@ -133,29 +115,9 @@ class YTLoginViewController: YTBaseViewController {
         bottomV.add(voice) { v in
             v.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
-                make.top.equalTo(box.snp.bottom).offset(16)
+                make.top.equalTo(codeView.snp.bottom).offset(16)
             }
         }
-        
-      
-        button.addTarget(self, action: #selector(login), for: .touchUpInside)
-        button.cornersSet(by: .allCorners, radius: 25)
-        button.setBgColor(color: .init(hex: "#6D90F5"))
-        bottomV.add(button) { v in
-            v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(40)
-                make.top.equalTo(voice.snp.bottom).offset(39)
-                make.height.equalTo(50)
-            }
-        }
-        
-        view.add(close) { v in
-            v.snp.makeConstraints { make in
-                make.left.equalToSuperview().offset(12)
-                make.top.equalToSuperview().offset(56)
-            }
-        }
-        
         
         let pV = UIView()
         
@@ -166,14 +128,14 @@ class YTLoginViewController: YTBaseViewController {
         
         bottomV.add(pV) { v in
             v.snp.makeConstraints { make in
-                make.bottom.equalToSuperview().offset(-44)
+                make.top.equalTo(voice.snp.bottom).offset(40)
                 make.left.right.equalToSuperview().inset(30)
             }
             
             pV.add(pvB) { v in
                 pvB.addTarget(self, action: #selector(check), for: .touchUpInside)
                 pvB.isSelected = true
-                pvB.setImage(image: "勾选12212")
+                pvB.setImage(image: "pro_sel")
                 v.snp.makeConstraints { make in
                     make.top.bottom.left.equalToSuperview()
                 }
@@ -191,7 +153,7 @@ class YTLoginViewController: YTBaseViewController {
                 attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 13), range: (fullText as NSString).range(of: fullText))
                 // 设置下划线和颜色
                 attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: privacyRange)
-                attributedString.addAttribute(.foregroundColor, value: UIColor.init(hex: "#0E6DFD"), range: privacyRange)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.init(hex: "#FEC95D"), range: privacyRange)
                 
                 protocolLable.attributedText = attributedString
                 v.snp.makeConstraints { make in
@@ -206,51 +168,63 @@ class YTLoginViewController: YTBaseViewController {
             v.addGestureRecognizer(protocolGestrue)
             
         }
+      
+        codeView.countdownBtn.addTarget(self, action: #selector(smsCode), for: .touchUpInside)
+        
+        button.cornersSet(by: .allCorners, radius: 8)
+        bottomV.add(button) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalTo(phoneView)
+                make.top.equalTo(pV.snp.bottom).offset(20)
+                make.height.equalTo(48)
+            }
+        }
+        
+        view.add(close) { v in
+            v.snp.makeConstraints { make in
+                make.left.equalToSuperview().offset(25)
+                make.top.equalToSuperview().offset(56)
+            }
+        }
     
         close.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        button.addTarget(self, action: #selector(login), for: UIControl.Event.touchUpInside)
+        
+        if !YTUserDefaults.shared.arrogant.isEmpty {
+            phoneView.phoneText.text = YTUserDefaults.shared.arrogant
+        }
+    }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if phoneView.phoneText.canBecomeFirstResponder {
+            phoneView.phoneText.becomeFirstResponder()
+        }
     }
     
     @objc func closeView(){
+        codeView.countdownBtn.stop()
         dismiss(animated: true)
     }
     
     // 语音
     @objc func voiceCode(){
-        if let t = code.text,t.isEmpty,t.count == 0  {
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.clear)
+        if let t = phoneView.phoneText.text,t.isEmpty,t.count == 0  {
             SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter your mobile phone number", b: "Silakan masukkan nomor ponsel Anda"))
-            SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
         
-        
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        
-        viewModel.dexterous(avp: code.text!) {[weak self] ree in
+        viewModel.dexterous(avp: phoneView.phoneText.text!) {[weak self] ree in
             switch ree {
             case .success(let success):
-               
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
-               
                 
-                let v2 = YTLogin2ViewController()
-                v2.phone.text = "\(YTUserDefaults.shared.gash == "1" ? "+91" : "+62") " + (self?.code.text)!
-                v2.time = Date()
-                self?.navigationController?.pushViewController(v2, animated: true)
                 
                 SVProgressHUD.showSuccess(withStatus: success?.lip.description ?? "")
                 
                 break
             case .failure(let error):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
                 SVProgressHUD.showInfo(withStatus: error.description)
                 break
             }
@@ -259,12 +233,10 @@ class YTLoginViewController: YTBaseViewController {
         
     }
     
-    @objc func login(_ button: UIButton) {
+    @objc func smsCode(_ button: CountdownButton) {
 
-        if let t = code.text,t.isEmpty,t.count == 0 {
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.clear)
-            SVProgressHUD.dismiss(withDelay: 1.5)
+        if let t = phoneView.phoneText.text,t.isEmpty,t.count == 0 {
+            
             
             
             SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter your mobile phone number", b: "Silakan masukkan nomor ponsel Anda"))
@@ -272,36 +244,111 @@ class YTLoginViewController: YTBaseViewController {
             return
         }
         
+        button.start()
         
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        
-        viewModel.suabian(avp: code.text!) {[weak self] ree in
+        viewModel.suabian(avp: phoneView.phoneText.text!) {[weak self] ree in
             switch ree {
             case .success(let success):
-
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
                 
-                let v2 = YTLogin2ViewController()
-                v2.time = Date()
-                v2.phone.text = "\(YTUserDefaults.shared.gash == "1" ? "+91" : "+62") " + (self?.code.text)!
-                v2.start()
-                self?.navigationController?.pushViewController(v2, animated: true)
                 
                 SVProgressHUD.showInfo(withStatus: success?.lip.description ?? "")
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
+                    if self?.codeView.codeText.canBecomeFirstResponder == true {
+                        self?.codeView.codeText.becomeFirstResponder()
+                    }
+                })
                 break
             case .failure(let error):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
                 SVProgressHUD.showInfo(withStatus: error.description)
                 break
             }
         }
 
+    }
+    
+    @objc func login(_ button: UIButton) {
+
+        if let t = phoneView.phoneText.text,t.isEmpty,t.count == 0 {
+
+            
+            SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter your mobile phone number", b: "Silakan masukkan nomor ponsel Anda"))
+            
+            return
+        }
+        
+        if let t = codeView.codeText.text,t.isEmpty,t.count == 0  {
+            
+            
+            
+            SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter the verification code", b: "Silakan masukkan kode verifikasi"))
+            
+            return
+        }
+        
+        if pvB.isSelected == false {
+            
+            SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please check the agreement", b: "Silakan periksa kesepakatan"))
+            return
+        }
+        
+        if let result = phoneView.phoneText.text!.components(separatedBy: " ").last {
+            viewModel.eyelid(avp: ["arrogant":"\(result)",
+                                   "offensive":"\(codeView.codeText.text!)"]) {[weak self] ree in
+                switch ree {
+                case .success(let success):
+                    
+
+                    YTUserDefaults.shared.transport = success?.upper?.transport ?? ""
+                    YTUserDefaults.shared.arrogant = success?.upper?.arrogant ?? ""
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginOK"), object: nil,userInfo: nil)
+                    
+                    
+                    var upInfo = ["dialect":YTIDFVKeychainHelper.retrieveIDFV(),
+                                  "forward":"2",
+                                  "mustaches":self?.l2 ?? "",
+                                  "smooth":self?.l1 ?? "",
+                                  "called":ASIdentifierManager.shared().advertisingIdentifier.uuidString]
+                    
+                   
+                       let a = "1"
+                       let b = "\(((self?.time) ?? Date()).timeIntervalSince1970)"
+                       let c = "\(Date().timeIntervalSince1970)"
+                        upInfo["obliged"] = a
+                        upInfo["nasty"] = b
+                        upInfo["newcomers"] = c
+                        
+                        self?.uploadS.tumult(avp: upInfo) { r in
+                            switch r {
+                            case .success(let success):
+                                
+                                SVProgressHUD.showSuccess(withStatus: success?.lip.description ?? "")
+                                print("shang bao maidian chenggong ------------shang bao weizhi maidian chenggong ------------shang bao weizhi maidian chenggong ------------ ")
+                                self?.dismiss(animated: true, completion: {
+                                })
+                                break
+                            case .failure(let failure):
+                               
+                                print("shang bao weizhi maidian chu cuo ------------ ")
+                                break
+                            }
+                        }
+                    
+                
+                    
+                   
+                    break
+                case .failure(let error):
+                    
+                    
+    
+                    SVProgressHUD.showError(withStatus: error.description)
+                    break
+                }
+            }
+        }
+        
+        
     }
     
 
@@ -317,9 +364,7 @@ class YTLoginViewController: YTBaseViewController {
 
     
     @objc func check(_ button: UIButton) {
-        button.setImage(image: button.isSelected ? "勾选" : "勾选12212")
+        button.setImage(image: button.isSelected ? "pro_sel" : "pro_nor")
         button.isSelected = !button.isSelected
     }
-
-   
 }

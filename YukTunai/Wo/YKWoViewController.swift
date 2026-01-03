@@ -16,7 +16,7 @@ class YKWoViewController: YTBaseViewController {
     
     let contentView = UIView()
     
-    let t2 = UILabel.init(title: "",textColor: .black,font: .systemFont(ofSize: 20,weight: .bold))
+    let t2 = UILabel.init(title: "",textColor: .white,font: .systemFont(ofSize: 20,weight: .bold))
     
     let icon1 = UIImageView.init(image: UIImage.init(named: "Group 1749"))
     
@@ -26,6 +26,10 @@ class YKWoViewController: YTBaseViewController {
     
     let t22 = UILabel.init(title: "",textColor: .black,font: .systemFont(ofSize: 16))
    
+    let repayView = woItemView(frame: CGRectZero, woType: WotItemsType.Repayment)
+    let applyView = woItemView(frame: CGRectZero, woType: WotItemsType.Apply)
+    let finishView = woItemView(frame: CGRectZero, woType: WotItemsType.Finished)
+    
     let box2 = UIView()
     
     var model: infoModel?
@@ -33,9 +37,12 @@ class YKWoViewController: YTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarHidden(true, animated: true)
+        repayView.addTarget(self, action: #selector(clikcTopTielsw(sender: )), for: UIControl.Event.touchUpInside)
+        applyView.addTarget(self, action: #selector(clikcTopTielsw(sender: )), for: UIControl.Event.touchUpInside)
+        finishView.addTarget(self, action: #selector(clikcTopTielsw(sender: )), for: UIControl.Event.touchUpInside)
         
-        view.backgroundColor = .init(hex: "#F2F4F4")
+        setNavigationBarHidden(true, animated: true)
+        box2.backgroundColor = .clear
         
         view.add(scrollView) { v in
             v.alwaysBounceVertical = true
@@ -51,19 +58,10 @@ class YKWoViewController: YTBaseViewController {
             }
         }
         
-        
-        let image = UIImageView.init(image: UIImage.init(named: "323dd"))
-        contentView.add(image) { v in
-            v.snp.makeConstraints { make in
-                make.top.equalToSuperview()
-                make.left.right.equalToSuperview()
-            }
-        }
-        
-        let icon = UIImageView.init(image: UIImage.init(named: "头像"))
+        let icon = UIImageView.init(image: UIImage.init(named: "avatar"))
         contentView.add(icon) { v in
             v.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(statusBarHeight+32)
+                make.top.equalToSuperview().offset(statusBarHeight + 20)
                 make.centerX.equalToSuperview()
             }
         }
@@ -77,7 +75,7 @@ class YKWoViewController: YTBaseViewController {
         }
         
         
-        let t3 = UILabel.init(title: YTTools.areaTitle(a: "Welcome to our products", b: "Selamat datang di produk kami"),textColor: .init(hex: "#747474"),font: .systemFont(ofSize: 14))
+        let t3 = UILabel.init(title: YTTools.areaTitle(a: "Welcome to our products", b: "Selamat datang di produk kami"),textColor: .init(hex: "#ffffff"),font: .systemFont(ofSize: 14))
         contentView.add(t3) { v in
             v.snp.makeConstraints { make in
                 make.top.equalTo(t2.snp.bottom).offset(5)
@@ -85,88 +83,70 @@ class YKWoViewController: YTBaseViewController {
             }
         }
         
-        
-        let babber = UIImageView.init(image: UIImage.init(named: "fewfewfwefwefwebavver"))
-        contentView.add(babber) { v in
+        contentView.add(applyView) { v in
             v.snp.makeConstraints { make in
-                make.top.equalTo(icon.snp.bottom).offset(54)
-                make.centerX.equalToSuperview()
+                make.left.equalToSuperview().offset(15)
+                make.top.equalTo(t3.snp.bottom).offset(20)
             }
         }
         
-        let box1 = UIView()
-        contentView.add(box1) { v in
+        contentView.add(repayView) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(16)
-                make.top.equalTo(babber.snp.bottom).offset(-20)
+                make.left.equalTo(applyView.snp.right).offset(10)
+                make.width.top.equalTo(applyView)
             }
-            
-            box1.add(icon1) { v in
-                icon1.isUserInteractionEnabled = true
-                let tap1 = UITapGestureRecognizer.init(target: self, action: #selector(add1))
-                icon1.addGestureRecognizer(tap1)
-                v.snp.makeConstraints { make in
-                    make.left.top.bottom.equalToSuperview()
-                }
-                
-                icon1.add(t11) { v in
-                    t11.numberOfLines = 1
-                    v.snp.makeConstraints { make in
-                        make.centerY.equalToSuperview()
-                        make.left.equalToSuperview().offset(70)
-                        make.right.equalToSuperview().offset(-10)
-                    }
-                }
+        }
+        
+        contentView.add(finishView) { v in
+            v.snp.makeConstraints { make in
+                make.left.equalTo(repayView.snp.right).offset(10)
+                make.top.width.equalTo(repayView)
+                make.right.equalToSuperview().offset(-15)
             }
-            
-            
-            box1.add(icon2) { v in
-                icon2.isUserInteractionEnabled = true
-                let tap1 = UITapGestureRecognizer.init(target: self, action: #selector(add2))
-                icon2.addGestureRecognizer(tap1)
-                v.snp.makeConstraints { make in
-                    make.right.top.bottom.equalToSuperview()
-                    make.left.equalTo(icon1.snp.right).offset(10)
-                }
-                
-                icon2.add(t22) { v in
-                    v.snp.makeConstraints { make in
-                        make.centerY.equalToSuperview()
-                        make.left.equalToSuperview().offset(70)
-                    }
-                }
-            }
-            
         }
        
-        box2.cornersSet(by: .allCorners, radius: 16)
-        box2.backgroundColor = .white
         contentView.add(box2) { v in
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview().inset(16)
-                make.top.equalTo(box1.snp.bottom).offset(14)
-                make.bottom.equalToSuperview().offset(-100)
+                make.top.equalTo(applyView.snp.bottom).offset(14)
             }
         }
         
+        let tip = UILabel(title: LocalizationManager.shared().localizedString(forKey: "mine_tip"), textColor: UIColor.black, font: UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium))
+        let tipImg = UIImageView(image: UIImage(named: "tip"))
+        
+        contentView.add(tipImg) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(15)
+                make.top.equalTo(box2.snp.bottom).offset(20)
+                make.height.equalTo((UIScreen.main.bounds.width - 30) * 0.23)
+                make.bottom.equalToSuperview().offset(-20)
+            }
+        }
+        
+        tipImg.add(tip) { v in
+            v.snp.makeConstraints { make in
+                make.right.equalToSuperview().offset(-11)
+                make.width.equalToSuperview().multipliedBy(0.7)
+                make.centerY.equalToSuperview()
+            }
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(loginOK), name: Notification.Name(rawValue: "loginOK"), object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(logout), name: Notification.Name(rawValue: "logout"), object: nil)
-        
-
     }
     
     @objc func loginOK(){
         viewModel.info {[weak self] result in
             switch result {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
                 self?.model = success?.upper
                 self?.lists(withs: (success?.upper?.along)!)
                 self?.t2.text = success?.upper?.inverted?.absurd
             case .failure(let failure):
-                SVProgressHUD.dismiss()
+                break
             }
         }
     }
@@ -175,12 +155,12 @@ class YKWoViewController: YTBaseViewController {
         viewModel.info {[weak self] result in
             switch result {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
                 self?.model = success?.upper
                 self?.lists(withs: (success?.upper?.along)!)
                 self?.t2.text = success?.upper?.inverted?.absurd
             case .failure(let failure):
-                SVProgressHUD.dismiss()
+                break
             }
         }
     }
@@ -188,68 +168,25 @@ class YKWoViewController: YTBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if model == nil {
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.clear)
-            SVProgressHUD.show()
-        }
-        
         viewModel.info {[weak self] result in
             switch result {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
                 self?.model = success?.upper
                 self?.lists(withs: (success?.upper?.along)!)
                 self?.t2.text = success?.upper?.inverted?.absurd
             case .failure(let failure):
-                SVProgressHUD.dismiss()
+                break
             }
         }
         
     }
-    
-    
-    @objc func add1(){
-        if let url = model?.along?[0].stride {
-            if url.hasPrefix("http") || url.hasPrefix("https") {
-                if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                    let webView = YTWebViewController.init(url: completeURL)
-                    navigationController?.pushViewController(webView, animated: true)
-                }
-            } else if  url.hasPrefix("yu://") {
-                if url.contains("yu://una.kno.s/junge") {
-                    let vc = YTSettingViewController()
-                    vc.model = model?.victorious
-                    navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
-    }
-    
-    @objc func add2(){
-        if let url = model?.along?[1].stride {
-            if url.hasPrefix("http") || url.hasPrefix("https") {
-                if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                    let webView = YTWebViewController.init(url: completeURL)
-                    navigationController?.pushViewController(webView, animated: true)
-                }
-            } else if  url.hasPrefix("yu://") {
-                if url.contains("yu://una.kno.s/junge") {
-                    let vc = YTSettingViewController()
-                    vc.model = model?.victorious
-                    navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
-    }
-    
-    
+
     func lists(withs data: [alongModel]){
         
         box2.subviews.forEach { item in
             item.removeFromSuperview()
         }
-        
         
         t11.text = data[0].downward ?? ""
         t22.text = data[1].downward ?? ""
@@ -268,7 +205,7 @@ class YKWoViewController: YTBaseViewController {
                     if i-2 == 0 {
                         make.top.equalToSuperview()
                     } else {
-                        make.top.equalTo(pre!.snp.bottom)
+                        make.top.equalTo(pre!.snp.bottom).offset(8)
                         
                         if i == data.count - 1 {
                             make.bottom.equalToSuperview()
@@ -278,8 +215,27 @@ class YKWoViewController: YTBaseViewController {
             }
             pre = im
         }
+    }
+    
+    @objc func clikcTopTielsw(sender: woItemView) {
+        guard let _tabVC = UIApplication.shared.keyWindow?.rootViewController as? YTBaseTabBarViewController else {
+            return
+        }
         
+        _tabVC.selectedIndex = 1
         
+        guard let _nav = _tabVC.viewControllers?[1] as? YTBaseNavigationController, let _rotw = _nav.topViewController as? YTZhongJianViewController else {
+            return
+        }
+        
+        switch sender.type {
+        case .Apply:
+            _rotw.indesww = 1
+        case .Repayment:
+            _rotw.indesww = 2
+        case .Finished:
+            _rotw.indesww = 3
+        }
     }
 
     
@@ -302,15 +258,9 @@ class YKWoViewController: YTBaseViewController {
                 navigationController?.pushViewController(vc, animated: true)
             }
         }
-        
-       
     }
 
 }
-
-
-
-
 
 class YTWoView: UIView {
     
@@ -318,7 +268,8 @@ class YTWoView: UIView {
     init(iconN: String,name: String) {
         super.init(frame: .zero)
         
-        backgroundColor = .white
+        cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        backgroundColor = UIColor(hex: "#EAF5FF")
         
         let image = UIImageView()
         image.sd_setImage(with: URL.init(string: iconN))
@@ -331,7 +282,8 @@ class YTWoView: UIView {
         }
         
         
-        let t2 = UILabel.init(title: name,textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
+        let t2 = UILabel.init(title: name,textColor: .init(hex: "#333333"),font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium))
+        
         add(t2) { v in
             v.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
@@ -339,7 +291,7 @@ class YTWoView: UIView {
             }
         }
         
-        let image2 = UIImageView.init(image: UIImage.init(named: "FWFW12323"))
+        let image2 = UIImageView.init(image: UIImage.init(named: "black_arr"))
         add(image2) { v in
             v.snp.makeConstraints { make in
                 make.width.height.equalTo(20)

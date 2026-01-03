@@ -27,7 +27,7 @@ class YTBaseTabBarViewController: UITabBarController,UITabBarControllerDelegate 
    
         func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
             let index = tabBarController.viewControllers?.firstIndex(of: viewController) ?? 0
-            if index == 0 || index == 2 {
+            if index == 1 || index == 2 {
                 if YTUserDefaults.shared.transport.count == 0 {
                     let loginVC = YTBaseNavigationController.init(rootViewController: YTLoginViewController())
                     loginVC.modalPresentationStyle = .fullScreen

@@ -26,11 +26,20 @@
 		33753ED72F024E6D00F897B4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33753ED52F024E6D00F897B4 /* Localizable.strings */; };
 		33753FF02F02517300F897B4 /* GradientLoadingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 33753FEF2F02517300F897B4 /* GradientLoadingButton.m */; };
 		4B30A3AD2F048F9C00323C51 /* bigCardTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3AC2F048F9C00323C51 /* bigCardTipView.swift */; };
+		4B30A3AF2F05D53C00323C51 /* loginPhonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3AE2F05D53C00323C51 /* loginPhonView.swift */; };
+		4B30A3B12F05D77700323C51 /* loginCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3B02F05D77700323C51 /* loginCodeView.swift */; };
+		4B30A3B32F05D83C00323C51 /* CountdownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3B22F05D83C00323C51 /* CountdownButton.swift */; };
+		4B30A3B92F06BF2500323C51 /* YTShouyeListItemFirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3B82F06BF2500323C51 /* YTShouyeListItemFirstTableViewCell.swift */; };
+		4B30A3BB2F0727DE00323C51 /* woItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3BA2F0727DE00323C51 /* woItemView.swift */; };
+		4B30A3BD2F0739A700323C51 /* loanTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3BC2F0739A700323C51 /* loanTipView.swift */; };
+		4B30A3BF2F073D2600323C51 /* CancleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3BE2F073D2600323C51 /* CancleItemView.swift */; };
+		4B30A3C12F080FEB00323C51 /* MenuControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A3C02F080FEB00323C51 /* MenuControl.swift */; };
+		4B30A4D32F08885D00323C51 /* QuestonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A4D22F08885D00323C51 /* QuestonViewController.swift */; };
+		4B30A4D52F093DB700323C51 /* PPChanPunTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30A4D42F093DB700323C51 /* PPChanPunTableViewCell.swift */; };
 		5A0313572CEF32960016C788 /* YTProductFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0313562CEF32950016C788 /* YTProductFaceViewController.swift */; };
 		5A0313592CEF403A0016C788 /* YTSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0313582CEF403A0016C788 /* YTSelectViewController.swift */; };
 		5A03135B2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A03135A2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift */; };
 		5A03135D2CEF4A1E0016C788 /* YTConfirmBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A03135C2CEF4A1E0016C788 /* YTConfirmBankViewController.swift */; };
-		5A0D041D2D00443F00BA10C9 /* login2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D041C2D00443F00BA10C9 /* login2ViewController.swift */; };
 		5A418F602CF31EB600F2FBED /* upapis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A418F5F2CF31EB600F2FBED /* upapis.swift */; };
 		5A6C5B912CF084C30033FC5C /* YTBirthdaySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C5B902CF084C30033FC5C /* YTBirthdaySelectorViewController.swift */; };
 		5A6C5B932CF15FC20033FC5C /* YTProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C5B922CF15FC20033FC5C /* YTProductListViewController.swift */; };
@@ -48,7 +57,6 @@
 		5AB331482CEB149A00BEC200 /* YKWoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB331472CEB149A00BEC200 /* YKWoViewController.swift */; };
 		5AB3314B2CEB14EF00BEC200 /* YTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3314A2CEB14EF00BEC200 /* YTScrollView.m */; };
 		5AB3314D2CEB1D5600BEC200 /* YTZhongJianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3314C2CEB1D5600BEC200 /* YTZhongJianViewController.swift */; };
-		5AB3314F2CEB218700BEC200 /* YTZhongJianCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3314E2CEB218700BEC200 /* YTZhongJianCellViewController.swift */; };
 		5AB331522CEB220600BEC200 /* YTTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB331502CEB220600BEC200 /* YTTableView.m */; };
 		5AB3315C2CEB3B5100BEC200 /* YTProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3315B2CEB3B5100BEC200 /* YTProductViewController.swift */; };
 		5AB3315E2CEB481600BEC200 /* YTShouyeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3315D2CEB481600BEC200 /* YTShouyeViewController.swift */; };
@@ -80,7 +88,6 @@
 		5AEBB88E2CEDD61900F0A733 /* YTShouyeT3TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEBB88D2CEDD61900F0A733 /* YTShouyeT3TableViewCell.swift */; };
 		5AEBB8902CEDD62300F0A733 /* YTShouyeT4TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEBB88F2CEDD62300F0A733 /* YTShouyeT4TableViewCell.swift */; };
 		5AEBB8922CEDD65800F0A733 /* YTShouyeListItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEBB8912CEDD65800F0A733 /* YTShouyeListItemTableViewCell.swift */; };
-		5AEBB8942CEDD67000F0A733 /* YTShouyeListItemHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEBB8932CEDD67000F0A733 /* YTShouyeListItemHeaderTableViewCell.swift */; };
 		69DD0FDF56B825D86CE22EE0 /* Pods_YukTunai.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B2C2294F5CB3E45302A0753 /* Pods_YukTunai.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,11 +118,20 @@
 		33753FEE2F02517300F897B4 /* GradientLoadingButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientLoadingButton.h; sourceTree = "<group>"; };
 		33753FEF2F02517300F897B4 /* GradientLoadingButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientLoadingButton.m; sourceTree = "<group>"; };
 		4B30A3AC2F048F9C00323C51 /* bigCardTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bigCardTipView.swift; sourceTree = "<group>"; };
+		4B30A3AE2F05D53C00323C51 /* loginPhonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPhonView.swift; sourceTree = "<group>"; };
+		4B30A3B02F05D77700323C51 /* loginCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginCodeView.swift; sourceTree = "<group>"; };
+		4B30A3B22F05D83C00323C51 /* CountdownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownButton.swift; sourceTree = "<group>"; };
+		4B30A3B82F06BF2500323C51 /* YTShouyeListItemFirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTShouyeListItemFirstTableViewCell.swift; sourceTree = "<group>"; };
+		4B30A3BA2F0727DE00323C51 /* woItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = woItemView.swift; sourceTree = "<group>"; };
+		4B30A3BC2F0739A700323C51 /* loanTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loanTipView.swift; sourceTree = "<group>"; };
+		4B30A3BE2F073D2600323C51 /* CancleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancleItemView.swift; sourceTree = "<group>"; };
+		4B30A3C02F080FEB00323C51 /* MenuControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuControl.swift; sourceTree = "<group>"; };
+		4B30A4D22F08885D00323C51 /* QuestonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestonViewController.swift; sourceTree = "<group>"; };
+		4B30A4D42F093DB700323C51 /* PPChanPunTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPChanPunTableViewCell.swift; sourceTree = "<group>"; };
 		5A0313562CEF32950016C788 /* YTProductFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTProductFaceViewController.swift; sourceTree = "<group>"; };
 		5A0313582CEF403A0016C788 /* YTSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTSelectViewController.swift; sourceTree = "<group>"; };
 		5A03135A2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTUserInfoAlertViewController.swift; sourceTree = "<group>"; };
 		5A03135C2CEF4A1E0016C788 /* YTConfirmBankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTConfirmBankViewController.swift; sourceTree = "<group>"; };
-		5A0D041C2D00443F00BA10C9 /* login2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = login2ViewController.swift; sourceTree = "<group>"; };
 		5A418F5F2CF31EB600F2FBED /* upapis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = upapis.swift; sourceTree = "<group>"; };
 		5A6C5B902CF084C30033FC5C /* YTBirthdaySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTBirthdaySelectorViewController.swift; sourceTree = "<group>"; };
 		5A6C5B922CF15FC20033FC5C /* YTProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTProductListViewController.swift; sourceTree = "<group>"; };
@@ -135,7 +151,6 @@
 		5AB331492CEB14EF00BEC200 /* YTScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTScrollView.h; sourceTree = "<group>"; };
 		5AB3314A2CEB14EF00BEC200 /* YTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTScrollView.m; sourceTree = "<group>"; };
 		5AB3314C2CEB1D5600BEC200 /* YTZhongJianViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTZhongJianViewController.swift; sourceTree = "<group>"; };
-		5AB3314E2CEB218700BEC200 /* YTZhongJianCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTZhongJianCellViewController.swift; sourceTree = "<group>"; };
 		5AB331502CEB220600BEC200 /* YTTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTTableView.m; sourceTree = "<group>"; };
 		5AB331512CEB220600BEC200 /* YTTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTTableView.h; sourceTree = "<group>"; };
 		5AB3315B2CEB3B5100BEC200 /* YTProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTProductViewController.swift; sourceTree = "<group>"; };
@@ -181,7 +196,6 @@
 		5AEBB88D2CEDD61900F0A733 /* YTShouyeT3TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTShouyeT3TableViewCell.swift; sourceTree = "<group>"; };
 		5AEBB88F2CEDD62300F0A733 /* YTShouyeT4TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTShouyeT4TableViewCell.swift; sourceTree = "<group>"; };
 		5AEBB8912CEDD65800F0A733 /* YTShouyeListItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTShouyeListItemTableViewCell.swift; sourceTree = "<group>"; };
-		5AEBB8932CEDD67000F0A733 /* YTShouyeListItemHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTShouyeListItemHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		6B2C2294F5CB3E45302A0753 /* Pods_YukTunai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YukTunai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D4E821192312A539AE1137 /* Pods-YukTunai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YukTunai.debug.xcconfig"; path = "Target Support Files/Pods-YukTunai/Pods-YukTunai.debug.xcconfig"; sourceTree = "<group>"; };
 		B388265862A2C8DA1167D338 /* Pods-YukTunai.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YukTunai.release.xcconfig"; path = "Target Support Files/Pods-YukTunai/Pods-YukTunai.release.xcconfig"; sourceTree = "<group>"; };
@@ -221,6 +235,7 @@
 				33753EB52F0227D700F897B4 /* UITapGestureRecognizer+Extension.swift */,
 				33753EB62F0227D700F897B4 /* UITextField+Extension.swift */,
 				33753EB72F0227D700F897B4 /* UIView+Extension.swift */,
+				4B30A3BC2F0739A700323C51 /* loanTipView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -289,6 +304,7 @@
 				5A6C5B942CF1DD1F0033FC5C /* YTProductdierViewController.swift */,
 				5A6C5B982CF2A9C10033FC5C /* YTUserConnectViewController.swift */,
 				5A6C5B962CF1DE7E0033FC5C /* YTDibankViewController.swift */,
+				4B30A4D42F093DB700323C51 /* PPChanPunTableViewCell.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -450,7 +466,9 @@
 			isa = PBXGroup;
 			children = (
 				5AC6E3D22CEADDBE00496263 /* YTLoginViewController.swift */,
-				5A0D041C2D00443F00BA10C9 /* login2ViewController.swift */,
+				4B30A3AE2F05D53C00323C51 /* loginPhonView.swift */,
+				4B30A3B02F05D77700323C51 /* loginCodeView.swift */,
+				4B30A3B22F05D83C00323C51 /* CountdownButton.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -459,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB331452CEB112900BEC200 /* YTSettingViewController.swift */,
+				4B30A3BE2F073D2600323C51 /* CancleItemView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -467,6 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				5AB331472CEB149A00BEC200 /* YKWoViewController.swift */,
+				4B30A3BA2F0727DE00323C51 /* woItemView.swift */,
 			);
 			path = Wo;
 			sourceTree = "<group>";
@@ -475,9 +495,9 @@
 			isa = PBXGroup;
 			children = (
 				5AB3314C2CEB1D5600BEC200 /* YTZhongJianViewController.swift */,
-				5AB3314E2CEB218700BEC200 /* YTZhongJianCellViewController.swift */,
 				5AB4B5152CFC5EDB009CC772 /* YTYSHViewController.swift */,
 				5AB4B5172CFC5FD1009CC772 /* YTYSHRViewController.swift */,
+				4B30A3C02F080FEB00323C51 /* MenuControl.swift */,
 			);
 			path = ZhongJian;
 			sourceTree = "<group>";
@@ -490,9 +510,10 @@
 				5AEBB88B2CEDD60800F0A733 /* YTShouyeT2TableViewCell.swift */,
 				5AEBB88D2CEDD61900F0A733 /* YTShouyeT3TableViewCell.swift */,
 				5AEBB88F2CEDD62300F0A733 /* YTShouyeT4TableViewCell.swift */,
-				5AEBB8932CEDD67000F0A733 /* YTShouyeListItemHeaderTableViewCell.swift */,
 				5AEBB8912CEDD65800F0A733 /* YTShouyeListItemTableViewCell.swift */,
+				4B30A3B82F06BF2500323C51 /* YTShouyeListItemFirstTableViewCell.swift */,
 				4B30A3AC2F048F9C00323C51 /* bigCardTipView.swift */,
+				4B30A4D22F08885D00323C51 /* QuestonViewController.swift */,
 			);
 			path = ShouYe;
 			sourceTree = "<group>";
@@ -654,17 +675,18 @@
 				5AAEA3BC2CECCC94000E2992 /* CKNetUploadServer.swift in Sources */,
 				5AC6E3B62CEAD1C100496263 /* YTIDFVKeychainHelper.m in Sources */,
 				5A03135D2CEF4A1E0016C788 /* YTConfirmBankViewController.swift in Sources */,
+				4B30A4D52F093DB700323C51 /* PPChanPunTableViewCell.swift in Sources */,
 				5A6C5B972CF1DE7E0033FC5C /* YTDibankViewController.swift in Sources */,
 				5AC6E3B82CEADA4800496263 /* YTLunchScreenViewController.swift in Sources */,
 				33753ED12F0228BD00F897B4 /* GuideAlert.m in Sources */,
 				33753ED22F0228BD00F897B4 /* LocalizationManager.m in Sources */,
 				5AC6E3B32CEAD10500496263 /* YTHealper.swift in Sources */,
+				4B30A3B92F06BF2500323C51 /* YTShouyeListItemFirstTableViewCell.swift in Sources */,
 				5AB331482CEB149A00BEC200 /* YKWoViewController.swift in Sources */,
 				5AB3319B2CEB554400BEC200 /* DeviceInformationModel.m in Sources */,
 				5A0313572CEF32960016C788 /* YTProductFaceViewController.swift in Sources */,
 				5AC6E3AB2CEACCAC00496263 /* YTBaseNavigationController.m in Sources */,
 				5AB3315C2CEB3B5100BEC200 /* YTProductViewController.swift in Sources */,
-				5A0D041D2D00443F00BA10C9 /* login2ViewController.swift in Sources */,
 				5AB3319A2CEB554400BEC200 /* WiFiNetworkInfoFetcher.m in Sources */,
 				5AC6E3AF2CEACE9C00496263 /* YTBaseViewController.m in Sources */,
 				5AC6E3D32CEADDBE00496263 /* YTLoginViewController.swift in Sources */,
@@ -676,9 +698,10 @@
 				5AEBB8922CEDD65800F0A733 /* YTShouyeListItemTableViewCell.swift in Sources */,
 				5AB4B5162CFC5EDB009CC772 /* YTYSHViewController.swift in Sources */,
 				5AAEA3BD2CECCC94000E2992 /* JJSNetRequstServer.swift in Sources */,
-				5AB3314F2CEB218700BEC200 /* YTZhongJianCellViewController.swift in Sources */,
 				5AB331602CEB48AF00BEC200 /* YTBaseTabBarViewController.swift in Sources */,
+				4B30A3BF2F073D2600323C51 /* CancleItemView.swift in Sources */,
 				5AB331522CEB220600BEC200 /* YTTableView.m in Sources */,
+				4B30A4D32F08885D00323C51 /* QuestonViewController.swift in Sources */,
 				5A0313592CEF403A0016C788 /* YTSelectViewController.swift in Sources */,
 				5A6C5B932CF15FC20033FC5C /* YTProductListViewController.swift in Sources */,
 				5A418F602CF31EB600F2FBED /* upapis.swift in Sources */,
@@ -687,6 +710,7 @@
 				33753ECA2F02281400F897B4 /* EmptyView.swift in Sources */,
 				5AC6E38A2CEAC19100496263 /* AppDelegate.swift in Sources */,
 				4B30A3AD2F048F9C00323C51 /* bigCardTipView.swift in Sources */,
+				4B30A3AF2F05D53C00323C51 /* loginPhonView.swift in Sources */,
 				5AB3317B2CEB538000BEC200 /* InitApis.swift in Sources */,
 				33753EB92F0227D700F897B4 /* UITapGestureRecognizer+Extension.swift in Sources */,
 				33753EBA2F0227D700F897B4 /* UIDevice+Extension.swift in Sources */,
@@ -699,6 +723,8 @@
 				33753EC12F0227D700F897B4 /* UIColor+Extension.swift in Sources */,
 				33753EC22F0227D700F897B4 /* UITextField+Extension.swift in Sources */,
 				33753EC32F0227D700F897B4 /* UIView+Extension.swift in Sources */,
+				4B30A3C12F080FEB00323C51 /* MenuControl.swift in Sources */,
+				4B30A3B32F05D83C00323C51 /* CountdownButton.swift in Sources */,
 				5AEBB88E2CEDD61900F0A733 /* YTShouyeT3TableViewCell.swift in Sources */,
 				5AE6DE162CF5AF9D0002BF6E /* YTAddressViewController.swift in Sources */,
 				5AB331A02CEB554400BEC200 /* YTLocationHelper.m in Sources */,
@@ -707,6 +733,7 @@
 				5AAEA3C32CECCC94000E2992 /* NetModelProtocol.swift in Sources */,
 				5A6C5B952CF1DD1F0033FC5C /* YTProductdierViewController.swift in Sources */,
 				5A6C5B992CF2A9C10033FC5C /* YTUserConnectViewController.swift in Sources */,
+				4B30A3BB2F0727DE00323C51 /* woItemView.swift in Sources */,
 				5AB331462CEB112900BEC200 /* YTSettingViewController.swift in Sources */,
 				5AB331442CEB0AFF00BEC200 /* YTBaseCollectionView.m in Sources */,
 				5A03135B2CEF43AF0016C788 /* YTUserInfoAlertViewController.swift in Sources */,
@@ -714,9 +741,10 @@
 				5AA67D6F2CEDD56700F176D7 /* YTShouyeT1TableViewCell.swift in Sources */,
 				5A6C5B912CF084C30033FC5C /* YTBirthdaySelectorViewController.swift in Sources */,
 				5AB4B5182CFC5FD1009CC772 /* YTYSHRViewController.swift in Sources */,
+				4B30A3B12F05D77700323C51 /* loginCodeView.swift in Sources */,
 				5AB331772CEB4FB300BEC200 /* YTPublicRequestURLTool.swift in Sources */,
-				5AEBB8942CEDD67000F0A733 /* YTShouyeListItemHeaderTableViewCell.swift in Sources */,
 				5AEBB88C2CEDD60800F0A733 /* YTShouyeT2TableViewCell.swift in Sources */,
+				4B30A3BD2F0739A700323C51 /* loanTipView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,9 +906,10 @@
 				CODE_SIGN_ENTITLEMENTS = YukTunai/YukTunaiDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 35C2489P56;
+				DEVELOPMENT_TEAM = 8HR7KN9336;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YukTunai/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pinjam Laju";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Requires access to camera to take photos";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your contacts in order to provide a better service";
@@ -899,7 +928,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.haohao.yins;
+				PRODUCT_BUNDLE_IDENTIFIER = YukTunai.zw.coms;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -919,13 +948,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = YukTunai/YukTunai.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TGF943V34F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YukTunai/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Pinjam Laju";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Requires access to camera to take photos";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your contacts in order to provide a better service";

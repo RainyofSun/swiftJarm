@@ -43,6 +43,7 @@
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.titleLabel];
 
+    [self setGradientColors:@[[UIColor colorWithRed:249/255.0 green:222/255.0 blue:111/255.0 alpha:1], [UIColor colorWithRed:1.0 green:136/255.0 blue:39/255.0 alpha:1]]];
     self.indicator =
     [[UIActivityIndicatorView alloc]
      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

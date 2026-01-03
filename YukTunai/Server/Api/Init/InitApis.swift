@@ -47,6 +47,7 @@ enum InitApis {
     case hjnca([String:String])
     
     case jsons(String)
+    case bolivia
 }
 
 
@@ -117,12 +118,14 @@ extension InitApis: TargetType {
             return "/tumult/hjnca"
         case .userInfo:
             return "/v3/personal-center/user-info"
+        case .bolivia:
+            return "/tumult/bolivia"
         }
     }
     
     var method: CKHTTPMethod {
         switch self {
-        case .schlaeger,.suabian,.dexterous,.eyelid,.lip,.info,.home:
+        case .schlaeger,.suabian,.dexterous,.eyelid,.lip,.info,.home, .bolivia:
             return .get
         case .bottles,.userInfo,.gash,.days,.fought,.hands,.duels,.homes,.went,.junge,.dummer,.impertinent,.absurd:
             return .post
@@ -157,7 +160,7 @@ extension InitApis: TargetType {
             return .requestParameters(parameters:["absurd":avp], encoding: URLEncoding.default)
         case .dexterous(let avp):
             return .requestParameters(parameters:["absurd":avp], encoding: URLEncoding.default)
-        case .lip,.bottles,.info,.home:
+        case .lip,.bottles,.info,.home, .bolivia:
             return .requestPlain
         case .arrogant(let avp):
             return .requestParameters(parameters:avp, encoding: URLEncoding.httpBody)

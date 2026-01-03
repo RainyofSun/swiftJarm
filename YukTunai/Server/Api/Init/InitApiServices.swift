@@ -60,6 +60,12 @@ class InitApiServices: CKService<InitApis>, InitApiServicesp {
         }
     }
     
+    func question(completion: @escaping (Result<CKBaseNetModel<questionModel>?, YKError>) -> Void) {
+        fetchData(target: InitApis.bolivia, responseClass: CKBaseNetModel<questionModel>.self) { result in
+            completion(result)
+        }
+    }
+    
     
     func defaultjsons(lj:String,completion: @escaping (Result<CKBaseNetModel<[homeURLList]>?, YKError>) -> Void) {
         downloadJSONFile(target: InitApis.jsons(lj), responseClass: CKBaseNetModel<[homeURLList]>.self) { re in
@@ -262,8 +268,16 @@ class reddddd: SmartCodable {
     required init(){}
 }
 
+class questionModel: SmartCodable {
+    var marched: [glassesItemModel]?
+    required init(){}
+}
 
-
+class glassesItemModel: SmartCodable {
+    var strike: String?
+    var seized: String?
+    required init (){}
+}
 
 class infoModel: SmartCodable {
     var along: [alongModel]?
@@ -305,10 +319,16 @@ class homeModel: SmartCodable {
 
 
 class homecon: SmartCodable{
-    var    loanUrl : String?
+    /*
+     aboutUrl = "http://8.215.47.12:4060/theAnd";
+     approach = "";
+     everystep = "https://thermex-tech.com/privacy.html";
+     feedbackUrl = "http://8.215.47.12:4060/raceDemonstrate";
+     */
+    var    aboutUrl : String?
     var    everystep : String?
-    var privateUrl: String?
-    var preScore: Int?
+    var approach: String?
+    var feedbackUrl: String?
 
     required init(){}
 }

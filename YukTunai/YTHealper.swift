@@ -59,6 +59,15 @@ extension YTUserDefaults {
         }
     }
     
+    var arrogant: String {
+        get {
+            return get(forKey: "arrogant") ?? ""
+        }
+        set {
+            set(newValue, forKey: "arrogant")
+        }
+    }
+    
     var gash: String {
         get {
             return get(forKey: "gash") ?? ""

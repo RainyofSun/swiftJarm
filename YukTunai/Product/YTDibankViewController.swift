@@ -59,14 +59,14 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         
         
         
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        
+        
         
         viewModel.arrogant(avp: ["erect": pid!]) { [weak self] re in
             switch re {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
 
                 var m = success?.upper
 
@@ -93,9 +93,9 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                 
                 break
             case .failure(let failure):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
+                
+                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }

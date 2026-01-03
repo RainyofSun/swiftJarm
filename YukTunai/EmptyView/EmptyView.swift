@@ -33,7 +33,7 @@ open class EmptyDataSourceView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = UIColor(hex: "#62B0FE")
     }
     
     /// 布局显示
@@ -75,9 +75,10 @@ open class EmptyDataSourceView: UIView {
             }
             
             if buttonTitle != nil {
-                let button = UIButton.init(title: buttonTitle!, font: UIFont.systemFont(ofSize: 12), color: .white, image: "", bgColor: .init(hex:"232323"))
+                let button = UIButton.init(title: buttonTitle!, font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium), color: UIColor(hex: "#2864D7"), image: "", bgColor: UIColor(hex: "#EAF5FF"))
                 button.setTitle(title: buttonTitle!)
                 button.setImage(image: buttonImage)
+                button.cornersSet(by: UIRectCorner.allCorners, radius: 4)
                 mainView.add(button) { v in
                     button.addTarget(self, action: #selector(doAction), for: .touchUpInside)
                     button.snp.makeConstraints { make in

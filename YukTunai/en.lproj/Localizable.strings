@@ -22,6 +22,9 @@
 "Nohiddanexpenses" = "No hidden expenses";
 "Other" = "Other";
 "Our" = "Our";
+"Borrowingagreement" = "Borrowing agreement";
+"oprotect" = "To protect your rights, please read the loan agreement carefully.";
+"Loansupermarket" = "Loan supermarket";
 
 "login_text1"="Welcome to Dana Terpilih！";
 "login_phone"="Phone number";
@@ -39,11 +42,12 @@
 "order_repay"="Repayment";
 "order_apply"="Apply";
 "order_finis"="Finished";
+"order_all"="All";
 "order_empty"="You don't have any order information yet. Go to the homepage and apply now";
 "order_title"="Order list";
 "order_enklw"="Order entry";
 
-"mine_tip"="With 7x24-hour professional support, all issues are resolved, leaving you at ease and worry-free.";
+"mine_tip"="Don't let financial worries hold you back. Our fast loans provide you with immediate cash solutions, tailor-made for you!";
 "mine_fun"="More functions";
 
 "setting_tip"="Borrow and repay flexibly, with flexible turnover - your pocket financial manager.";
@@ -54,13 +58,16 @@
 "settitle_wk"="Setting";
 "setting_skw"="Payment Reminder";
 "setting_wkskq"="Setup success";
+"sqasd" = "Question";
 
 "cancel_wel_tip"="Welcome~ ";
-"ccancel_del"="Delete account\n";
+"ccancel_del"="Deregister account";
 "cancel_del1"="Deleting your account will result in the permanent loss of the following data and features:";
-"cancel_tip1"="Personal Information: This includes your profile.preferences, and other personal data.";
-"cancel_tip2"="History: All historical records will be deleted and cannot be recovered.";
-"cancel_tip3"="App Permissions: You will no longer be able to use any features and services of this application.";
+"cancel_tip1"="After the account is cancelled, you will no longer be able to use the account to access ";
+"cancel_tip2"="All personal information will be permanently deleted and cannot be restored";
+"cancel_tip3"="All outstanding loans must be repaid in full before cancellation";
+"cancel_tip4"="Automatic deduction settings must be canceled in advance to avoid unnecessary deductions";
+"cancel_tip5"="After cancellation, we will stop sending you any notifications and marketing information";
 "cancel_priss"="I have read and agreed to the above";
 
 "produc_tip"="We are here to help you realize your dreams in every journey - entrepreneurship, education, and travel.";

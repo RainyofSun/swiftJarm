@@ -40,9 +40,7 @@ extension CKService {
             }
             .validate(statusCode: 200..<500)
             .responseData {[weak self] result in
-                if showLoading {
-                    SVProgressHUD.dismiss()
-                }
+                SVProgressHUD.dismiss()
                 
                 guard let _weakSelf = self else {
                    

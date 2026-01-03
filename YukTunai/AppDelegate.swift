@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.clear)
         SVProgressHUD.setRingRadius(3)
         SVProgressHUD.setCornerRadius(10)
-        SVProgressHUD.setMinimumDismissTimeInterval(0.3)
+        SVProgressHUD.setMinimumDismissTimeInterval(1.5)
         
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()

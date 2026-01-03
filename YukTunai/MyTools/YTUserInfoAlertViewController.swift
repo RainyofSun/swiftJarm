@@ -202,9 +202,9 @@ class YTUserInfoAlertViewController: YTBaseViewController {
     }
   
     @objc func pu(){
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        
+        
         
         
         viewModel.duels(avp: [m!.profusely![0].eyelid!:text1.text!,
@@ -214,14 +214,14 @@ class YTUserInfoAlertViewController: YTBaseViewController {
                              ]) {[weak self] r in
             switch r {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
                 self?.onHandle?()
                 self?.dismiss(animated: true)
                 break
             case .failure(let failure):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
+                
+                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }

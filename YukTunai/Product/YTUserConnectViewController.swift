@@ -60,14 +60,14 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
        
         
         
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        
+        
         
         viewModel.impertinent(avp: ["erect": pid!]) { [weak self] re in
             switch re {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
 
                 let m = success?.upper
                 
@@ -94,9 +94,9 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
                 
                 break
             case .failure(let failure):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
+                
+                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }
@@ -190,24 +190,24 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: resultData, options: [])
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                SVProgressHUD.show()
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
+                
+                
+                
 
                 viewModel.absurd(avp: ["erect":pid!,
                                         "upper":jsonString]) {[weak self] res in
                     switch res {
                     case .success(let success):
-                        SVProgressHUD.dismiss()
+                        
                         let data: [String: Any] = ["obliged": "6", "nasty": "\(((self?.time) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]
                         NotificationCenter.default.post(name: .myNotification, object: nil, userInfo: data)
                         
                         self?.navigationController?.popViewController(animated: true)
                     case .failure(let failure):
-                        SVProgressHUD.setDefaultStyle(.dark)
-                        SVProgressHUD.setDefaultMaskType(.clear)
+                        
+                        
                         SVProgressHUD.showError(withStatus: failure.description)
-                        SVProgressHUD.dismiss(withDelay: 1.5)
+                        
                     }
                 }
             }
@@ -218,18 +218,18 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
 
     
     @objc func displayUsr(with d: Int){
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        SVProgressHUD.show()
+        
+        
+        
     
         YTContactAccessManager.shared().checkContactAuthorizationStatus(self) { result in
-            SVProgressHUD.dismiss()
+            
             if result["contacts"] as? [CNContact] != nil {
                 self.idx = d
                 self.presentContactPicker()
                 } else if let error = result["error"] as? String {
-                    SVProgressHUD.setDefaultStyle(.dark)
-                    SVProgressHUD.setDefaultMaskType(.clear)
+                    
+                    
                     SVProgressHUD.dismiss(withDelay: 2.5)
                     SVProgressHUD.show(withStatus: error)
                 }

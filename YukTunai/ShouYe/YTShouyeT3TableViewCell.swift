@@ -22,6 +22,7 @@ class YTShouyeT3TableViewCell: UITableViewCell {
         
         contentView.addSubview(image)
         image.snp.makeConstraints { make in
+            make.height.equalTo(UIScreen.main.bounds.width * 0.357)
             make.edges.equalToSuperview()
         }
     }

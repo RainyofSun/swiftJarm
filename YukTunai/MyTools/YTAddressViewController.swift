@@ -244,10 +244,10 @@ class YTAddressViewController: YTBaseViewController,UITableViewDataSource,UITabB
         guard let indx = s1,
               let secend = s2,
               let third = s3 else {
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.clear)
+            
+            
             SVProgressHUD.showError(withStatus: "Silakan pilih alamat lengkap")
-            SVProgressHUD.dismiss(withDelay: 1.5)
+            
             return
         }
         

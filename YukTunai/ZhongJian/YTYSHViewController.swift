@@ -50,13 +50,13 @@ class YTYSHViewController: YTBaseViewController, UITableViewDelegate, UITableVie
         table.isHidden = true
         
         
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        
+        
         viewmodel.rrrrrr {[weak self] r in
             switch r {
             case .success(let b):
-                SVProgressHUD.dismiss()
+                
                 self?.table.reloadData()
                 self?.md = b?.upper
                 self?.button.isHidden = false
@@ -117,9 +117,9 @@ class YTYSHViewController: YTBaseViewController, UITableViewDelegate, UITableVie
     
     @objc func submitData(){
     
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        SVProgressHUD.dismiss(withDelay: 1.5)
+        
+        
+        
         
         guard let a1 = texts[0] else {
             SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter name!", b: "Silakan masukkan nama!"))
@@ -141,7 +141,7 @@ class YTYSHViewController: YTBaseViewController, UITableViewDelegate, UITableVie
             return
         }
         
-        SVProgressHUD.show()
+        
         viewmodel.hjnca(avp: ["ensued":"\(a1)",
                               "absurd":"\(a2)",
                               "tumult":"\(a3)",
@@ -153,9 +153,9 @@ class YTYSHViewController: YTBaseViewController, UITableViewDelegate, UITableVie
                 self?.navigationController?.pushViewController(vc, animated: true)
                 break
             case .failure(let failure):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
+                
+                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }

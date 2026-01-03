@@ -23,16 +23,18 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
     let locationManager = YTLocationHelper.sharedInstance()
     
     let locationPermissionManager = LocationPermissionManager()
-
+    var chanpinId: String?
+    private var isHandlingClick = false
+    private var isHandlingSelection = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationBarHidden(true, animated: true)
         setBarBgHidden()
+        setbgImgViewHidden()
         
-        view.backgroundColor = .white
-        
+        tableView.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(loginOK), name: Notification.Name(rawValue: "loginOK"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(logout), name: Notification.Name(rawValue: "logout"), object: nil)
@@ -50,8 +52,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         tableView.register(YTShouyeT3TableViewCell.self, forCellReuseIdentifier: YTShouyeT3TableViewCell.identifier)
         tableView.register(YTShouyeT4TableViewCell.self, forCellReuseIdentifier: YTShouyeT4TableViewCell.identifier)
         tableView.register(YTShouyeListItemTableViewCell.self, forCellReuseIdentifier: YTShouyeListItemTableViewCell.identifier)
-        tableView.register(YTShouyeListItemHeaderTableViewCell.self, forCellReuseIdentifier: YTShouyeListItemHeaderTableViewCell.identifier)
-        
+        tableView.register(YTShouyeListItemFirstTableViewCell.self, forCellReuseIdentifier: YTShouyeListItemFirstTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -148,19 +149,14 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                 
                 self?.refreshing = false
                 
-                SVProgressHUD.dismiss()
-                
                 self?.model = success?.upper
                 
                 self?.tableView.reloadData()
+                self?.tableView.isHidden = false
                 
                 break
             case .failure(let failure):
                 self?.refreshing = false
-//                SVProgressHUD.setDefaultStyle(.dark)
-//                SVProgressHUD.setDefaultMaskType(.clear)
-//                SVProgressHUD.dismiss(withDelay: 1.5)
-//                SVProgressHUD.showError(withStatus: failure.description)
                 break
             }
         }
@@ -232,9 +228,6 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         }
         if scrollView.contentOffset.y < -90 {
             refreshing = true
-            SVProgressHUD.show()
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.clear)
             reloadDataS()
         }
     }
@@ -259,297 +252,194 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if model?.along?.filter({$0.directly == "dexterous"}).first  != nil {
-            if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeListItemHeaderTableViewCell.identifier, for: indexPath) as? YTShouyeListItemHeaderTableViewCell else {
-                    return UITableViewCell()
-                }
-                
-                
-                if let item = model?.along?.filter({$0.directly == "dexterous"}).first?.marched?.first {
-                    // 小卡位
-                    
-                    cell.name.isHidden = false
-                    
-                    cell.subName.isHidden = false
-                    
-                    cell.price.isHidden = false
-                    
-                    cell.icon.isHidden = false
-                    
-                    cell.buttonname.isHidden = false
-                    
-                    cell.buttonicon.isHidden = false
-                    
-                    cell.lyBox.isHidden = false
-                    
-                    cell.icon1.isHidden = false
-                    cell.l1t.isHidden = false
-                    cell.l1tv.isHidden = false
-                    
-                    cell.bottomView.isHidden = false
-                    
-                    cell.icon2.isHidden = false
-                    cell.l2t.isHidden = false
-                    cell.l2tv.isHidden = false
-                    
-                    cell.icon.sd_setImage(with: URL.init(string: item.neck ?? ""))
-                    
-                    cell.name.text = item.bare
-                    
-                    cell.price.text = item.smoky
-                    
-                    cell.buttonname.text = item.coat
-                    
-                    cell.l1t.text = item.drunk
-                    cell.l1tv.text = item.stalking
-                    
-                    cell.l2tv.text = item.lead
-                    cell.l2t.text = item.sheet
-                    
-                    let t = UITapGestureRecognizer.init(target: self, action: #selector(xiaokaweidianji))
-                    cell.bottomView.isUserInteractionEnabled = true
-                    cell.bottomView.addGestureRecognizer(t)
-                }
-                
-
-                return cell
-            }else {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeListItemTableViewCell.identifier, for: indexPath) as? YTShouyeListItemTableViewCell else {
-                    return UITableViewCell()
-                }
-                
-                if let item = model?.along?.filter({$0.directly == "eyelid"}).first?.marched?[indexPath.row-1] {
-                    cell.topimage.sd_setImage(with: URL.init(string: item.neck ?? ""))
-                    cell.topname.text = item.bare
-                    cell.money.text = item.smoky
-                    cell.centerrightButton.text = item.coat!
-                    
-                    cell.l1t.text = item.drunk!
-                    
-                    cell.l3t.text = item.sheet!
-                    
-                    cell.l1tv.text = item.stalking
-                    
-                    cell.l3tv.text = item.lead
-                }
-        
-                return cell
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT1TableViewCell.identifier, for: indexPath) as? YTShouyeT1TableViewCell else {
+                return UITableViewCell()
             }
-        } else {
             
+            var item: marchedModel?
+            if let smalCardModel = model?.along?.filter({$0.directly == "dexterous"}).first?.marched?.first {
+                item = smalCardModel
+                chanpinId = item?.wide
+            }
             
-            if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT1TableViewCell.identifier, for: indexPath) as? YTShouyeT1TableViewCell else {
-                    return UITableViewCell()
+            if let bigCardModel = model?.along?.filter({$0.directly == "suabian"}).first?.marched?.first {
+                item = bigCardModel
+                chanpinId = item?.wide
+            }
+            
+            cell.name.isHidden = false
+            
+            cell.subName.isHidden = false
+            
+            cell.price.isHidden = false
+            
+            cell.icon.isHidden = false
+            
+            cell.lyBox.isHidden = false
+            
+            cell.l1t.isHidden = false
+            cell.l1tv.isHidden = false
+            
+            cell.l2t.isHidden = false
+            cell.l2tv.isHidden = false
+            
+            cell.icon.sd_setImage(with: URL.init(string: item?.neck ?? ""))
+            
+            cell.name.text = item?.bare
+            
+            cell.price.text = item?.smoky
+            
+            cell.buttonicon.isHidden = false
+            cell.buttonicon.setTitle(title: item?.coat ?? "")
+            cell.l1t.text = item?.drunk
+            cell.l1tv.text = item?.stalking
+            
+            cell.l2tv.text = item?.lead
+            cell.l2t.text = item?.sheet
+                        
+            return cell
+        }
+        else {
+            // 小卡位
+            if model?.along?.filter({$0.directly == "dexterous"}).first  != nil {
+                var cell: YTShouyeListItemTableViewCell?
+                
+                if indexPath.row == 1 {
+                    if let _skwk_cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeListItemFirstTableViewCell.identifier, for: indexPath) as? YTShouyeListItemFirstTableViewCell {
+                        cell = _skwk_cell
+                    }
+                } else {
+                    if let _skwk_cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeListItemTableViewCell.identifier, for: indexPath) as? YTShouyeListItemTableViewCell {
+                        cell = _skwk_cell
+                    }
+                }
+                    
+                if let item = model?.along?.filter({$0.directly == "eyelid"}).first?.marched?[indexPath.row-1] {
+                    cell?.topimage.sd_setImage(with: URL.init(string: item.neck ?? ""))
+                    cell?.topname.text = item.bare
+                    cell?.money.text = item.smoky
+                    cell?.centerrightButton.setTitle(item.coat ?? "")
+                    
+                    cell?.l1t.text = item.drunk!
+                    
+                    cell?.l3t.text = item.sheet!
+                    
+                    cell?.l1tv.text = item.stalking
+                    
+                    cell?.l3tv.text = item.lead
                 }
                 
-                // 大卡位
-                if let item = model?.along?.filter({$0.directly == "suabian"}).first?.marched?.first {
-                                        
-                    cell.name.isHidden = false
+                return cell ?? UITableViewCell()
+            } else {
+               if indexPath.row == 1 {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT2TableViewCell.identifier, for: indexPath) as? YTShouyeT2TableViewCell else {
+                        return UITableViewCell()
+                    }
                     
-                    cell.subName.isHidden = false
-                    
-                    cell.price.isHidden = false
-                    
-                    cell.icon.isHidden = false
-                    
-                    cell.lyBox.isHidden = false
-                    
-                    cell.l1t.isHidden = false
-                    cell.l1tv.isHidden = false
-                    
-                    cell.l2t.isHidden = false
-                    cell.l2tv.isHidden = false
-                    
-                    cell.icon.sd_setImage(with: URL.init(string: item.neck ?? ""))
-                    
-                    cell.name.text = item.bare
-                    
-                    cell.price.text = item.smoky
-                    
-                    cell.buttonicon.isHidden = false
-                    cell.buttonicon.setTitle(title: item.coat ?? "")
-                    cell.l1t.text = item.drunk
-                    cell.l1tv.text = item.stalking
-                    
-                    cell.l2tv.text = item.lead
-                    cell.l2t.text = item.sheet
-                    
-                    cell.buttonicon.addTarget(self, action: #selector(dakaweidianji), for: UIControl.Event.touchUpInside)
+                    return cell
+                }else if indexPath.row == 2 {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT3TableViewCell.identifier, for: indexPath) as? YTShouyeT3TableViewCell else {
+                        return UITableViewCell()
+                    }
+                    return cell
+                }else if indexPath.row == 3 {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT4TableViewCell.identifier, for: indexPath) as? YTShouyeT4TableViewCell else {
+                        return UITableViewCell()
+                    }
+                    return cell
                 }
-                
-                return cell
-            }else if indexPath.row == 1 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT2TableViewCell.identifier, for: indexPath) as? YTShouyeT2TableViewCell else {
-                    return UITableViewCell()
-                }
-                
-//                let t = UITapGestureRecognizer.init(target: self, action: #selector(z1))
-//                cell.image1.isUserInteractionEnabled = true
-//                cell.image1.addGestureRecognizer(t)
-//                
-//                let t2 = UITapGestureRecognizer.init(target: self, action: #selector(z2))
-//                cell.image2.isUserInteractionEnabled = true
-//                cell.image2.addGestureRecognizer(t2)
-                
-                return cell
-            }else if indexPath.row == 2 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT3TableViewCell.identifier, for: indexPath) as? YTShouyeT3TableViewCell else {
-                    return UITableViewCell()
-                }
-                return cell
-            }else if indexPath.row == 3 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT4TableViewCell.identifier, for: indexPath) as? YTShouyeT4TableViewCell else {
-                    return UITableViewCell()
-                }
-                return cell
             }
         }
         
         return UITableViewCell()
     }
     
-    
-    
-    @objc func dakaweidianji(){
-        
+    @objc func kaweidianji() {
+
+        // 防止重复点击
+        guard !isHandlingClick else { return }
+        isHandlingClick = true
+
         if YTUserDefaults.shared.transport.count == 0 {
-            let loginVC = YTBaseNavigationController.init(rootViewController: YTLoginViewController())
+            let loginVC = YTBaseNavigationController(rootViewController: YTLoginViewController())
             loginVC.modalPresentationStyle = .fullScreen
-            self.present(loginVC, animated: true, completion: nil)
+            present(loginVC, animated: true) { [weak self] in
+                self?.isHandlingClick = false
+            }
             return
         }
-        
-        
-        if let item = model?.along?.filter({$0.directly == "suabian"}).first?.marched?.first {
-            guard let id = item.wide else {
-                return
+
+        guard let id = chanpinId else {
+            isHandlingClick = false
+            return
+        }
+
+        viewModel.gash(avp: ["erect" : id]) { [weak self] re in
+            guard let self = self else { return }
+
+            // ⚠️ 无论成功失败，最终都要解锁
+            defer {
+                self.isHandlingClick = false
+                self.isHandlingSelection = false
             }
-            
-            SVProgressHUD.show()
-            SVProgressHUD.setDefaultStyle(.dark)
-            SVProgressHUD.setDefaultMaskType(.clear)
-            
-            viewModel.gash(avp: ["erect" : id]) {[weak self] re in
-                switch re {
-                case .success(let success):
-                    SVProgressHUD.dismiss()
-                    
-                    if YTUserDefaults.shared.gash == "1"{
-                        
-                        if let url = self?.model?.courageous?.loanUrl,  let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                            let v = YT2WebViewController.init(url: completeURL)
-                            if let item = self?.model?.along?.filter({$0.directly == "suabian"}).first?.marched?.first {
-                                v.buttonname.text =   item.coat
-                            }
-                           
-                            self?.navigationController?.pushViewController(v, animated: true)
-                            v.han = {[weak self] in
-                                let vc = YTProductViewController()
-                                vc.mID = id
-                                self?.navigationController?.pushViewController(vc, animated: true)
-                            }
+
+            switch re {
+            case .success(let success):
+
+                if YTUserDefaults.shared.gash == "1" {
+
+                    if let url = self.model?.courageous?.everystep,
+                       let completeURL = YTPublicRequestURLTool
+                            .createURLWithParameters(component: url)?
+                            .absoluteString {
+
+                        let v = YT2WebViewController(url: completeURL)
+
+                        if let item = self.model?
+                            .along?
+                            .first(where: { $0.directly == "suabian" })?
+                            .marched?
+                            .first {
+
+                            v.buttonname.text = item.coat
                         }
-                        
-                        return
-                    }
-                    
-                    guard let url = success?.upper?.stride else {
-                        return
-                    }
-                    
-                    if url.hasPrefix("http") || url.hasPrefix("https") {
-                        if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                            let webView = YTWebViewController.init(url: completeURL)
-                            self?.navigationController?.pushViewController(webView, animated: true)
-                        }
-                    } else if  url.hasPrefix("yu://") {
-                        if url.contains("yu://una.kno.s/arrogant") {
-                            let pro = YTProductViewController.init()
-                            pro.mID = id
-                            self?.navigationController?.pushViewController(pro, animated: true)
+
+                        self.navigationController?.pushViewController(v, animated: true)
+
+                        v.han = { [weak self] in
+                            guard let self = self else { return }
+                            let vc = YTProductViewController()
+                            vc.mID = id
+                            self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }
-                    
-                    break
-                case .failure(let failure):
-                    SVProgressHUD.dismiss(withDelay: 1.5)
-                    SVProgressHUD.showError(withStatus: failure.description)
-                    break
+                    return
                 }
+
+                guard let url = success?.upper?.stride else { return }
+
+                if url.hasPrefix("http") || url.hasPrefix("https") {
+                    if let completeURL = YTPublicRequestURLTool
+                        .createURLWithParameters(component: url)?
+                        .absoluteString {
+
+                        let webView = YTWebViewController(url: completeURL)
+                        self.navigationController?.pushViewController(webView, animated: true)
+                    }
+                } else if url.hasPrefix("yu://"),
+                          url.contains("yu://una.kno.s/arrogant") {
+
+                    let pro = YTProductViewController()
+                    pro.mID = id
+                    self.navigationController?.pushViewController(pro, animated: true)
+                }
+
+            case .failure:
+                break
             }
         }
     }
-    
-    @objc func xiaokaweidianji(){
-        if YTUserDefaults.shared.transport.count == 0 {
-            let loginVC = YTBaseNavigationController.init(rootViewController: YTLoginViewController())
-            loginVC.modalPresentationStyle = .fullScreen
-            self.present(loginVC, animated: true, completion: nil)
-            return
-        }
-        
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        
-        if let id = model?.along?.filter({$0.directly == "dexterous"}).first?.marched?.first?.wide {
-            viewModel.gash(avp: ["erect" : id]) {[weak self] re in
-                switch re {
-                case .success(let success):
-                    SVProgressHUD.dismiss()
-                    
-                    if YTUserDefaults.shared.gash == "1"{
-                        
-                        if let url = self?.model?.courageous?.loanUrl,  let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                            let v = YT2WebViewController.init(url: completeURL)
-                            
-                            if let item = self?.model?.along?.filter({$0.directly == "dexterous"}).first?.marched?.first {
-                                v.buttonname.text =   item.coat
-                            }
-                           
-                            self?.navigationController?.pushViewController(v, animated: true)
-                            v.han = {[weak self] in
-                                let vc = YTProductViewController()
-                                vc.mID = id
-                                self?.navigationController?.pushViewController(vc, animated: true)
-                            }
-                        }
-                        
-                        return
-                    }
-                    
-                    
-                    guard let url = success?.upper?.stride else {
-                        return
-                    }
-        
-                    
-                    if url.hasPrefix("http") || url.hasPrefix("https") {
-                        if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                            let webView = YTWebViewController.init(url: completeURL)
-                            self?.navigationController?.pushViewController(webView, animated: true)
-                        }
-                    } else if  url.hasPrefix("yu://") {
-                        if url.contains("yu://una.kno.s/arrogant") {
-                            let pro = YTProductViewController.init()
-                            pro.mID = id
-                            self?.navigationController?.pushViewController(pro, animated: true)
-                        }
-                    }
-                    
-                    break
-                case .failure(let failure):
-                    SVProgressHUD.dismiss(withDelay: 1.5)
-                    SVProgressHUD.showError(withStatus: failure.description)
-                    break
-                }
-            }
-        }
-    }
-    
     
     @objc func z1(){
         
@@ -561,102 +451,59 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         }
         
         if YTUserDefaults.shared.gash == "1" {
-            if let url = model?.courageous?.loanUrl {
+            if let url = model?.courageous?.aboutUrl {
                 if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
                     let webView = YTWebViewController.init(url: completeURL)
                     navigationController?.pushViewController(webView, animated: true)
                 }
             }
         } else {
-            if let url = model?.courageous?.privateUrl {
+            if let url = model?.courageous?.feedbackUrl {
                 if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
                     let webView = YTWebViewController.init(url: completeURL)
                     navigationController?.pushViewController(webView, animated: true)
                 }
             }
         }
-    }
-    
-    @objc func z2(){
-        
-        if YTUserDefaults.shared.transport.count == 0 {
-            let loginVC = YTBaseNavigationController.init(rootViewController: YTLoginViewController())
-            loginVC.modalPresentationStyle = .fullScreen
-            self.present(loginVC, animated: true, completion: nil)
-            return
-        }
-        
-        if YTUserDefaults.shared.gash == "1" {
-            if let url = model?.courageous?.preScore, url > 0 {
-                let vc = YTYSHRViewController()
-                vc.title3V.text = "\(url)%"
-                navigationController?.pushViewController(vc, animated: true)
-            } else {
-                let vc = YTYSHViewController()
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        } else {
-            if let url = model?.courageous?.everystep {
-                if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                    let webView = YTWebViewController.init(url: completeURL)
-                    navigationController?.pushViewController(webView, animated: true)
-                }
-            }
-        }
-        
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 立刻取消选中态（视觉 + 逻辑都重要）
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        if model?.along?.filter({$0.directly == "dexterous"}).first  == nil {
-            return
-        }
-        
-        if YTUserDefaults.shared.transport.count == 0 {
-            let loginVC = YTBaseNavigationController.init(rootViewController: YTLoginViewController())
-            loginVC.modalPresentationStyle = .fullScreen
-            self.present(loginVC, animated: true, completion: nil)
-            return
-        }
-        
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
-        
-        if let id = model?.along?.filter({$0.directly == "eyelid"}).first?.marched?[indexPath.row-1].wide {
-            viewModel.gash(avp: ["erect" : id]) {[weak self] re in
-                switch re {
-                case .success(let success):
-                    SVProgressHUD.dismiss()
-                    guard let url = success?.upper?.stride else {
-                        return
-                    }
-                    
-                    if url.hasPrefix("http") || url.hasPrefix("https") {
-                        if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
-                            let webView = YTWebViewController.init(url: completeURL)
-                            self?.navigationController?.pushViewController(webView, animated: true)
-                        }
-                    } else if  url.hasPrefix("yu://") {
-                        if url.contains("yu://una.kno.s/arrogant") {
-                            let pro = YTProductViewController.init()
-                            pro.mID = id
-                            self?.navigationController?.pushViewController(pro, animated: true)
-                        }
-                    }
-                    
-                    break
-                case .failure(let failure):
-                    SVProgressHUD.dismiss(withDelay: 1.5)
-                    SVProgressHUD.showError(withStatus: failure.description)
-                    break
+        if indexPath.row == 0 {
+            // 防止重复点击
+            guard !isHandlingSelection else { return }
+            isHandlingSelection = true
+            kaweidianji()
+        } else {
+            
+            // 大卡位点击
+            if model?.along?.filter({$0.directly == "suabian"}).first  != nil {
+                if indexPath.row == 2 {
+                    // 常见问题
+                    self.navigationController?.pushViewController(QuestonViewController(), animated: true)
                 }
+                
+                if indexPath.row == 3 {
+                    // 协议
+                    z1()
+                }
+            }
+            
+            // 小卡位点击
+            if model?.along?.filter({$0.directly == "dexterous"}).first  != nil {
+                if let id = model?.along?.filter({$0.directly == "eyelid"}).first?.marched?[indexPath.row-1].wide {
+                    chanpinId = id
+                }
+                
+                // 防止重复点击
+                guard !isHandlingSelection else { return }
+                isHandlingSelection = true
+                kaweidianji()
             }
         }
     }
-    
-
 }
 
 
@@ -896,8 +743,6 @@ class YT2WebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDele
     init(url: String? = nil) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
-        
-        view.backgroundColor = .white
         
   
         let config = WKWebViewConfiguration()

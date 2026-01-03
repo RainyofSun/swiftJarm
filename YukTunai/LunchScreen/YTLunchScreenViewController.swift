@@ -23,6 +23,10 @@ class ApiViewModel: NSObject {
         }
     }
     
+    func question(completion: @escaping (Result<CKBaseNetModel<questionModel>?, YKError>) -> Void) {
+        service.question(completion: completion)
+    }
+    
     
     func impertinent(avp: [String:String],completion: @escaping(Result<CKBaseNetModel<impertinentModel>?, YKError>) -> Void) {
         service.impertinent(avp: avp) { r in
@@ -165,7 +169,6 @@ class YTLunchScreenViewController: UIViewController {
     let imgView: UIImageView = UIImageView(image: UIImage(named: "launchs"))
     var button: GradientLoadingButton = {
         let view = GradientLoadingButton.init(frame: CGRectZero)
-        view.setGradientColors([UIColor(hex: "#F9DE6F"), UIColor(hex: "#FF8827")])
         view.setTitle(LocalizationManager.shared().localizedString(forKey: "start_try"))
         return view
     }()
@@ -175,7 +178,6 @@ class YTLunchScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.init(hex: "#EDF0FE")
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.LocalizationLanguageDidChange, object: nil, queue: OperationQueue.main) { _ in
             self.button.setTitle(LocalizationManager.shared().localizedString(forKey: "start_try"))
@@ -235,13 +237,13 @@ class YTLunchScreenViewController: UIViewController {
                 YTUserDefaults.shared.firstStart = true
                 let tabViewC = YTBaseTabBarViewController.init()
 
-                let home =  YTZhongJianViewController()
+                let home =  YTShouyeViewController()
                 home.tabBarItem.image = UIImage.init(named: "home_nor")!.withRenderingMode(.alwaysOriginal)
                 home.tabBarItem.selectedImage = UIImage.init(named: "home_sel")!.withRenderingMode(.alwaysOriginal)
                 let homeVc = YTBaseNavigationController.init(rootViewController: home)
                 tabViewC.addChild(homeVc)
 
-                let order =  YTShouyeViewController()
+                let order =  YTZhongJianViewController()
                 let orderVc = YTBaseNavigationController.init(rootViewController: order)
                 order.tabBarItem.image = UIImage.init(named: "order_nor")!.withRenderingMode(.alwaysOriginal)
                 order.tabBarItem.selectedImage = UIImage.init(named: "order_sel")!.withRenderingMode(.alwaysOriginal)
@@ -256,20 +258,18 @@ class YTLunchScreenViewController: UIViewController {
 
 
                 UIApplication.shared.windows.first?.rootViewController  = tabViewC
-
-                tabViewC.selectedIndex = 1
             }
             UIApplication.shared.windows.first?.rootViewController = firstScreen
         } else {
             let tabViewC = YTBaseTabBarViewController.init()
 
-            let home =  YTZhongJianViewController()
+            let home =  YTShouyeViewController()
             home.tabBarItem.image = UIImage.init(named: "home_nor")!.withRenderingMode(.alwaysOriginal)
             home.tabBarItem.selectedImage = UIImage.init(named: "home_sel")!.withRenderingMode(.alwaysOriginal)
             let homeVc = YTBaseNavigationController.init(rootViewController: home)
             tabViewC.addChild(homeVc)
 
-            let order =  YTShouyeViewController()
+            let order = YTZhongJianViewController()
             let orderVc = YTBaseNavigationController.init(rootViewController: order)
             order.tabBarItem.image = UIImage.init(named: "order_nor")!.withRenderingMode(.alwaysOriginal)
             order.tabBarItem.selectedImage = UIImage.init(named: "order_sel")!.withRenderingMode(.alwaysOriginal)
@@ -281,8 +281,6 @@ class YTLunchScreenViewController: UIViewController {
             let centerVc = YTBaseNavigationController.init(rootViewController: center)
             tabViewC.addChild(centerVc)
             UIApplication.shared.windows.first?.rootViewController  = tabViewC
-
-            tabViewC.selectedIndex = 1
         }
     }
                 
@@ -296,7 +294,7 @@ class YTLunchScreenViewController: UIViewController {
             case .success(let model):
                 hasStartApp = true
                 guard let m = model?.upper else {
-                    SVProgressHUD.dismiss()
+                    
                     return
                 }
                 
@@ -392,7 +390,7 @@ class YTLunchScreenViewController: UIViewController {
             case .success(let model):
                 
                 guard let m = model?.upper else {
-                    SVProgressHUD.dismiss()
+                    
                     return
                 }
                 
@@ -419,12 +417,6 @@ class YTLunchScreenViewController: UIViewController {
                 
                 completion(true)
             case .failure(let e):
-                
-               
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
-                
                 completion(false)
                 break
             }

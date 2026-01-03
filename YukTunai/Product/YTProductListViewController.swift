@@ -107,14 +107,14 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
         
         
         
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        
+        
         
         viewModel.homes(avp: ["erect": pid!]) { [weak self] re in
             switch re {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
                 
                 self?.setNavigationBarTitle(self?.t ?? "")
                 
@@ -142,9 +142,9 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
                 
                 break
             case .failure(let failure):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
+                
+                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }
@@ -263,13 +263,13 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
 
         
         print(result)
-        SVProgressHUD.show()
-        SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        
+        
         viewModel.went(avp: result) {[weak self] r in
             switch r {
             case .success(let success):
-                SVProgressHUD.dismiss()
+                
                 
                 let data: [String: Any] = ["obliged": "4", "nasty": "\(((self?.time) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]
                 NotificationCenter.default.post(name: .myNotification, object: nil, userInfo: data)
@@ -277,9 +277,9 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
                 self?.navigationController?.popViewController(animated: true)
                 break
             case .failure(let failure):
-                SVProgressHUD.setDefaultStyle(.dark)
-                SVProgressHUD.setDefaultMaskType(.clear)
-                SVProgressHUD.dismiss(withDelay: 1.5)
+                
+                
+                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }
