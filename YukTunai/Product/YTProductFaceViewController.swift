@@ -73,6 +73,7 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         self.time = Date()
         self.bigTitle.text = self.t
         self.view.backgroundColor = UIColor(hex: "#2864D7")
+        
         setbgTopImgViewShow()
         self.setbgImgViewHidden()
         
@@ -86,6 +87,8 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         
         bimae.contentMode = .scaleAspectFill
         b2image.contentMode = .scaleAspectFill
+        bimae.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        b2image.cornersSet(by: UIRectCorner.allCorners, radius: 8)
         
         imagePicker.delegate = self
         
@@ -169,8 +172,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
     
     func load(){
         
-        
-        
         viewmodLE.fought(avp: ["erect": pid!]) {[weak self] re in
             switch re {
             case .success(let success):
@@ -252,15 +253,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
             }
            return
         }
-        
-//        current = 0
-//        let vc = YTProductFaceKTPViewController()
-//        vc.modalPresentationStyle = .overFullScreen
-//        vc.b1.text = model?.marched?.doctor
-//        present(vc, animated: false)
-//        vc.onKeluarButtonTapped = {[weak self] in
-//            self?.checkCameraPermission(type: 0)
-//        }
     }
 
     @objc func nextA(){
@@ -327,11 +319,14 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
             imagePicker.sourceType = .camera
             imagePicker.cameraDevice = type == 0 ? .rear : .front
             imagePicker.cameraCaptureMode = .photo
-            present(imagePicker, animated: true, completion: nil)
+            present(imagePicker, animated: true) {
+                SVProgressHUD.dismiss()
+            }
         }
     }
     
     func showPermissionAlert() {
+        SVProgressHUD.dismiss()
         GuideAlert.show(self, alertType: AlertType_Camera)
     }
 
@@ -361,7 +356,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
             switch r {
             case .success(let success):
                 let vc = YTUserInfoAlertViewController()
-                vc.t = self?.bigTitle.text
                 
                 vc.pid = self?.pid
                 
@@ -379,7 +373,8 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
                 
                 vc.text3.text = success?.upper?.profusely?[2].parental ?? ""
                 
-                
+                vc.t4.text = success?.upper?.garnished
+
                 vc.modalPresentationStyle = .overFullScreen
                 self?.present(vc, animated: false)
                 
@@ -521,7 +516,7 @@ class YTProductFaceKTPViewController: YTBaseViewController {
     }
     
     @objc func nextA(){
-      
+        SVProgressHUD.show()
         dismiss(animated: false)
         onKeluarButtonTapped?()
     }

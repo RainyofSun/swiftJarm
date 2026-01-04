@@ -7,31 +7,23 @@
 
 import UIKit
 
-class YTUserInfoAlertViewController: YTBaseViewController {
+class YTUserInfoAlertViewController: PPAlertCksViewController {
     
     let viewModel = ApiViewModel()
     
-    var bigTitle = UILabel(title: "", textColor: UIColor.white, font: UIFont.boldSystemFont(ofSize: 40), alignment: .center)
-    
     var pid: String?
-    var t: String?
     
     var m: FACEhandsModel?
     
     var onHandle:(()->Void)?
-    
-    let button = {
-        let view = GradientLoadingButton()
-        view.setTitle(YTTools.areaTitle(a: "Confirmation", b: "Konfirmasi"))
-        view.cornersSet(by: UIRectCorner.allCorners, radius: 8)
-        return view
-    }()
     
     let t1 = UILabel.init(title: YTTools.areaTitle(a: "Full Name", b: "Nama Lengkap"),textColor: .init(hex: "#919191"),font: .systemFont(ofSize: 14))
     
     let t2 = UILabel.init(title: YTTools.areaTitle(a: "ID NO.", b: "Nama Lengkap"),textColor: .init(hex: "#919191"),font: .systemFont(ofSize: 14))
     
     let t3 = UILabel.init(title: YTTools.areaTitle(a: "Birthday", b: "Hari ulang tahun"),textColor: .init(hex: "#919191"),font: .systemFont(ofSize: 14))
+    
+    let t4 = UILabel.init(title: YTTools.areaTitle(a: "Check the identity information andmake sure it is correct, oncesubmitted it cannot be changed!", b: "Periksa informasi identitas dan pastikan sudah benar, setelah dikirimkan tidak dapat diubah!"),textColor: .init(hex: "#FF455D"),font: .systemFont(ofSize: 12))
     
     let f1 = UIView()
     let f2 = UIView()
@@ -44,19 +36,8 @@ class YTUserInfoAlertViewController: YTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.bigTitle.text = self.t
-        self.view.backgroundColor = UIColor(hex: "#2864D7")
-        setbgTopImgViewShow()
-        self.setbgImgViewHidden()
-        
-        self.topBgImgView.add(self.bigTitle) { v in
-            v.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.width.equalToSuperview().dividedBy(2)
-                make.top.equalToSuperview().offset(105)
-            }
-        }
-        
+        self.loanTileView.title.text = YTTools.areaTitle(a: "Confirm information", b: "Konfirmasi informasi")
+
         text1.font = .systemFont(ofSize: 18,weight: .semibold)
         text2.font = .systemFont(ofSize: 18,weight: .semibold)
         text3.font = .systemFont(ofSize: 18,weight: .semibold)
@@ -74,16 +55,25 @@ class YTUserInfoAlertViewController: YTBaseViewController {
         text3.borderStyle = .none
         
         let box = UIView()
-        box.backgroundColor = UIColor(hex: "#EAF5FF")
+        box.backgroundColor = UIColor(hex: "#D2E9FF")
         box.cornersSet(by: UIRectCorner.allCorners, radius: 8)
         
         let box1 = UIView()
-        box1.backgroundColor = UIColor(hex: "#EAF5FF")
+        box1.backgroundColor = UIColor(hex: "#D2E9FF")
         box1.cornersSet(by: UIRectCorner.allCorners, radius: 8)
         
         let box2 = UIView()
-        box2.backgroundColor = UIColor(hex: "#EAF5FF")
+        box2.backgroundColor = UIColor(hex: "#D2E9FF")
         box2.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        
+        let box0 = UIView()
+        box0.backgroundColor = UIColor(hex: "#FF8827")
+        
+        box0.add(t4) { v in
+            v.snp.makeConstraints { make in
+                make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
+            }
+        }
         
         box.add(t1) { v in
             v.snp.makeConstraints { make in
@@ -130,43 +120,37 @@ class YTUserInfoAlertViewController: YTBaseViewController {
             }
         }
         
-        self.view.add(box) { v in
+        contentView.add(box0) { v in
             v.snp.makeConstraints { make in
-                make.top.equalTo(self.bigTitle.snp.bottom).offset(34)
+                make.horizontalEdges.equalToSuperview()
+                make.top.equalToSuperview().offset(25)
+            }
+        }
+        
+        contentView.add(box) { v in
+            v.snp.makeConstraints { make in
+                make.top.equalTo(box0.snp.bottom).offset(15)
                 make.horizontalEdges.equalToSuperview().inset(20)
             }
         }
         
-        self.view.add(box1) { v in
+        contentView.add(box1) { v in
             v.snp.makeConstraints { make in
                 make.top.equalTo(box.snp.bottom).offset(10)
                 make.horizontalEdges.equalTo(box)
             }
         }
         
-        self.view.add(box2) { v in
+        contentView.add(box2) { v in
             v.snp.makeConstraints { make in
                 make.top.equalTo(box1.snp.bottom).offset(10)
                 make.horizontalEdges.equalTo(box1)
-            }
-        }
-        
-        self.view.add(button) { v in
-            button.addTarget(self, action: #selector(pu), for: .touchUpInside)
-            v.snp.makeConstraints { make in
-                make.horizontalEdges.equalTo(box2)
-                make.height.equalTo(48)
-                make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
+                make.bottom.equalToSuperview().offset(-15)
             }
         }
     }
     
-    override func bTapped() {
-        dismiss(animated: false)
-    }
-  
-    @objc func pu(){
-        
+    override func submitContent() {
         viewModel.duels(avp: [m!.profusely![0].eyelid!:text1.text!,
                               m!.profusely![1].eyelid!:text2.text!,
                               m!.profusely![2].eyelid!:text3.text!,
@@ -179,9 +163,6 @@ class YTUserInfoAlertViewController: YTBaseViewController {
                 self?.dismiss(animated: true)
                 break
             case .failure(let failure):
-                
-                
-                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }
@@ -189,8 +170,7 @@ class YTUserInfoAlertViewController: YTBaseViewController {
     }
     
     @objc func bir(){
-        let t = text3.text!
-        let vc = YTBirthdaySelectorViewController.init(select:YTTools.convertToDate(from: text3.text ?? "") ?? YTTools.convertToDate(from: "01-01-2000"))
+        let vc = YTBirthdaySelectorViewController()
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false)
         vc.onHandleShow =  {[weak self] str in

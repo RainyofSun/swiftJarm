@@ -358,7 +358,9 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
     @objc func kaweidianji() {
 
         // 防止重复点击
-        guard !isHandlingClick else { return }
+        guard !isHandlingClick else {
+            return
+        }
         isHandlingClick = true
 
         if YTUserDefaults.shared.transport.count == 0 {
@@ -366,12 +368,14 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: true) { [weak self] in
                 self?.isHandlingClick = false
+                self?.isHandlingSelection = false
             }
             return
         }
 
         guard let id = chanpinId else {
             isHandlingClick = false
+            isHandlingSelection = false
             return
         }
 

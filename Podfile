@@ -22,7 +22,7 @@ target 'YukTunai' do
   pod 'IQKeyboardManagerSwift'
 
   pod 'FBSDKCoreKit'
-
+  pod 'BRPickerView/Default','2.9.1'
 end
 
 

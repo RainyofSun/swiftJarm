@@ -1,5 +1,13 @@
 PODS:
   - Alamofire (5.9.1)
+  - BRPickerView/Core (2.9.1)
+  - BRPickerView/DatePicker (2.9.1):
+    - BRPickerView/Core
+  - BRPickerView/Default (2.9.1):
+    - BRPickerView/DatePicker
+    - BRPickerView/TextPicker
+  - BRPickerView/TextPicker (2.9.1):
+    - BRPickerView/Core
   - FBAEMKit (17.0.3):
     - FBSDKCoreKit_Basics (= 17.0.3)
   - FBSDKCoreKit (17.0.3):
@@ -25,6 +33,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - BRPickerView/Default (= 2.9.1)
   - FBSDKCoreKit
   - FMDB
   - IQKeyboardManagerSwift
@@ -38,6 +47,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BRPickerView
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -52,6 +62,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  BRPickerView: 6dd69ea2c48e0a0abf1d197a705050e13143ee63
   FBAEMKit: 9900b2edd99a2d21629a6277e6166f14c6215799
   FBSDKCoreKit: 0791f8f68a8630931a4c12aa23a56cc021551596
   FBSDKCoreKit_Basics: 46d6b472c0dd0a5a7e972c025033d1c567f54eb4
@@ -64,6 +75,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
 
-PODFILE CHECKSUM: a15639f6c36ba723deacc569499430ef0d7113c9
+PODFILE CHECKSUM: e090c0bfc61c4befefe22a16f208eb373c32cf3f
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
