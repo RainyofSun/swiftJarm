@@ -73,7 +73,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         self.time = Date()
         self.bigTitle.text = self.t
         self.view.backgroundColor = UIColor(hex: "#2864D7")
-        setNavigationBarTitle(YTTools.areaTitle(a: "ldentity information", b: "Informasi identitas"))
         setbgTopImgViewShow()
         self.setbgImgViewHidden()
         
@@ -120,6 +119,7 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         
         bimae1.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            make.size.equalTo(54)
         }
         
         box2.snp.makeConstraints { make in
@@ -141,6 +141,7 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         
         bimae2.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            make.size.equalTo(54)
         }
         
         button.addTarget(self, action: #selector(nextA), for: .touchUpInside)
@@ -331,31 +332,12 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
     }
     
     func showPermissionAlert() {
-        let alert = UIAlertController(title: "Camera Permission Needed", message: "Please enable camera permission in settings to take photos.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Settings", style: .default) { _ in
-            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-            }
-        })
-        present(alert, animated: true, completion: nil)
+        GuideAlert.show(self, alertType: AlertType_Camera)
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            
-//            if let i1 = model?.marched?.thou,i1.count == 0  {
-//                uploadBankCard(with: image)
-//                picker.dismiss(animated: true, completion: nil)
-//                return
-//            }
-//            
-//            if let i2 = model?.marched?.flushed,i2.count == 0 {
-//                didUploadUserFace(with: image)
-//                picker.dismiss(animated: true, completion: nil)
-//            }
-            
             if current == 0 {
                 uploadBankCard(with: image)
                 picker.dismiss(animated: true, completion: nil)
@@ -372,16 +354,14 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
     }
     
     func uploadBankCard(with image: UIImage){
-        let img = image.compressImage(maxLength: 1024*100)
-        
-        
-        
+        let img = image.compressImage(maxLength: 1024*500)
+        SVProgressHUD.show()
         viewmodLE.hands(avp: ["hope": img,"directly":"11","face":"1"]) {[weak self] r in
+            SVProgressHUD.dismiss()
             switch r {
             case .success(let success):
-                
-
                 let vc = YTUserInfoAlertViewController()
+                vc.t = self?.bigTitle.text
                 
                 vc.pid = self?.pid
                 
@@ -399,8 +379,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
                 
                 vc.text3.text = success?.upper?.profusely?[2].parental ?? ""
                 
-                vc.t4.text = success?.upper?.garnished
-                
                 
                 vc.modalPresentationStyle = .overFullScreen
                 self?.present(vc, animated: false)
@@ -416,95 +394,36 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
                 
                 break
             case .failure(let failure):
-                
-                
-                
                 SVProgressHUD.showError(withStatus: failure.description)
-                
                break
             }
         }
     }
     
     func didUploadUserFace(with image: UIImage){
-        let img = image.compressImage(maxLength: 1024*100)
-        
-        
-        
-        viewmodLE.hands(avp: ["hope": img,"directly":"10","face":"1"]) {[weak self] r in
+        let img = image.compressImage(maxLength: 1024*500)
+        viewmodLE.hands(avp: ["ourProfiles": img,"directly":"10","face":"1"]) {[weak self] r in
             switch r {
             case .success(let success):
-                
                 let data: [String: Any] = ["obliged": "3", "nasty": "\(((self?.time2) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]
                 NotificationCenter.default.post(name: .myNotification, object: nil, userInfo: data)
                 self?.load()
                 break
             case .failure(let failure):
-                
-                
-                
                 SVProgressHUD.showError(withStatus: failure.description)
                 
                break
             }
         }
     }
-    
-    
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class YTProductFaceKTPViewController: YTBaseViewController {
     
     var onKeluarButtonTapped: (() -> Void)?
     var t: String?
     
+    let topimshw = UIImageView(image: UIImage(named: "auth_top_skw"))
     let box = UIImageView(image: UIImage(named: "tip_top"))
     
     let b1 = UILabel.init(title: "",textColor: .init(hex: "#333333"),font: .systemFont(ofSize: 16, weight: .bold))
@@ -530,10 +449,16 @@ class YTProductFaceKTPViewController: YTBaseViewController {
         self.setbgImgViewHidden()
         self.view.backgroundColor = UIColor(hex: "#2864D7")
         
+        self.view.add(topimshw) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.top.equalToSuperview()
+            }
+        }
+        
         view.addSubview(box)
         box.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview().offset(105)
+            make.top.equalTo(topimshw.snp.bottom).offset(-25 )
         }
         
         box.addSubview(b1)
@@ -549,7 +474,6 @@ class YTProductFaceKTPViewController: YTBaseViewController {
             make.horizontalEdges.equalToSuperview().inset(15)
             make.top.equalTo(b1.snp.bottom).offset(25)
             make.height.equalTo((UIScreen.main.bounds.size.width - 30) * 0.52)
-            make.bottom.equalToSuperview().offset(-15)
         }
         
         b2image.add(b2image1) { v in
@@ -566,7 +490,6 @@ class YTProductFaceKTPViewController: YTBaseViewController {
         b2.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(50)
             make.top.equalTo(b2image.snp.bottom).offset(20)
-            make.height.equalTo(40)
         }
         
         box.addSubview(b3image)

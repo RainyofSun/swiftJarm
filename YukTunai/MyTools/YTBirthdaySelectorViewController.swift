@@ -11,18 +11,22 @@ import SmartCodable
 
 class YTBirthdaySelectorViewController: YTBaseViewController,UITableViewDataSource,UITabBarDelegate, UITableViewDelegate {
 
-        let days = Array(1...31)
-        
-        let months = Array(1...12)
-        
-        let years: [Int] = {
-                let currentYear = Calendar.current.component(.year, from: Date())
-                return Array(1900...currentYear)
-        }()
+    let days = Array(1...31)
+    
+    let months = Array(1...12)
+    
+    let years: [Int] = {
+            let currentYear = Calendar.current.component(.year, from: Date())
+            return Array(1900...currentYear)
+    }()
         
     var onHandleShow:((String)->())?
-        
-    let tttt1 = UILabel.init(title: YTTools.areaTitle(a: "Select a time", b: "Pilih waktu"),textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 22,weight: .semibold))
+    
+    let tipView = {
+        let view = loanTipView(frame: CGRectZero)
+        view.title.text = YTTools.areaTitle(a: "Select a time", b: "Pilih waktu")
+        return view
+    }()
     
     let closeButton = UIButton.init(title: "", image: "bacfewe")
     
@@ -76,6 +80,18 @@ class YTBirthdaySelectorViewController: YTBaseViewController,UITableViewDataSour
             self.selectedDate = select
             
             view.isUserInteractionEnabled = true
+            
+            // 添加关闭按钮
+            let closeButton = UIButton(type: .system)
+            closeButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
+            closeButton.tintColor = .white
+            closeButton.addTarget(self, action: #selector(dismissPopup), for: .touchUpInside)
+            view.addSubview(closeButton)
+            closeButton.snp.makeConstraints { make in
+                make.right.equalTo(popupView)
+                make.bottom.equalTo(loanTip.snp.top).offset(-10)
+                make.width.height.equalTo(40)
+            }
             
             view.backgroundColor = .init(hex: "000000",alpha: 0.8)
             

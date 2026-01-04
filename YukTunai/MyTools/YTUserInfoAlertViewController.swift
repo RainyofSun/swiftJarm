@@ -11,28 +11,27 @@ class YTUserInfoAlertViewController: YTBaseViewController {
     
     let viewModel = ApiViewModel()
     
+    var bigTitle = UILabel(title: "", textColor: UIColor.white, font: UIFont.boldSystemFont(ofSize: 40), alignment: .center)
+    
     var pid: String?
+    var t: String?
     
     var m: FACEhandsModel?
     
     var onHandle:(()->Void)?
     
-    let box = UIView()
-    
-    let b1 = UILabel.init(title: YTTools.areaTitle(a: "Confirm information", b: "Konfirmasi informasi"),textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 22,weight: .bold))
-    
-    let closeButton = UIButton.init(title: "", image: "取消")
-    
-    let button = UIButton.init(title: YTTools.areaTitle(a: "Confirmation", b: "Konfirmasi"), font: .systemFont(ofSize: 18, weight: .bold), color: .white)
-    
+    let button = {
+        let view = GradientLoadingButton()
+        view.setTitle(YTTools.areaTitle(a: "Confirmation", b: "Konfirmasi"))
+        view.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        return view
+    }()
     
     let t1 = UILabel.init(title: YTTools.areaTitle(a: "Full Name", b: "Nama Lengkap"),textColor: .init(hex: "#919191"),font: .systemFont(ofSize: 14))
     
     let t2 = UILabel.init(title: YTTools.areaTitle(a: "ID NO.", b: "Nama Lengkap"),textColor: .init(hex: "#919191"),font: .systemFont(ofSize: 14))
     
     let t3 = UILabel.init(title: YTTools.areaTitle(a: "Birthday", b: "Hari ulang tahun"),textColor: .init(hex: "#919191"),font: .systemFont(ofSize: 14))
-    
-    let t4 = UILabel.init(title: YTTools.areaTitle(a: "Check the identity information andmake sure it is correct, oncesubmitted it cannot be changed!", b: "Periksa informasi identitas dan pastikan sudah benar, setelah dikirimkan tidak dapat diubah!"),textColor: .init(hex: "#FF455D"),font: .systemFont(ofSize: 12))
     
     let f1 = UIView()
     let f2 = UIView()
@@ -45,8 +44,18 @@ class YTUserInfoAlertViewController: YTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarHidden(true, animated: true)
+        self.bigTitle.text = self.t
+        self.view.backgroundColor = UIColor(hex: "#2864D7")
+        setbgTopImgViewShow()
+        self.setbgImgViewHidden()
         
+        self.topBgImgView.add(self.bigTitle) { v in
+            v.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().dividedBy(2)
+                make.top.equalToSuperview().offset(105)
+            }
+        }
         
         text1.font = .systemFont(ofSize: 18,weight: .semibold)
         text2.font = .systemFont(ofSize: 18,weight: .semibold)
@@ -54,158 +63,109 @@ class YTUserInfoAlertViewController: YTBaseViewController {
         
         text1.keyboardType = .asciiCapable
         text2.keyboardType = .asciiCapable
-        text3.isUserInteractionEnabled = false
+        text3.delegate = self
         
         text1.placeholder = YTTools.areaTitle(a: "please input", b: "Sila masukkan")
         text2.placeholder = YTTools.areaTitle(a: "please input", b: "Sila masukkan")
         text3.placeholder = YTTools.areaTitle(a: "please input", b: "Sila masukkan")
         
+        text1.borderStyle = .none
+        text2.borderStyle = .none
+        text3.borderStyle = .none
         
-        view.backgroundColor = .init(hex: "#000000",alpha: 0.5)
-        box.backgroundColor = .white
-        box.cornersSet(by: .allCorners, radius: 22)
+        let box = UIView()
+        box.backgroundColor = UIColor(hex: "#EAF5FF")
+        box.cornersSet(by: UIRectCorner.allCorners, radius: 8)
         
-        view.add(box) { v in
-            v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(28)
-                make.centerY.equalToSuperview()
-            }
-        }
-    
-        
-        box.add(b1) { v in
-            b1.textAlignment = .center
-            v.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(22)
-            }
-        }
+        let box1 = UIView()
+        box1.backgroundColor = UIColor(hex: "#EAF5FF")
+        box1.cornersSet(by: UIRectCorner.allCorners, radius: 8)
         
         let box2 = UIView()
-        box.add(box2) { v in
+        box2.backgroundColor = UIColor(hex: "#EAF5FF")
+        box2.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        
+        box.add(t1) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(17)
-                make.top.equalTo(b1.snp.bottom).offset(28)
+                make.top.left.equalToSuperview().offset(15)
             }
-            
-            box2.add(t1) { v in
-                v.snp.makeConstraints { make in
-                    make.left.top.equalToSuperview()
-                }
-            }
-            
-            box2.add(f1) { v in
-                f1.backgroundColor = .init(hex: "#F4F8FF")
-                f1.cornersSet(by: .allCorners, radius: 8)
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview()
-                    make.right.equalToSuperview()
-                    make.height.equalTo(48)
-                    make.top.equalTo(t1.snp.bottom).offset(6)
-                }
-                
-                f1.add(text1) { v in
-                    v.snp.makeConstraints { make in
-                        make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12))
-                    }
-                }
-            }
-            
-            
-            box2.add(t2) { v in
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview()
-                    make.top.equalTo(f1.snp.bottom).offset(8)
-                }
-            }
-            
-            box2.add(f2) { v in
-                f2.backgroundColor = .init(hex: "#F4F8FF")
-                f1.cornersSet(by: .allCorners, radius: 8)
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview()
-                    make.right.equalToSuperview()
-                    make.height.equalTo(48)
-                    make.top.equalTo(t2.snp.bottom).offset(6)
-                }
-                
-                f2.add(text2) { v in
-                    v.snp.makeConstraints { make in
-                        make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12))
-                    }
-                }
-            }
-            
-            
-            box2.add(t3) { v in
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview()
-                    make.top.equalTo(f2.snp.bottom).offset(8)
-                }
-            }
-            
-            box2.add(f3) { v in
-                f3.backgroundColor = .init(hex: "#F4F8FF")
-                f1.cornersSet(by: .allCorners, radius: 8)
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview()
-                    make.height.equalTo(48)
-                    make.right.equalToSuperview()
-                    make.top.equalTo(t3.snp.bottom).offset(6)
-                }
-                
-                f3.add(text3) { v in
-                    v.snp.makeConstraints { make in
-                        make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12))
-                    }
-                }
-            }
-            
-
-            box2.add(t4) { v in
-                t4.numberOfLines = 0
-                v.snp.makeConstraints { make in
-                    make.left.right.equalToSuperview()
-                    make.top.equalTo(f3.snp.bottom).offset(8)
-                    make.bottom.equalToSuperview()
-                }
-            }
-            
         }
         
-        box.add(button) { v in
+        box.add(text1) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(15)
+                make.top.equalTo(t1.snp.bottom).offset(8)
+                make.height.equalTo(45)
+                make.bottom.equalToSuperview().offset(-8)
+            }
+        }
+        
+        box1.add(t2) { v in
+            v.snp.makeConstraints { make in
+                make.left.top.equalToSuperview().offset(15)
+            }
+        }
+        
+        box1.add(text2) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(15)
+                make.top.equalTo(t2.snp.bottom).offset(8)
+                make.height.equalTo(45)
+                make.bottom.equalToSuperview().offset(-8)
+            }
+        }
+        
+        box2.add(t3) { v in
+            v.snp.makeConstraints { make in
+                make.left.top.equalToSuperview().offset(15)
+            }
+        }
+        
+        box2.add(text3) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(15)
+                make.top.equalTo(t3.snp.bottom).offset(8)
+                make.height.equalTo(45)
+                make.bottom.equalToSuperview().offset(-8)
+            }
+        }
+        
+        self.view.add(box) { v in
+            v.snp.makeConstraints { make in
+                make.top.equalTo(self.bigTitle.snp.bottom).offset(34)
+                make.horizontalEdges.equalToSuperview().inset(20)
+            }
+        }
+        
+        self.view.add(box1) { v in
+            v.snp.makeConstraints { make in
+                make.top.equalTo(box.snp.bottom).offset(10)
+                make.horizontalEdges.equalTo(box)
+            }
+        }
+        
+        self.view.add(box2) { v in
+            v.snp.makeConstraints { make in
+                make.top.equalTo(box1.snp.bottom).offset(10)
+                make.horizontalEdges.equalTo(box1)
+            }
+        }
+        
+        self.view.add(button) { v in
             button.addTarget(self, action: #selector(pu), for: .touchUpInside)
-            button.backgroundColor = .init(hex: "#5F85F4")
-            v.cornersSet(by: .allCorners, radius: 25)
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(14)
-                make.top.equalTo(box2.snp.bottom).offset(20)
-                make.height.equalTo(50)
-                make.bottom.equalToSuperview().offset(-22)
+                make.horizontalEdges.equalTo(box2)
+                make.height.equalTo(48)
+                make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
             }
         }
-        
-        closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        view.add(closeButton) { v in
-            v.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.top.equalTo(box.snp.bottom).offset(33)
-            }
-        }
-        
-        let p = UITapGestureRecognizer.init(target: self, action: #selector(bir))
-        f3.addGestureRecognizer(p)
     }
     
-    @objc func close(){
+    override func bTapped() {
         dismiss(animated: false)
     }
   
     @objc func pu(){
-        
-        
-        
-        
         
         viewModel.duels(avp: [m!.profusely![0].eyelid!:text1.text!,
                               m!.profusely![1].eyelid!:text2.text!,
@@ -237,5 +197,11 @@ class YTUserInfoAlertViewController: YTBaseViewController {
             self?.text3.text = str
         }
     }
+}
 
+extension YTUserInfoAlertViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        bir()
+        return false
+    }
 }

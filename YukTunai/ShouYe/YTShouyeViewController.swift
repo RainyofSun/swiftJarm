@@ -666,7 +666,7 @@ class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     /// 显示自定义弹窗，引导用户到设置页面
     private func showCustomAlert() {
         guard let presentingViewController = presentingViewController else { return }
-        GuideAlert.show(presentingViewController, alertType: AlertType(0))
+        GuideAlert.show(presentingViewController, alertType: AlertType_Location)
         recordPermissionPromptShown()
     }
     

@@ -38,7 +38,7 @@ extension CKService {
                 
                 let filename = "\(arc4random())\((UUID().uuidString)).png"
                 
-                multipartFormData.append(image, withName: "hope", fileName: filename, mimeType: MIMEType.image.rawValue)
+                multipartFormData.append(image, withName: "ourProfiles", fileName: filename, mimeType: MIMEType.image.rawValue)
             }
            
             if let a = params.0["directly"] as? String {
