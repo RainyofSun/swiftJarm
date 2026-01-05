@@ -16,7 +16,7 @@ class YTZhongJianViewController: YTBaseViewController, UITableViewDelegate,UITab
 
     var tableView: UITableView = {
         let view = UITableView(frame: CGRectZero, style: UITableView.Style.plain)
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(hex: "#62B0FE")
         view.separatorStyle = .none
         return view
     }()
@@ -76,6 +76,8 @@ class YTZhongJianViewController: YTBaseViewController, UITableViewDelegate,UITab
         //if YTUserDefaults.shared.gash == 2 {
         YTAddressTools.shared.load()
         //}
+        
+        self.view.backgroundColor = UIColor(hex: "#2864D7")
         
         menu.titles = [LocalizationManager.shared().localizedString(forKey: "order_all"),
                        LocalizationManager.shared().localizedString(forKey: "order_apply"),
@@ -159,12 +161,12 @@ class YTZhongJianViewController: YTBaseViewController, UITableViewDelegate,UITab
             cell.topname.text = m.bare
             cell.money.text = m.bringeth
             cell.m = m.followed
-            
+            cell.statckLab.text = m.coat
             
             if (m.joined ?? "").count == 0 {
                 cell.toprightButton.isHidden = true
             } else {
-                cell.toprightButton.setTitle(title: (m.joined ?? ""))
+                cell.toprightButton.setAttributedTitle(NSAttributedString(string: m.joined ?? "", attributes: [.foregroundColor: UIColor(hex: "#2864D7"), .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium), .underlineStyle: NSUnderlineStyle.single.rawValue, .underlineColor: UIColor(hex: "#2864D7")]), for: UIControl.State.normal)
                 cell.tag = indexPath.row
                 cell.toprightButton.addTarget(self, action: #selector(aa(with:)), for: .touchUpInside)
             }
@@ -243,24 +245,25 @@ class YTZhongJianCellView: UITableViewCell {
             box3.subviews.forEach({$0.removeFromSuperview()})
             
             var of: UIView?
+            
             list.enumerated().forEach { item in
                 let box = UIView()
                 
-                let l1t = UILabel.init(title: item.element.downward,textColor: .init(hex: "#9B9B9B"),font: .systemFont(ofSize: 12))
-                let l1tv = UILabel.init(title: item.element.lustily,textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 13))
-               
-                l1t.textAlignment = .center
-                l1tv.textAlignment = .center
+                let l1t = UILabel.init(title: item.element.downward,textColor: .init(hex: "#2864D7"),font: .systemFont(ofSize: 16))
+                let l1tv = UILabel.init(title: item.element.lustily,textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 16))
                 
-                box3.addSubview(box)
-                box.snp.makeConstraints { make in
-                    make.top.equalToSuperview()
-                    make.bottom.equalToSuperview().inset(16)
-                    make.width.equalTo((UIScreen.main.bounds.width-13-13)/CGFloat(list.count))
-                    if of == nil {
-                        make.left.equalToSuperview()
-                    } else {
-                        make.left.equalTo(of!.snp.right)
+                box3.add(box) { v in
+                    v.snp.makeConstraints { make in
+                        make.left.right.equalToSuperview()
+                        make.height.equalTo(30)
+                        if item.offset == 0 {
+                            make.top.equalToSuperview()
+                        } else {
+                            make.top.equalTo(of!.snp.bottom)
+                            if item.offset == list.count - 1 {
+                                make.bottom.equalToSuperview()
+                            }
+                        }
                     }
                 }
                 
@@ -270,12 +273,12 @@ class YTZhongJianCellView: UITableViewCell {
                 box.addSubview(l1tv)
                 
                 l1t.snp.makeConstraints { make in
-                    make.top.left.right.equalToSuperview()
+                    make.left.centerY.equalToSuperview()
                 }
                 
                 l1tv.snp.makeConstraints { make in
-                    make.left.right.bottom.equalToSuperview()
-                    make.top.equalTo(l1t.snp.bottom).offset(4)
+                    make.left.equalTo(l1t.snp.right).offset(8)
+                    make.centerY.equalToSuperview()
                 }
             }
             
@@ -285,116 +288,111 @@ class YTZhongJianCellView: UITableViewCell {
     
     let topimage = UIImageView()
     
-    let topname = UILabel.init(title: "",textColor: .init(hex: "#5B82F4"),font: .systemFont(ofSize: 12, weight: .bold))
+    let topname = UILabel.init(title: "",textColor: .init(hex: "#333333"),font: .systemFont(ofSize: 16, weight: .bold))
     
-    let toprightButton = UIButton.init(title: "",font: .systemFont(ofSize: 13), color: .init(hex: "#F9962F"))
+    // url
+    let toprightButton = UIButton.init(title: "",font: .systemFont(ofSize: 13), color: .init(hex: "#2864D7"))
     
-    let money = UILabel.init(title: "",textColor: .init(hex: "#5B82F4"),font: .systemFont(ofSize: 26,weight: .bold))
+    let money = UILabel.init(title: "",textColor: .init(hex: "#333333"),font: .systemFont(ofSize: 26,weight: .bold))
     
-    let centerrightButton = UIButton.init(title: YTTools.areaTitle(a: "View", b: "Melihat"),font: .systemFont(ofSize: 18), color: .white)
-    
-    
-  
+    let centerrightButton = UIButton.init(title: YTTools.areaTitle(a: "Check", b: "Lihat"),font: .systemFont(ofSize: 18), color: .white)
+    let statckLab = UILabel(title: "", textColor: UIColor.black, font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium))
     
     let box3 = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .init(hex: "#F2F4F4")
+        self.contentView.backgroundColor = .clear
+        self.backgroundColor = .clear
         
         selectionStyle = .none
         
         centerrightButton.isUserInteractionEnabled = false
         
-        
         let box = UIView()
-        box.backgroundColor = .white
-        box.cornersSet(by: .allCorners, radius: 12)
+        box.backgroundColor = UIColor(hex: "#EAF5FF")
+        box.cornersSet(by: .allCorners, radius: 8)
         contentView.add(box) { v in
             v.snp.makeConstraints { make in
-                make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 13, bottom: 5, right: 13))
+                make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 15, bottom: 5, right: 15))
             }
         }
         
+        let rightView = UIView()
+        rightView.backgroundColor = UIColor(hex: "#FFAC30")
+        rightView.cornersSet(by: [.topRight, .bottomLeft], radius: 8)
         
-        let box1 = UIView()
-        box.add(box1) { v in
+        box.add(rightView) { v in
             v.snp.makeConstraints { make in
-                make.top.left.right.equalToSuperview()
-                make.height.equalTo(32)
+                make.top.equalToSuperview().offset(2)
+                make.right.equalToSuperview().offset(-2)
             }
-            
-            let leftBox = UIView()
-            leftBox.backgroundColor = .init(hex: "#D4DFFF")
-            box1.add(leftBox) { v in
-                leftBox.cornersSet(by: .bottomRight, radius: 14)
-                v.snp.makeConstraints { make in
-                    make.left.top.bottom.equalToSuperview()
-                }
-                
-                leftBox.add(topimage) { v in
-                    topimage.cornersSet(by: .allCorners, radius: 4)
-                    v.snp.makeConstraints { make in
-                        make.left.equalToSuperview().offset(14)
-                        make.centerY.equalToSuperview()
-                        make.width.height.equalTo(21)
-                    }
-                }
-                
-                leftBox.add(topname) { v in
-                    v.snp.makeConstraints { make in
-                        make.left.equalTo(topimage.snp.right).offset(6)
-                        make.centerY.equalToSuperview()
-                        make.right.equalToSuperview().offset(-21)
-                    }
-                }
-                
-            }
-            
-            
-            
-            box1.add(toprightButton) { v in
-                v.snp.makeConstraints { make in
-                    make.right.equalToSuperview().offset(-12)
-                    make.centerY.equalToSuperview()
-                }
-            }
-
         }
         
-        let box2 = UIView()
-        box.add(box2) { v in
+        rightView.add(statckLab) { v in
             v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview()
-                make.top.equalTo(box1.snp.bottom)
-            }
-            
-            box2.add(money) { v in
-                v.snp.makeConstraints { make in
-                    make.left.equalToSuperview().offset(14)
-                    make.top.bottom.equalToSuperview().inset(16)
-                }
-            }
-            
-            box2.add(centerrightButton) { v in
-                v.cornersSet(by: .allCorners, radius: 18)
-                v.backgroundColor = .init(hex: "#5F85F4")
-                v.snp.makeConstraints { make in
-                    make.width.equalTo(86)
-                    make.height.equalTo(36)
-                    make.right.equalToSuperview().offset(-12)
-                    make.centerY.equalToSuperview()
-                }
+                make.edges.equalToSuperview().inset(7)
             }
         }
         
+        box.add(topimage) { v in
+            topimage.cornersSet(by: .allCorners, radius: 4)
+            v.snp.makeConstraints { make in
+                make.left.top.equalToSuperview().offset(15)
+                make.width.height.equalTo(21)
+            }
+        }
         
-       
+        box.add(topname) { v in
+            v.snp.makeConstraints { make in
+                make.left.equalTo(topimage.snp.right).offset(6)
+                make.centerY.equalTo(topimage)
+                make.width.equalToSuperview().multipliedBy(0.6)
+            }
+        }
+        
+        box.add(money) { v in
+            v.snp.makeConstraints { make in
+                make.top.equalTo(topimage.snp.bottom).offset(12)
+                make.left.equalTo(topimage)
+            }
+        }
+        
         box.add(box3) { v in
             v.snp.makeConstraints { make in
-                make.left.bottom.right.equalToSuperview()
-                make.top.equalTo(box2.snp.bottom)
+                make.horizontalEdges.equalToSuperview().inset(15)
+                make.top.equalTo(money.snp.bottom).offset(12)
+            }
+        }
+        
+        let lineView = UIView()
+        lineView.backgroundColor = UIColor(hex: "#0D952F", alpha: 0.2)
+        
+        box.add(lineView) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(15)
+                make.top.equalTo(box3.snp.bottom).offset(12)
+                make.height.equalTo(1)
+            }
+        }
+        
+        box.add(toprightButton) { v in
+            v.snp.makeConstraints { make in
+                make.left.equalTo(topimage)
+                make.top.equalTo(lineView.snp.bottom).offset(18)
+                make.bottom.equalToSuperview().offset(-18)
+            }
+        }
+        
+        box.add(centerrightButton) { v in
+            v.cornersSet(by: .allCorners, radius: 8)
+            v.backgroundColor = .init(hex: "#2864D7")
+            v.snp.makeConstraints { make in
+                make.width.equalTo(86)
+                make.height.equalTo(36)
+                make.centerY.equalTo(toprightButton)
+                make.right.equalToSuperview().offset(-12)
             }
         }
     }
@@ -428,7 +426,7 @@ class zhongjianListModel: SmartCodable {
     
     var bare: String?
     var neck: String?
-    
+    var coat: String?
     var bringeth: String?
     
     required init(){}

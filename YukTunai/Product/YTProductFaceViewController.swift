@@ -33,7 +33,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
     let viewmodLE = ApiViewModel()
     
     var model: marchedFaceModel?
-    var bigTitle = UILabel(title: "", textColor: UIColor.white, font: UIFont.boldSystemFont(ofSize: 40), alignment: .center)
     
     var pid: String?
     var t: String?
@@ -71,19 +70,11 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         super.viewDidLoad()
         
         self.time = Date()
-        self.bigTitle.text = self.t
+        self.bigLabel.text = self.t
         self.view.backgroundColor = UIColor(hex: "#2864D7")
         
         setbgTopImgViewShow()
         self.setbgImgViewHidden()
-        
-        self.topBgImgView.add(self.bigTitle) { v in
-            v.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.width.equalToSuperview().dividedBy(2)
-                make.top.equalToSuperview().offset(navigationBarHeight + statusBarHeight)
-            }
-        }
         
         bimae.contentMode = .scaleAspectFill
         b2image.contentMode = .scaleAspectFill
@@ -104,7 +95,7 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         
         box1.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.top.equalTo(bigTitle.snp.bottom).offset(32)
+            make.top.equalTo(bigLabel.snp.bottom).offset(32)
         }
         
         b1.snp.makeConstraints { make in
@@ -397,7 +388,7 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
     
     func didUploadUserFace(with image: UIImage){
         let img = image.compressImage(maxLength: 1024*500)
-        viewmodLE.hands(avp: ["ourProfiles": img,"directly":"10","face":"1"]) {[weak self] r in
+        viewmodLE.hands(avp: ["hope": img,"directly":"10","face":"1"]) {[weak self] r in
             switch r {
             case .success(let success):
                 let data: [String: Any] = ["obliged": "3", "nasty": "\(((self?.time2) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]

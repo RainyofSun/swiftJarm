@@ -33,7 +33,7 @@ open class EmptyDataSourceView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(hex: "#62B0FE")
+//        backgroundColor = UIColor(hex: "#62B0FE")
     }
     
     /// 布局显示

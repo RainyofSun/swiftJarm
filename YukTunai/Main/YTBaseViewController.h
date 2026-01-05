@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *tLabel;
 @property (nonatomic, strong) UIButton *backB;
 @property (nonatomic, strong) UIImageView *topBgImgView;
+@property (nonatomic, strong) UILabel *bigLabel;
 
 - (void)setNavigationBarTitle:(NSString *)title;
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;

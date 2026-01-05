@@ -23,26 +23,29 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
     
     var time: Date?
     
-    let button = UIButton.init(title: YTTools.areaTitle(a: "Next", b: "Berikutnya"), font: .systemFont(ofSize: 18, weight: .bold), color: .white)
+    let button = {
+        let view = GradientLoadingButton()
+        view.setTitle(YTTools.areaTitle(a: "Next", b: "Berikutnya"))
+        view.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         time = Date()
-
-        view.backgroundColor = .white
-        
-        setNavigationBarTitle(t ?? "")
+        self.setbgImgViewHidden()
+        self.setbgTopImgViewShow()
+        self.bigLabel.text = t
+        self.view.backgroundColor = UIColor(hex: "#2864D7")
         
         
         button.addTarget(self, action: #selector(nextA), for: .touchUpInside)
-        button.cornersSet(by: .allCorners, radius: 25)
-        button.setBgColor(color: .init(hex: "#6D90F5"))
         view.add(button) { v in
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview().inset(20)
                 make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
-                make.height.equalTo(50)
+                make.height.equalTo(48)
             }
         }
         
@@ -51,18 +54,14 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(button.snp.top).offset(-20)
-                make.top.equalTo(cBar.snp.bottom).offset(10)
+                make.top.equalTo(self.bigLabel.snp.bottom).offset(10)
             }
         }
+        
         table.delegate = self
         table.dataSource = self
         table.register(YTUserConnectViewCell.self, forCellReuseIdentifier: YTUserConnectViewCell.identifier)
-       
-        
-        
-        
-        
-        
+        table.backgroundColor = .clear
         
         viewModel.impertinent(avp: ["erect": pid!]) { [weak self] re in
             switch re {
@@ -94,9 +93,6 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
                 
                 break
             case .failure(let failure):
-                
-                
-                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }
@@ -119,7 +115,7 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
             return UITableViewCell()
         }
         
-        cell.g1.text = m.downward
+        cell.tip1.title.text = m.downward
         cell.t1.text = m.knits
         cell.t11.text = m.mamsell
         cell.t2.placeholder = m.ur
@@ -138,16 +134,18 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
         
         
         cell.handle = {[weak self] in
-            
+            self?.view.endEditing(true)
             let vc = YTSelectViewController.init()
-           
+            if let _rose = m.rose {
+                vc.reloadSindlwPickerViews(moelsw: _rose)
+            }
             vc.modalPresentationStyle = .overFullScreen
            
             self?.present(vc, animated: false)
-            
-            vc.model = m.rose
-            
+   
             vc.onKeluarButtonTapped = {[weak self] str in
+                m.rose?.forEach({$0.selected = false})
+                m.rose?.first(where: {$0.ensued == str})?.selected = true
                 let i = self?.model?.smokes?[indexPath.row].rose?.filter({$0.ensued == str}).first?.directly
                 self?.model?.smokes?[indexPath.row].rector = i
                 cell.t2.text = str
@@ -219,20 +217,12 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
     
     @objc func displayUsr(with d: Int){
         
-        
-        
-    
         YTContactAccessManager.shared().checkContactAuthorizationStatus(self) { result in
             
             if result["contacts"] as? [CNContact] != nil {
                 self.idx = d
                 self.presentContactPicker()
-                } else if let error = result["error"] as? String {
-                    
-                    
-                    SVProgressHUD.dismiss(withDelay: 2.5)
-                    SVProgressHUD.show(withStatus: error)
-                }
+            }
         }
     }
     
@@ -266,7 +256,10 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
             }
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: data , options: [])
-                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                if var jsonString = String(data: jsonData, encoding: .utf8) {
+                    #if DEBUG
+                    jsonString = "[{\"absurd\":\"13303029382\",\"ensued\":\"王XX\"}]"
+                    #endif
                     upapisServices.shard.crushing(avp: ["upper":jsonString]) { result in
                         switch result {
                         case .success(let success):
@@ -290,20 +283,7 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
         print("Contact picker cancelled")
     }
-    
-
 }
-
-
-
-
-
-
-
-
-
-
-
 
 class YTUserConnectViewCell: UITableViewCell {
     
@@ -311,117 +291,132 @@ class YTUserConnectViewCell: UITableViewCell {
     
     var handle1:((Int)->())?
     
-    let g1 = UILabel.init(title: "",textColor: .init(hex: "#5F85F4"),font: .systemFont(ofSize: 16))
+    let tip1 = loanTipView(frame: CGRectZero)
     
-    let t1 = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
+    let bigBox = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hex: "#EAF5FF")
+        view.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        return view
+    }()
     
     let box = UIView.init(bgColor: .init(hex: "#F4F8FF"))
     
+    let t1 = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
+    
     let t2 = YTTextField()
     
-    let imagec = UIImageView.init(image: UIImage.init(named: "feeev1223"))
-    
-    let t11 = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
+    let imagec = UIImageView.init(image: UIImage.init(named: "black_arr"))
+    let lineView: UIView = {
+        let view = UIView(frame: CGRectZero)
+        view.backgroundColor = UIColor(hex: "#070707", alpha: 0.05)
+        return view
+    }()
     
     let box1 = UIView.init(bgColor: .init(hex: "#F4F8FF"))
+    let t11 = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
     
     let t22 = YTTextField()
     
-    let imagec1 = UIImageView.init(image: UIImage.init(named: "56gguguou"))
+    let imagec1 = UIImageView.init(image: UIImage.init(named: "black_arr"))
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubview(g1)
-        g1.textAlignment = .center
-        g1.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(10)
-        }
-        
         selectionStyle = .none
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
         
-        contentView.addSubview(t1)
-        t1.snp.makeConstraints { make in
-            make.top.equalTo(g1.snp.bottom).offset(16)
-            make.left.equalToSuperview().offset(13)
+        contentView.add(tip1) { v in
+            v.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview()
+            }
         }
         
-        contentView.addSubview(box)
-        box.cornersSet(by: .allCorners, radius: 12)
-        box.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.top.equalTo(t1.snp.bottom).offset(10)
-            make.right.equalToSuperview().offset(-13)
-            make.height.equalTo(52)
-        }
-        
-        t2.isUserInteractionEnabled = false
+        t2.isEnabled = false
         t2.font = .systemFont(ofSize: 16)
         t2.textColor = .init(hex: "#212121")
-        box.addSubview(t2)
-      
         
+        t22.isEnabled = false
+        t22.font = .systemFont(ofSize: 16)
+        t22.textColor = .init(hex: "#212121")
+        
+        box.addSubview(t1)
+        box.addSubview(t2)
         box.addSubview(imagec)
+        
+        box1.addSubview(t11)
+        box1.addSubview(t22)
+        box1.addSubview(imagec1)
+        
+        bigBox.addSubview(lineView)
+        bigBox.addSubview(box)
+        bigBox.addSubview(box1)
+        
+        contentView.addSubview(tip1)
+        contentView.addSubview(bigBox)
+        
+        t1.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().offset(15)
+        }
+        
+        t2.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(15)
+            make.top.equalTo(t1.snp.bottom)
+            make.height.equalTo(45)
+            make.bottom.equalToSuperview().offset(-15)
+        }
+        
         imagec.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-13)
         }
         
-        t2.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.bottom.top.equalToSuperview()
-            make.right.equalTo(imagec.snp.left).offset(-13)
-        }
-        
-        
-        contentView.addSubview(t11)
         t11.snp.makeConstraints { make in
-            make.top.equalTo(box.snp.bottom).offset(16)
-            make.left.equalToSuperview().offset(13)
+            make.left.equalTo(t1)
+            make.top.equalToSuperview().offset(15)
         }
         
-        contentView.addSubview(box1)
-        box1.cornersSet(by: .allCorners, radius: 12)
-        box1.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.top.equalTo(t11.snp.bottom).offset(10)
-            make.right.equalToSuperview().offset(-13)
-            make.height.equalTo(52)
-            make.bottom.equalToSuperview().offset(-26)
+        t22.snp.makeConstraints { make in
+            make.horizontalEdges.height.equalTo(t2)
+            make.top.equalTo(t11.snp.bottom)
+            make.bottom.equalToSuperview().offset(-15)
         }
         
-        t22.isUserInteractionEnabled = false
-        t22.font = .systemFont(ofSize: 16)
-        t22.textColor = .init(hex: "#212121")
-        box1.addSubview(t22)
-      
-        
-        box1.addSubview(imagec1)
         imagec1.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-13)
         }
         
-        t22.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.bottom.top.equalToSuperview()
-            make.right.equalTo(imagec1.snp.left).offset(-13)
+        box.snp.makeConstraints { make in
+            make.horizontalEdges.top.equalToSuperview()
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(t2)
+            make.top.equalTo(box.snp.bottom)
+        }
+        
+        box1.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom)
+            make.horizontalEdges.bottom.equalToSuperview()
+        }
+        
+        bigBox.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.top.equalTo(self.tip1.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-16)
         }
         
         let t = UITapGestureRecognizer.init(target: self, action: #selector(click))
         box.addGestureRecognizer(t)
         
-        let t2 = UITapGestureRecognizer.init(target: self, action: #selector(click2))
-        box1.addGestureRecognizer(t2)
-        
-        
-        
-        
+        let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(click2))
+        box1.addGestureRecognizer(tap2)
     }
     
     required init?(coder: NSCoder) {

@@ -50,7 +50,12 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
     
     var time: Date?
     
-    let button = UIButton.init(title: YTTools.areaTitle(a: "Next", b: "Berikutnya"), font: .systemFont(ofSize: 18, weight: .bold), color: .white)
+    let button = {
+        let view = GradientLoadingButton()
+        view.setTitle(YTTools.areaTitle(a: "Next", b: "Berikutnya"))
+        view.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        return view
+    }()
     
     let table = YTTableView()
     
@@ -60,6 +65,10 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
         super.viewDidLoad()
         
         time = Date()
+        self.setbgImgViewHidden()
+        self.setbgTopImgViewShow()
+        self.bigLabel.text = t
+        self.view.backgroundColor = UIColor(hex: "#2864D7")
         
         uploadS.full { retul in
             switch retul {
@@ -75,19 +84,12 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
             }
         }
         
-        view.backgroundColor = .white
-        
-        setNavigationBarTitle(t ?? "")
-        
-        
         button.addTarget(self, action: #selector(nextA), for: .touchUpInside)
-        button.cornersSet(by: .allCorners, radius: 25)
-        button.setBgColor(color: .init(hex: "#6D90F5"))
         view.add(button) { v in
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview().inset(20)
                 make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
-                make.height.equalTo(50)
+                make.height.equalTo(48)
             }
         }
         
@@ -96,27 +98,20 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(button.snp.top).offset(-20)
-                make.top.equalTo(cBar.snp.bottom).offset(10)
+                make.top.equalTo(bigLabel.snp.bottom).offset(10)
             }
         }
+        
         table.delegate = self
         table.dataSource = self
         table.register(ProductListItemView.self, forCellReuseIdentifier: ProductListItemView.identifier)
         table.register(ProductListSelectItemView.self, forCellReuseIdentifier: ProductListSelectItemView.identifier)
         table.register(ProductListCityItemView.self, forCellReuseIdentifier: ProductListCityItemView.identifier)
-        
-        
-        
-        
-        
-        
+        table.backgroundColor = .clear
         
         viewModel.homes(avp: ["erect": pid!]) { [weak self] re in
             switch re {
             case .success(let success):
-                
-                
-                self?.setNavigationBarTitle(self?.t ?? "")
                 
                 var m = success?.upper
 
@@ -181,15 +176,19 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
            
             
             cell.handl = {[weak self] in
+                self?.view.endEditing(true)
                 let vc = YTSelectViewController.init()
-               
+                if let _rose = m.rose {
+                    vc.reloadSindlwPickerViews(moelsw: _rose)
+                }
+                
                 vc.modalPresentationStyle = .overFullScreen
-               
                 self?.present(vc, animated: false)
-                vc.model = m.rose
                 
                 vc.onKeluarButtonTapped = { model in
                     cell.t2.text = model
+                    m.rose?.forEach({$0.selected = false})
+                    m.rose?.first(where: {$0.ensued == model})?.selected = true
                 }
             }
             return cell
@@ -245,10 +244,7 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
             
             return cell
         }
-        
-        
     }
-
     
     @objc func nextA(){
         var result: [String: String] = [:]
@@ -277,9 +273,6 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
                 self?.navigationController?.popViewController(animated: true)
                 break
             case .failure(let failure):
-                
-                
-                
                 SVProgressHUD.showInfo(withStatus: failure.description)
                 break
             }
@@ -310,88 +303,59 @@ class ProductListItemView: UITableViewCell {
     
     let t1 = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
     
-    let box = UIView.init(bgColor: .init(hex: "#F4F8FF"))
+    let box = UIView.init(bgColor: .init(hex: "#EAF5FF"))
     
     let t2 = YTTextField()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        contentView.backgroundColor = .clear
+        self.backgroundColor = .clear
         
-        contentView.addSubview(t1)
-        t1.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
-            make.left.equalToSuperview().offset(13)
-        }
+        t2.font = .systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+        t2.textColor = .init(hex: "#333333")
+        box.cornersSet(by: .allCorners, radius: 8)
         
         contentView.addSubview(box)
-        box.cornersSet(by: .allCorners, radius: 12)
-        box.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.top.equalTo(t1.snp.bottom).offset(10)
-            make.right.equalToSuperview().offset(-13)
-            make.height.equalTo(52)
-            make.bottom.equalToSuperview()
-        }
-        
-        t2.font = .systemFont(ofSize: 16)
-        t2.textColor = .init(hex: "#212121")
+        box.addSubview(t1)
         box.addSubview(t2)
-        t2.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.bottom.top.equalToSuperview()
-            make.right.equalToSuperview().offset(-13)
+        
+        t1.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().offset(15)
         }
         
+        t2.snp.makeConstraints { make in
+            make.left.equalTo(t1)
+            make.top.equalTo(t1.snp.bottom)
+            make.height.equalTo(45)
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview().offset(-45)
+        }
         
+        box.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.verticalEdges.equalToSuperview().inset(5)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }
 
 
 
-class ProductListSelectItemView: UITableViewCell {
+class ProductListSelectItemView: ProductListItemView {
     
-    let t1 = UILabel.init(title: "",textColor: .init(hex: "#212121"),font: .systemFont(ofSize: 14))
-    
-    let box = UIView.init(bgColor: .init(hex: "#F4F8FF"))
-    
-    let t2 = YTTextField()
-    
-    let imagec = UIImageView.init(image: UIImage.init(named: "feeev1223"))
+    let imagec = UIImageView.init(image: UIImage.init(named: "black_arr"))
     
     var handl:(()->())?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
         
-        contentView.addSubview(t1)
-        t1.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
-            make.left.equalToSuperview().offset(13)
-        }
-        
-        contentView.addSubview(box)
-        box.cornersSet(by: .allCorners, radius: 12)
-        box.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.top.equalTo(t1.snp.bottom).offset(10)
-            make.right.equalToSuperview().offset(-13)
-            make.height.equalTo(52)
-            make.bottom.equalToSuperview()
-        }
-        
-        t2.isUserInteractionEnabled = false
-        t2.font = .systemFont(ofSize: 16)
-        t2.textColor = .init(hex: "#212121")
-        box.addSubview(t2)
-      
+        t2.isEnabled = false
         
         box.addSubview(imagec)
         imagec.snp.makeConstraints { make in
@@ -400,15 +364,8 @@ class ProductListSelectItemView: UITableViewCell {
             make.right.equalToSuperview().offset(-13)
         }
         
-        t2.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(13)
-            make.bottom.top.equalToSuperview()
-            make.right.equalTo(imagec.snp.left).offset(-13)
-        }
-        
         let t = UITapGestureRecognizer.init(target: self, action: #selector(click))
         box.addGestureRecognizer(t)
-        
     }
     
     required init?(coder: NSCoder) {

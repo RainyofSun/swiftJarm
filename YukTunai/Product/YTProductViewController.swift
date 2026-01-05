@@ -416,35 +416,34 @@ class YTProductViewController: YTBaseViewController, UITableViewDelegate, UITabl
             return
         }
         
-        guard let t = item.floor == 1 ? item.poodle : model?.quiet?.poodle else {
-            return
-        }
+        let t = item.floor == 1 ? item.poodle : model?.quiet?.poodle
+        let ttitle = item.floor == 1 ? item.downward : model?.quiet?.downward
         
         SVProgressHUD.show()
         if t == "lip" {
             let v = YTProductFaceViewController()
             v.pid = model?.placed?.wide
-            v.t = (item.downward ?? "")
+            v.t = ttitle
             navigationController?.pushViewController(v, animated: true)
         } else if t == "upper" {
             let v = YTProductListViewController()
             v.pid = model?.placed?.wide
-            v.t = (item.downward ?? "")
+            v.t = ttitle
             navigationController?.pushViewController(v, animated: true)
         } else if t == "gash" {
             let v = YTProductdierViewController()
             v.pid = model?.placed?.wide
-            v.t = (item.downward ?? "")
+            v.t = ttitle
             navigationController?.pushViewController(v, animated: true)
         } else if t == "days" {
             let v = YTUserConnectViewController()
             v.pid = model?.placed?.wide
-            v.t = (item.downward ?? "")
+            v.t = ttitle
             navigationController?.pushViewController(v, animated: true)
         } else if t == "fought" {
             let v = YTDibankViewController()
             v.pid = model?.placed?.wide
-            v.t = (item.downward ?? "")
+            v.t = ttitle
             navigationController?.pushViewController(v, animated: true)
         }
         

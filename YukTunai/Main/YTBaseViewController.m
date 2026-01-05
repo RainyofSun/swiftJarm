@@ -16,13 +16,24 @@
     
     self.backB.hidden = self.navigationController.viewControllers.count == 1 ? YES : NO;
     self.bgImgView.frame = self.view.bounds;
-    self.topBgImgView.frame = CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, UIScreen.mainScreen.bounds.size.width * 0.89);
+    self.topBgImgView.frame = CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, UIScreen.mainScreen.bounds.size.width * 1.24);
     
     self.topBgImgView.hidden = YES;
     self.view.backgroundColor = [UIColor colorWithRed:3/255.0 green:52/255.0 blue:114/255.0 alpha:1];
     
     [self.view addSubview:self.bgImgView];
     [self.view addSubview:self.topBgImgView];
+    [self.topBgImgView addSubview:self.bigLabel];
+    self.bigLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    // 1. 水平居中
+    [self.bigLabel.centerXAnchor constraintEqualToAnchor:self.topBgImgView.centerXAnchor].active = YES;
+
+    // 2. 宽度 = 父 view 的一半
+    [self.bigLabel.widthAnchor constraintEqualToAnchor:self.topBgImgView.widthAnchor multiplier:0.5].active = YES;
+
+    // 3. 距离顶部 100
+    CGFloat topDis = self.navigationController.navigationBar.bounds.size.height + [self statusBarH];
+    [self.bigLabel.topAnchor constraintEqualToAnchor:self.topBgImgView.topAnchor constant:(topDis)].active = YES;
 }
 
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
@@ -149,6 +160,18 @@
         _topBgImgView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return  _topBgImgView;
+}
+
+-(UILabel *)bigLabel {
+    if (!_bigLabel) {
+        _bigLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _bigLabel.textColor = [UIColor whiteColor];
+        _bigLabel.font = [UIFont boldSystemFontOfSize:40];
+        _bigLabel.textAlignment = NSTextAlignmentCenter;
+        _bigLabel.numberOfLines = 0;
+    }
+    
+    return  _bigLabel;
 }
 
 @end

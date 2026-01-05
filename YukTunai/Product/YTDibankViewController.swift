@@ -19,27 +19,31 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
     
     var time: Date?
     
-    let button = UIButton.init(title: YTTools.areaTitle(a: "Next", b: "Berikutnya"), font: .systemFont(ofSize: 18, weight: .bold), color: .white)
+    let button = {
+        let view = GradientLoadingButton()
+        view.setTitle(YTTools.areaTitle(a: "Next", b: "Berikutnya"))
+        view.cornersSet(by: UIRectCorner.allCorners, radius: 8)
+        return view
+    }()
     
     let table = YTTableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
-        setNavigationBarTitle(t ?? "")
-        
         time = Date()
+        self.setbgImgViewHidden()
+        self.setbgTopImgViewShow()
+        self.bigLabel.text = t
+        self.view.backgroundColor = UIColor(hex: "#2864D7")
+
         
         button.addTarget(self, action: #selector(nextA), for: .touchUpInside)
-        button.cornersSet(by: .allCorners, radius: 25)
-        button.setBgColor(color: .init(hex: "#6D90F5"))
         view.add(button) { v in
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview().inset(20)
                 make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
-                make.height.equalTo(50)
+                make.height.equalTo(48)
             }
         }
         
@@ -48,21 +52,17 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             v.snp.makeConstraints { make in
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(button.snp.top).offset(-20)
-                make.top.equalTo(cBar.snp.bottom).offset(10)
+                make.top.equalTo(bigLabel.snp.bottom).offset(10)
             }
         }
+        
         table.delegate = self
         table.dataSource = self
         table.register(ProductListItemView.self, forCellReuseIdentifier: ProductListItemView.identifier)
         table.register(ProductListSelectItemView.self, forCellReuseIdentifier: ProductListSelectItemView.identifier)
         table.register(ProductListCityItemView.self, forCellReuseIdentifier: ProductListCityItemView.identifier)
-        
-        
-        
-        
-        
-        
-        
+        table.backgroundColor = .clear
+
         viewModel.arrogant(avp: ["erect": pid!]) { [weak self] re in
             switch re {
             case .success(let success):
@@ -127,15 +127,20 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
            
             
             cell.handl = {[weak self] in
+                self?.view.endEditing(true)
                 let vc = YTSelectViewController.init()
-               
+                if let _rose = m.rose {
+                    vc.reloadSindlwPickerViews(moelsw: _rose)
+                }
                 vc.modalPresentationStyle = .overFullScreen
                
                 self?.present(vc, animated: false)
-                vc.model = m.rose
+                
                 
                 vc.onKeluarButtonTapped = { model in
                     cell.t2.text = model
+                    m.rose?.forEach({$0.selected = false})
+                    m.rose?.first(where: {$0.ensued == model})?.selected = true
                 }
             }
             return cell

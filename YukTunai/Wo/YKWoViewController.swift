@@ -350,11 +350,11 @@ class YTWebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDeleg
         let userContentController = WKUserContentController()
         config.userContentController = userContentController
       
-        userContentController.add(self, name: "chosen")
-        userContentController.add(self, name: "leaped")
-        userContentController.add(self, name: "dropped")
-        userContentController.add(self, name: "dog")
-        userContentController.add(self, name: "seconds")
+        userContentController.add(self, name: "DemonstrateVision")
+        userContentController.add(self, name: "ToThis")
+        userContentController.add(self, name: "AboutOur")
+        userContentController.add(self, name: "LaborOf")
+        userContentController.add(self, name: "RaceIntroduce")
         
         
         webView = WKWebView(frame: .zero, configuration: config)
@@ -377,26 +377,62 @@ class YTWebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDeleg
         webView.load(request)
         
     }
-
+/*
+ ---------------------------
+ 1. 文档地址：https://doc.alta-dg.mx/id_pinjam_laju_ios
+ 2. 文档反转义地址：https://doc.alta-dg.mx/decode.php?project=id_pinjam_laju_ios
+ 3. 接口访问地址：http://8.215.47.12/fundinghe
+  
+  
+ 接口文档账号：dev
+ 接口文档密码：fly2024
+  
+  
+ 4. 官方文档:https://developer.apple.com/support/third-party-SDK-requirements
+ 5. 隐私清单文档-必看(持续更新 ): http://47.238.207.2:3031/APP/AppPrivacyChecklist_doc.git
+ 账号：wendang
+ 密码：wendang123
+  
+  
+ Tips:  接口调试流程注意文档  https://pwdgtjoqfr.feishu.cn/docx/PYMwdLwDwoey7pxH5fJcC0tlnRe
+  
+  
+ 6. 证件和流程调试补充文档  https://note.youdao.com/s/cJPkcHQz
+  
+  
+ 7. H5交互函数：
+ DemonstrateVision()关闭当前webview
+ ToThis(String url, String params)带参数页面跳转
+ AboutOur()回到首页，并关闭当前页
+ LaborOf() app store评分功能
+ RaceIntroduce() 确认申请埋点调用方法
+  
+  
+ 8. 数据检查网站，可检查埋点数据，设备信息上报，位置信息上报，idfa&idfv上报 (可自行检查，有效期时长：45天):
+ http://8.215.47.12:4058/index.html
+ 账号：admin
+ 密码：666666
+ -----------------------------
+ */
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-                if message.name == "chosen" {
-                    close()
-                } else if message.name == "leaped" {
-                    goToHome()
-                } else if message.name == "dropped" {
-                    openRevew()
-                } else if message.name == "seconds" {
-                    if let messageBody = message.body as? String {
-                        targetAction(with: messageBody)
-                    } else if let messageDatas = message.body as? [String] {
-                        guard let item = messageDatas.first else {
-                            return
-                        }
-                        targetAction(with: item)
-                    }
-                } else if message.name == "dog" {
-                  storms()
+        if message.name == "DemonstrateVision" {
+            close()
+        } else if message.name == "AboutOur" {
+            goToHome()
+        } else if message.name == "LaborOf" {
+            openRevew()
+        } else if message.name == "ToThis" {
+            if let messageBody = message.body as? String {
+                targetAction(with: messageBody)
+            } else if let messageDatas = message.body as? [String] {
+                guard let item = messageDatas.first else {
+                    return
                 }
+                targetAction(with: item)
+            }
+        } else if message.name == "RaceIntroduce" {
+          storms()
+        }
     }
     
     func targetAction(with item: String) {

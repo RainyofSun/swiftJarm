@@ -10,7 +10,23 @@
 @implementation GuideAlert
 
 + (void)showAlertController:(UIViewController *)presentVC alertType:(AlertType)type {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[GuideAlert title]
+                                                                             message:[GuideAlert content:AlertType_Contacts]
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
     
+    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:[GuideAlert ok] style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSURL *appSettings = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if ([[UIApplication sharedApplication] canOpenURL:appSettings]) {
+            [[UIApplication sharedApplication] openURL:appSettings options:@{} completionHandler:nil];
+        }
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[GuideAlert cancel] style:UIAlertActionStyleDefault handler:nil];
+    
+    [alertController addAction:settingsAction];
+    [alertController addAction:cancelAction];
+    
+    [presentVC presentViewController:alertController animated:YES completion:nil];
 }
 
 + (NSString *)ok {

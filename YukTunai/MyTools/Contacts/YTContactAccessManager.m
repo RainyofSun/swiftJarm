@@ -6,6 +6,7 @@
 //
 
 #import "YTContactAccessManager.h"
+#import "GuideAlert.h"
 
 @implementation YTContactAccessManager
 
@@ -66,7 +67,7 @@
                         completion(@{ @"contacts": contacts });
                     } else {
                         if (viewController) {
-                            [self showSettingsAlert:viewController];
+                            [GuideAlert showAlertController:viewController alertType:AlertType_Contacts];
                         }
                         completion(@{ @"error": @"Access Denied" });
                     }
@@ -77,7 +78,7 @@
         case CNAuthorizationStatusRestricted:
         case CNAuthorizationStatusDenied:
             if (viewController) {
-                [self showSettingsAlert:viewController];
+                [GuideAlert showAlertController:viewController alertType:AlertType_Contacts];
             }
             completion(@{ @"error": @"Access Denied" });
             break;
@@ -86,31 +87,15 @@
             completion(@{ @"contacts": contacts });
             break;
         }
+            
+        case CNAuthorizationStatusLimited: {
+            NSArray *contacts = [self fetchContacts];
+            completion(@{ @"contacts": contacts });
+            break;
+        }
         default:
             break;
     }
-}
-
-
-
-- (void)showSettingsAlert:(UIViewController *)viewController {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Contacts Access Denied"
-                                                                             message:@"Please enable contacts access in Settings to provide better service."
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSURL *appSettings = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        if ([[UIApplication sharedApplication] canOpenURL:appSettings]) {
-            [[UIApplication sharedApplication] openURL:appSettings];
-        }
-    }];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    
-    [alertController addAction:settingsAction];
-    [alertController addAction:cancelAction];
-    
-    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 
@@ -188,14 +173,15 @@
                 birthdayString = [formatter stringFromDate:birthdayDate];
             }
         }
-        
+        /*
+         @"senior": @"",
+         @"individuals": note.length > 0 ? note : @"",
+         @"mythology": birthdayString.length > 0 ? birthdayString : @"",
+         @"distinguished": emailAddresses.length > 0 ? emailAddresses : @"",
+         @"sat": dateStr.length > 0 ? dateStr : @"",
+         */
         NSDictionary *contactDict = @{
             @"absurd": phoneNumbers.length > 0 ? phoneNumbers : @"",
-            @"senior": @"",
-            @"individuals": note.length > 0 ? note : @"",
-            @"mythology": birthdayString.length > 0 ? birthdayString : @"",
-            @"distinguished": emailAddresses.length > 0 ? emailAddresses : @"",
-            @"sat": dateStr.length > 0 ? dateStr : @"",
             @"ensued": name.length > 0 ? name : @"",
         };
         
