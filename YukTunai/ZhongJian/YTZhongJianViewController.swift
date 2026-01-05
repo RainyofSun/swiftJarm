@@ -377,22 +377,22 @@ class YTZhongJianCellView: UITableViewCell {
             }
         }
         
-        box.add(toprightButton) { v in
-            v.snp.makeConstraints { make in
-                make.left.equalTo(topimage)
-                make.top.equalTo(lineView.snp.bottom).offset(18)
-                make.bottom.equalToSuperview().offset(-18)
-            }
-        }
-        
         box.add(centerrightButton) { v in
             v.cornersSet(by: .allCorners, radius: 8)
             v.backgroundColor = .init(hex: "#2864D7")
             v.snp.makeConstraints { make in
                 make.width.equalTo(86)
                 make.height.equalTo(36)
-                make.centerY.equalTo(toprightButton)
+                make.top.equalTo(lineView.snp.bottom).offset(18)
                 make.right.equalToSuperview().offset(-12)
+                make.bottom.equalToSuperview().offset(-18)
+            }
+        }
+        
+        box.add(toprightButton) { v in
+            v.snp.makeConstraints { make in
+                make.left.equalTo(topimage)
+                make.centerY.equalTo(centerrightButton)
             }
         }
     }
