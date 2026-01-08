@@ -181,6 +181,7 @@ class YTProductListViewController: YTBaseViewController,UITableViewDelegate,UITa
                 if let _rose = m.rose {
                     vc.reloadSindlwPickerViews(moelsw: _rose)
                 }
+                vc.loanTileView.title.text = m.downward
                 
                 vc.modalPresentationStyle = .overFullScreen
                 self?.present(vc, animated: false)
@@ -330,7 +331,7 @@ class ProductListItemView: UITableViewCell {
             make.top.equalTo(t1.snp.bottom)
             make.height.equalTo(45)
             make.bottom.equalToSuperview()
-            make.right.equalToSuperview().offset(-45)
+            make.right.equalToSuperview().offset(-15)
         }
         
         box.snp.makeConstraints { make in
@@ -356,6 +357,14 @@ class ProductListSelectItemView: ProductListItemView {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         t2.isEnabled = false
+        
+        t2.snp.remakeConstraints { make in
+            make.left.equalTo(t1)
+            make.top.equalTo(t1.snp.bottom)
+            make.height.equalTo(45)
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview().offset(-45)
+        }
         
         box.addSubview(imagec)
         imagec.snp.makeConstraints { make in

@@ -283,6 +283,8 @@ class infoModel: SmartCodable {
     var along: [alongModel]?
     var inverted: invertedModel?
     var victorious: victoriousModel?
+    var order_num: OrderNumberModel?
+    
     required init(){}
 }
 
@@ -290,6 +292,13 @@ class alongModel: SmartCodable {
     var downward: String?
     var stride: String?
     var courageous: String?
+    required init(){}
+}
+
+class OrderNumberModel: SmartCodable {
+    var apply_num: String?
+    var repayment_num: String?
+    var finished_num: String?
     required init(){}
 }
 
@@ -314,6 +323,13 @@ class victoriousModel: SmartCodable {
 class homeModel: SmartCodable {
     var along: [homealongModel]?
     var courageous: homecon?
+    var addressed: homeAddressModel?
+    required init(){}
+}
+
+class homeAddressModel: SmartCodable {
+    var downward: String?
+    var words: String?
     required init(){}
 }
 
@@ -353,6 +369,7 @@ class marchedModel: SmartCodable {
     var neck: String?
     var coat: String?
     var smoky: String?
+    var bassgl: String?
     var dim: String?
     var stalking: String?
     var drunk: String?

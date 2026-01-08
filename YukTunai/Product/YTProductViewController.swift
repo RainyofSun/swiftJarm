@@ -117,7 +117,7 @@ class YTPView: UIView {
         }
         
         
-        let t2 = UILabel.init(title: name,textColor: .init(hex: "#141C35"),font: .systemFont(ofSize: 16), alignment: .center)
+        let t2 = UILabel.init(title: name,textColor: .init(hex: "#141C35"),font: .systemFont(ofSize: YTTools.isIPhone6Series() ? 14 : 16), alignment: .center)
         add(t2) { v in
             v.snp.makeConstraints { make in
                 make.horizontalEdges.equalToSuperview().inset(15)
@@ -154,6 +154,7 @@ class YTProductViewController: YTBaseViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let c = tableView.dequeueReusableCell(withIdentifier: PPChanPunTableViewCell.identifier, for: indexPath) as! PPChanPunTableViewCell
+            c.resetBoxView2()
             if let mm = model  {
                 c.price.isHidden = false
                 c.l1t.isHidden = false
@@ -307,7 +308,7 @@ class YTProductViewController: YTBaseViewController, UITableViewDelegate, UITabl
         view.add(table) { v in
             v.snp.makeConstraints { make in
                 make.left.right.top.equalToSuperview()
-                make.bottom.equalTo(protocolLable.snp.top).offset(12)
+                make.bottom.equalTo(protocolLable.snp.top).offset(-12)
             }
         }
      
@@ -325,7 +326,7 @@ class YTProductViewController: YTBaseViewController, UITableViewDelegate, UITabl
  
     
     @objc func check(with button: UIButton) {
-        button.setImage(image: button.isSelected ? "pro_sel选" : "pro_nor")
+        button.setImage(image: button.isSelected ? "pro_sel" : "pro_nor")
         button.isSelected = !button.isSelected
     }
     
@@ -489,7 +490,7 @@ class cell2: UITableViewCell {
             }
         }
 
-        let spacing: CGFloat = 15
+        let spacing: CGFloat = YTTools.isIPhone6Series() ? 8 : 15
 
         var lastRowBottomView: UIView?
         var leftItem: UIView?
@@ -527,13 +528,14 @@ class cell2: UITableViewCell {
 
                     // 宽度 = 半屏（减去列间距）
                     make.width.equalToSuperview().multipliedBy(0.5).offset(-spacing / 2)
+                    make.height.equalTo(175)
                 } else {
                     // 右列
                     make.left.equalTo(leftItem!.snp.right).offset(spacing)
                     make.right.equalToSuperview()
 
                     // 宽度等于左列
-                    make.width.equalTo(leftItem!)
+                    make.size.equalTo(leftItem!)
                 }
             }
 

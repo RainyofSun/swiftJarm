@@ -9,7 +9,7 @@ import UIKit
 
 class loginPhonView: UIView {
 
-    let fileLaw: UILabel = UILabel(title: (YTTools.areaTitle(a: "+61", b: "+91")), textColor: .white, font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium))
+    let fileLaw: UILabel = UILabel(title: (YTTools.areaTitle(a: "+91", b: "+62")), textColor: .white, font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium))
     let phoneText: YTTextField = YTTextField()
     let line = UIView(frame: CGRectZero)
     

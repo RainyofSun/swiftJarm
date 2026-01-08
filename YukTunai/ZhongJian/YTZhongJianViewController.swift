@@ -30,9 +30,8 @@ class YTZhongJianViewController: YTBaseViewController, UITableViewDelegate,UITab
                                      buttonTitle: YTTools.areaTitle(a: "Apply loan", b: "Ajukan Sekarang"),
                                      offsetY: -40,
                                      canBunces: true) {[weak self] in
-                    self?.tableView.mj_header?.beginRefreshing {[weak self] in
-                        self?.requst()
-                    }
+                    let tabBar = UIApplication.shared.windows.first?.rootViewController as? UITabBarController
+                    tabBar?.selectedIndex = 0
                 }
             } else {
                 tableView.empty.hidden()
@@ -165,10 +164,14 @@ class YTZhongJianViewController: YTBaseViewController, UITableViewDelegate,UITab
             
             if (m.joined ?? "").count == 0 {
                 cell.toprightButton.isHidden = true
+                cell.centerrightButton.isHidden = true
             } else {
+                cell.toprightButton.isHidden = false
+                cell.centerrightButton.isHidden = false
                 cell.toprightButton.setAttributedTitle(NSAttributedString(string: m.joined ?? "", attributes: [.foregroundColor: UIColor(hex: "#2864D7"), .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium), .underlineStyle: NSUnderlineStyle.single.rawValue, .underlineColor: UIColor(hex: "#2864D7")]), for: UIControl.State.normal)
                 cell.tag = indexPath.row
                 cell.toprightButton.addTarget(self, action: #selector(aa(with:)), for: .touchUpInside)
+                cell.centerrightButton.addTarget(self, action: #selector(aa(with: )), for: UIControl.Event.touchUpInside)
             }
             
         }

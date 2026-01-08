@@ -166,7 +166,12 @@ class ApiViewModel: NSObject {
 class YTLunchScreenViewController: UIViewController {
     
     let viewModel = ApiViewModel()
-    let imgView: UIImageView = UIImageView(image: UIImage(named: "launchs"))
+    let imgView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "launchs"))
+        view.contentMode = UIView.ContentMode.scaleAspectFill
+        return view
+    }()
+    
     var button: GradientLoadingButton = {
         let view = GradientLoadingButton.init(frame: CGRectZero)
         view.setTitle(LocalizationManager.shared().localizedString(forKey: "start_try"))
@@ -183,20 +188,23 @@ class YTLunchScreenViewController: UIViewController {
             self.button.setTitle(LocalizationManager.shared().localizedString(forKey: "start_try"))
         }
 
-        monitor.pathUpdateHandler = { [weak self] path in
-            DispatchQueue.main.async {
-                if path.status == .satisfied {
-                    if (self?.hasStartApp == false) {
-                        self?.startApp()
+        if !YTTools.isIpad() {
+            monitor.pathUpdateHandler = { [weak self] path in
+                DispatchQueue.main.async {
+                    if path.status == .satisfied {
+                        if (self?.hasStartApp == false) {
+                            self?.startApp()
+                        }
+                    } else {
+                        self?.button.isHidden = false
                     }
-                } else {
-                    self?.button.isHidden = false
                 }
             }
-        }
 
-        let queue = DispatchQueue(label: "Monitor")
-        monitor.start(queue: queue)
+            monitor.start(queue: DispatchQueue(label: "Monitor"))
+        } else {
+            startApp()
+        }
         
         view.addSubview(imgView)
         imgView.snp.makeConstraints { make in
@@ -217,7 +225,9 @@ class YTLunchScreenViewController: UIViewController {
     
 
     deinit {
-        monitor.cancel()
+        if !YTTools.isIpad() {
+            monitor.cancel()
+        }
         print("fewfewfew")
     }
     
@@ -255,8 +265,6 @@ class YTLunchScreenViewController: UIViewController {
                 let centerVc = YTBaseNavigationController.init(rootViewController: center)
                 tabViewC.addChild(centerVc)
 
-
-
                 UIApplication.shared.windows.first?.rootViewController  = tabViewC
             }
             UIApplication.shared.windows.first?.rootViewController = firstScreen
@@ -285,6 +293,16 @@ class YTLunchScreenViewController: UIViewController {
     }
                 
     func startApp(){
+
+        if YTTools.isIpad() {
+            YTUserDefaults.shared.gash = "1"
+            LocalizationManager.shared().setLanguage("en")
+            self.button.isHidden = true
+            
+            self.initApi()
+            return
+        }
+        
         viewModel.schlaeger(h:HOST,avp: [
             "schlaeger":"\(DeviceInformationModel.getCurrentLanguage())",
             "suabian":"\(DeviceInformationModel.isProxyEnabled() ? 1:0)",

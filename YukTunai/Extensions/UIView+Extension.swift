@@ -130,6 +130,10 @@ extension UIViewController {
         return UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
     }
     
+    var safeAreaBottom: CGFloat {
+        return UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
+    }
+    
     // 获取状态栏和导航栏的总高度
     var totalTopHeight: CGFloat {
         return statusBarHeight + navigationBarHeight

@@ -306,7 +306,7 @@ class YTFullScreenPopupViewController: UIViewController {
     // UI组件
     private let popupView = UIView()
     private let accountButton = GradientLoadingButton(frame: CGRectZero)
-    private let checkBoxButton = UIButton.init(title: "", image: "pro_nor")
+    private let checkBoxButton = UIButton.init(title: "", image: "bir_skw")
     
     // 记录选择状态
     private var isAgreed = false {
@@ -435,12 +435,15 @@ class YTFullScreenPopupViewController: UIViewController {
         if isAgreed {
             checkBoxButton.setImage(image: "pro_sel")
         } else {
-            checkBoxButton.setImage(image: "pro_nor")
+            checkBoxButton.setImage(image: "bir_skw")
         }
     }
 
     @objc private func confirmAction() {
-        guard isAgreed else { return }
+        guard isAgreed else {
+            SVProgressHUD.showInfo(withStatus: LocalizationManager.shared().localizedString(forKey: "cancelsw"))
+            return
+        }
         // 回调闭包，用于通知外部
         onKeluarButtonTapped?()
         

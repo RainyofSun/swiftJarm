@@ -139,6 +139,7 @@ class YTUserConnectViewController: YTBaseViewController,CNContactPickerDelegate,
             if let _rose = m.rose {
                 vc.reloadSindlwPickerViews(moelsw: _rose)
             }
+            vc.loanTileView.title.text = m.downward
             vc.modalPresentationStyle = .overFullScreen
            
             self?.present(vc, animated: false)

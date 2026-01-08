@@ -43,8 +43,6 @@ class YTSelectViewController: PPAlertCksViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loanTileView.title.text = YTTools.areaTitle(a: "Please select", b: "Silakan pilih")
-        
         contentView.addSubview(self.pickerContentView)
         self.suwjeypickerView.addPicker(to: self.pickerContentView)
         

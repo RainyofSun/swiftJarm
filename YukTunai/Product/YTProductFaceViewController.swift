@@ -41,6 +41,13 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
     
     var time2: Date?
     
+    let scrollViwe = {
+        let scrollv = UIScrollView()
+        scrollv.backgroundColor = .clear
+        scrollv.showsVerticalScrollIndicator = false
+        return scrollv
+    }()
+    
     let box1 = UIImageView(image: UIImage(named: "tip_top"))
     
     let bimae = UIImageView.init(image: UIImage.init(named: "card_ff"))
@@ -83,9 +90,24 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         
         imagePicker.delegate = self
         
+        view.add(button) { v in
+            v.snp.makeConstraints { make in
+                make.left.right.equalToSuperview().inset(15)
+                make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
+                make.height.equalTo(48)
+            }
+        }
         
-        view.addSubview(box1)
-        view.addSubview(box2)
+        self.view.add(scrollViwe) { v in
+            v.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview()
+                make.top.equalTo(bigLabel.snp.bottom).offset(32)
+                make.bottom.equalTo(button.snp.top).offset(-20)
+            }
+        }
+        
+        self.scrollViwe.addSubview(box1)
+        self.scrollViwe.addSubview(box2)
         box1.addSubview(b1)
         box2.addSubview(b2)
         box1.addSubview(bimae)
@@ -94,8 +116,8 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         b2image.addSubview(bimae2)
         
         box1.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalTo(bigLabel.snp.bottom).offset(32)
+            make.horizontalEdges.equalTo(self.view)
+            make.top.equalToSuperview()
         }
         
         b1.snp.makeConstraints { make in
@@ -117,8 +139,9 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         }
         
         box2.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalTo(box1)
             make.top.equalTo(box1.snp.bottom).offset(10)
+            make.bottom.equalToSuperview()
         }
         
         b2.snp.makeConstraints { make in
@@ -139,14 +162,6 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
         }
         
         button.addTarget(self, action: #selector(nextA), for: .touchUpInside)
-        
-        view.add(button) { v in
-            v.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(15)
-                make.bottom.equalToSuperview().offset(YTTools.isIPhone6Series() ? -20 : -39)
-                make.height.equalTo(48)
-            }
-        }
         
         let t1 = UITapGestureRecognizer.init(target: self, action: #selector(takeFace))
         let t2 = UITapGestureRecognizer.init(target: self, action: #selector(takeBank))
@@ -346,6 +361,16 @@ class YTProductFaceViewController: YTBaseViewController,UIImagePickerControllerD
             SVProgressHUD.dismiss()
             switch r {
             case .success(let success):
+                if success?.upper?.virtually == "0" {
+                    // 不需要弹窗
+                    let data: [String: Any] = ["obliged": "2", "nasty": "\(((self?.time) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]
+                    NotificationCenter.default.post(name: .myNotification, object: nil, userInfo: data)
+
+                    
+                    self?.load()
+                    return
+                }
+                
                 let vc = YTUserInfoAlertViewController()
                 
                 vc.pid = self?.pid
@@ -515,6 +540,7 @@ class YTProductFaceKTPViewController: YTBaseViewController {
 
 class FACEhandsModel: SmartCodable {
     var garnished: String?
+    var virtually: String?
     var profusely: [profuselyModel]?
     required init(){}
 }

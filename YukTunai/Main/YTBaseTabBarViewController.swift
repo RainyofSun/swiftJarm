@@ -14,8 +14,8 @@ class YTBaseTabBarViewController: UITabBarController,UITabBarControllerDelegate 
             
             
             let tabBarAppearance = UITabBarAppearance()
-            tabBarAppearance.backgroundColor = UIColor.white
-            tabBarAppearance.shadowColor =  UIColor.white
+            tabBarAppearance.backgroundColor = UIColor(hex: "#033472")
+            tabBarAppearance.shadowColor =  UIColor(hex: "#033472")
             tabBar.standardAppearance = tabBarAppearance
            
             if #available(iOS 15.0, *) {

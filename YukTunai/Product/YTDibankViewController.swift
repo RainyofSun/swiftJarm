@@ -120,8 +120,7 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             cell.t1.text = m.downward
             cell.t2.placeholder = m.hind
             
-            
-            if let i = model?.discourse?[indexPath.row].rose?.filter({$0.directly == m.performance}).first {
+            if let i = model?.discourse?[indexPath.row].rose?.filter({$0.ensued == m.performance}).first {
                 cell.t2.text = i.ensued
             }
            
@@ -132,6 +131,7 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                 if let _rose = m.rose {
                     vc.reloadSindlwPickerViews(moelsw: _rose)
                 }
+                vc.loanTileView.title.text = m.downward
                 vc.modalPresentationStyle = .overFullScreen
                
                 self?.present(vc, animated: false)
@@ -193,24 +193,20 @@ class YTDibankViewController: YTBaseViewController,UITableViewDelegate,UITableVi
        
         
         print(result)
-        
-        
-        
-        let vc = YTConfirmBankViewController.init()
-        vc.l = result
-        vc.b2.text =  result["confirmCardNo"]
-        vc.pid = pid
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
-        
-        vc.onHandle = {[weak self] in
-            
-            let data: [String: Any] = ["obliged": "7", "nasty": "\(((self?.time) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]
-            NotificationCenter.default.post(name: .myNotification, object: nil, userInfo: data)
-            
-            self?.navigationController?.popViewController(animated: true)
-        }
 
+        viewModel.offensive(avp: result) {[weak self] r in
+            switch r {
+            case .success(let success):
+                let data: [String: Any] = ["obliged": "7", "nasty": "\(((self?.time) ?? Date()).timeIntervalSince1970)","newcomers":"\(Date().timeIntervalSince1970)"]
+                NotificationCenter.default.post(name: .myNotification, object: nil, userInfo: data)
+                
+                self?.navigationController?.popViewController(animated: true)
+                break
+            case .failure(let failure):
+                SVProgressHUD.showInfo(withStatus: failure.description)
+                break
+            }
+        }
     }
 
     

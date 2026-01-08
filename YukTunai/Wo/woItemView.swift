@@ -47,7 +47,6 @@ class woItemView: UIControl {
         super.init(frame: frame)
         self.type = woType
         
-        self.numLab.text = "\(type.rawValue)"
         self.subLab.text = type.subText()
         
         self.cornersSet(by: UIRectCorner.allCorners, radius: 8)
@@ -56,6 +55,7 @@ class woItemView: UIControl {
         self.add(numLab) { v in
             v.snp.makeConstraints { make in
                 make.top.left.equalToSuperview().offset(11)
+                make.height.equalTo(20)
             }
         }
         

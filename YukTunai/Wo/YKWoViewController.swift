@@ -41,20 +41,23 @@ class YKWoViewController: YTBaseViewController {
         applyView.addTarget(self, action: #selector(clikcTopTielsw(sender: )), for: UIControl.Event.touchUpInside)
         finishView.addTarget(self, action: #selector(clikcTopTielsw(sender: )), for: UIControl.Event.touchUpInside)
         
+        scrollView.showsVerticalScrollIndicator = false
+        
         setNavigationBarHidden(true, animated: true)
         box2.backgroundColor = .clear
         
         view.add(scrollView) { v in
             v.alwaysBounceVertical = true
             v.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.horizontalEdges.equalToSuperview()
+                make.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 49))
             }
         }
         
         scrollView.add(contentView) { v in
             v.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-                make.width.equalToSuperview()
+                make.left.width.top.equalToSuperview()
+                make.bottom.equalToSuperview()
             }
         }
         
@@ -112,24 +115,34 @@ class YKWoViewController: YTBaseViewController {
             }
         }
         
-        let tip = UILabel(title: LocalizationManager.shared().localizedString(forKey: "mine_tip"), textColor: UIColor.black, font: UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium))
+        let tipView = UIView()
+        tipView.backgroundColor = UIColor(hex: "#FEE35D")
+        tipView.cornersSet(by: .allCorners, radius: 8)
+        
+        let tip = UILabel(title: LocalizationManager.shared().localizedString(forKey: "mine_tip"), textColor: UIColor.black, font: UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium), alignment: NSTextAlignment.center)
         let tipImg = UIImageView(image: UIImage(named: "tip"))
         
-        contentView.add(tipImg) { v in
-            v.snp.makeConstraints { make in
-                make.horizontalEdges.equalToSuperview().inset(15)
-                make.top.equalTo(box2.snp.bottom).offset(20)
-                make.height.equalTo((UIScreen.main.bounds.width - 30) * 0.23)
-                make.bottom.equalToSuperview().offset(-20)
-            }
+        contentView.addSubview(tipView)
+        tipView.addSubview(tip)
+        contentView.addSubview(tipImg)
+        
+        tipView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(15)
+            make.top.equalTo(box2.snp.bottom).offset(35)
+            make.bottom.equalToSuperview().offset(-20)
         }
         
-        tipImg.add(tip) { v in
-            v.snp.makeConstraints { make in
-                make.right.equalToSuperview().offset(-11)
-                make.width.equalToSuperview().multipliedBy(0.7)
-                make.centerY.equalToSuperview()
-            }
+        tipImg.snp.makeConstraints { make in
+            make.left.equalTo(tipView.snp.left).offset(15)
+            make.top.equalTo(tipView.snp.top).offset(-15)
+            make.size.equalTo(CGSize(width: 60, height: 76))
+        }
+        
+        tip.snp.makeConstraints { make in
+            make.verticalEdges.equalToSuperview().inset(8)
+            make.right.equalToSuperview().offset(-8)
+            make.left.equalTo(tipImg.snp.right).offset(8)
+            make.height.greaterThanOrEqualTo(60)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(loginOK), name: Notification.Name(rawValue: "loginOK"), object: nil)
@@ -175,6 +188,9 @@ class YKWoViewController: YTBaseViewController {
                 self?.model = success?.upper
                 self?.lists(withs: (success?.upper?.along)!)
                 self?.t2.text = success?.upper?.inverted?.absurd
+                self?.repayView.numLab.text = success?.upper?.order_num?.repayment_num
+                self?.applyView.numLab.text = success?.upper?.order_num?.apply_num
+                self?.finishView.numLab.text = success?.upper?.order_num?.finished_num
             case .failure(let failure):
                 break
             }
@@ -193,7 +209,7 @@ class YKWoViewController: YTBaseViewController {
         
         
         var pre: UIView?
-        for i in 2..<data.count {
+        for i in 0..<data.count {
             let im = YTWoView.init(iconN: data[i].courageous ?? "", name: data[i].downward ?? "")
             im.tag = i
             let tap = UITapGestureRecognizer.init(target: self, action: #selector(click(tap:)))
@@ -202,7 +218,7 @@ class YKWoViewController: YTBaseViewController {
                 v.snp.makeConstraints { make in
                     make.left.right.equalToSuperview()
                     make.height.equalTo(56)
-                    if i-2 == 0 {
+                    if i == 0 {
                         make.top.equalToSuperview()
                     } else {
                         make.top.equalTo(pre!.snp.bottom).offset(8)
@@ -342,7 +358,6 @@ class YTWebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDeleg
     init(url: String? = nil) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
-        
         view.addSubview(topView)
 
  
@@ -521,6 +536,8 @@ class YTWebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let displayName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
+        self.setNavigationBarTitle(displayName)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -542,9 +559,10 @@ class YTWebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDeleg
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        self.setNavigationBarTitle(webView.title ?? "")
         DispatchQueue.main.asyncAfter(deadline: .now()+2){[weak self] in
-            self?.setNavigationBarTitle(webView.title ?? "")
+            if (webView.title?.isEmpty != true) {
+                self?.setNavigationBarTitle(webView.title ?? "")
+            }
         }
     }
 

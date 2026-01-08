@@ -147,6 +147,7 @@ class YTProductdierViewController: YTBaseViewController,UITableViewDelegate,UITa
                 if let _rose = m.rose {
                     vc.reloadSindlwPickerViews(moelsw: _rose)
                 }
+                vc.loanTileView.title.text = m.downward
                 vc.modalPresentationStyle = .overFullScreen
                
                 self?.present(vc, animated: false)

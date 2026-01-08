@@ -21,14 +21,15 @@ class PPChanPunTableViewCell: UITableViewCell {
     
     let l2t = UILabel.init(title: "",textColor: UIColor(hex: "#999999"),font: .systemFont(ofSize: 13))
     let l2tv = UILabel.init(title: "",textColor: UIColor(hex: "#333333"),font: .systemFont(ofSize: 14,weight: .bold))
-
+    let bgHeight = UIScreen.main.bounds.width
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        let bgHeight = UIScreen.main.bounds.width
+        
         let image = UIImageView.init(image: UIImage.init(named: "pp_top"))
         contentView.add(image) { v in
             v.snp.makeConstraints { make in
@@ -106,5 +107,72 @@ class PPChanPunTableViewCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func resetBoxView1() {
+        contentView.add(lyBox) { v in
+            v.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(price.snp.bottom).offset(bgHeight * 0.26)
+            }
+            
+            lyBox.add(l1t) { v in
+                v.snp.makeConstraints { make in
+                    make.left.equalToSuperview().offset(8)
+                    make.centerY.equalToSuperview()
+                }
+            }
+            
+            lyBox.add(l1tv) { v in
+                v.snp.makeConstraints { make in
+                    make.left.equalTo(l1t.snp.right)
+                    make.centerY.equalToSuperview()
+                }
+            }
+            
+            lyBox.add(l2t) { v in
+                v.snp.makeConstraints { make in
+                    make.left.equalTo(l1tv.snp.right).offset(10)
+                    make.centerY.equalToSuperview()
+                }
+            }
+            
+            lyBox.add(l2tv) { v in
+                v.snp.makeConstraints { make in
+                    make.left.equalTo(l2t.snp.right)
+                    make.centerY.equalToSuperview()
+                    make.right.equalToSuperview().offset(-8)
+                }
+            }
+        }
+    }
+    
+    
+    func resetBoxView2() {
+        l1tv.textAlignment = .center
+        l2tv.textAlignment = .center
+        
+        contentView.add(lyBox) { v in
+            v.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(price.snp.bottom).offset(bgHeight * 0.26)
+            }
+            
+            lyBox.add(l1tv) { v in
+                v.snp.makeConstraints { make in
+                    make.left.equalToSuperview().offset(8)
+                    make.centerY.equalToSuperview()
+                }
+            }
+            
+            lyBox.add(l2tv) { v in
+                v.snp.makeConstraints { make in
+                    make.left.equalTo(l1tv.snp.right)
+                    make.centerY.equalToSuperview()
+                    make.right.equalToSuperview().offset(-8)
+                    make.width.equalTo(l1tv)
+                }
+            }
+        }
     }
 }

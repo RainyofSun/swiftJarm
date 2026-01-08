@@ -31,8 +31,8 @@
 "login_phone_p"="Masukkan nomor telepon Anda";
 "login_v_code"="Kode verifikasi";
 "login_v_code_t"="Kode verifikasi kosong";
-"login_v_code_btn"="Dapatkan kode";
-"login_v_voice"="Verifikasi suara";
+"login_v_code_btn"="Dapatkan Kode";
+"login_v_voice"="Verifikasi Suara";
 "login_privicy"="Saya telah membaca dan menyetujui ";
 "login_ppp"="Perjanjian Privasi";
 "login_btn"="Masuk";
@@ -105,4 +105,5 @@
 "mine_title" = "Milikku";
 "order_title" = "Daftar pesanan";
 "const_tip"="Aplikasi ini digunakan untuk mengakses daftar kontak. Unggah informasi kontak dengan mudah untuk menyederhanakan langkah dan mempercepat pengajuan pinjaman.";
-"neiw_tswp"="Terjadi kesalahan jaringan, mohon periksa.";
+"neiw_tswp"="Terjadi kesalahan jaringan. Mohon periksa apakah Anda terhubung ke jaringan?";
+"cancelsw" = "Mohon baca dan setujui isi di atas terlebih dahulu.";

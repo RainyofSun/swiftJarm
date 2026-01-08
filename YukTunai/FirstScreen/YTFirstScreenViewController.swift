@@ -57,7 +57,7 @@ class YTFirstScreenViewControllercell: UICollectionViewCell {
         contentView.add(t2) { v in
             v.snp.makeConstraints { make in
                 make.horizontalEdges.equalToSuperview().inset(24)
-                make.top.equalToSuperview().offset(statusBarHeight+88)
+                make.top.equalToSuperview().offset(statusBarHeight + (YTTools.isIPhone6Series() ? 30 : 88))
             }
         }
         

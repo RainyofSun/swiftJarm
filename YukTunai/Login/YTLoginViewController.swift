@@ -40,7 +40,7 @@ class YTLoginViewController: YTBaseViewController {
     let phoneView: loginPhonView = loginPhonView(frame: CGRectZero)
     let codeView: loginCodeView = loginCodeView(frame: CGRectZero)
     
-    let voice = UIButton.init(title: "ovz", image: "login_voi")
+    let voice = UIButton.init(title: LocalizationManager.shared().localizedString(forKey: "login_v_voice"), image: "login_voi")
     
     let pvB = UIButton.init(title: "", image: "pro_sel")
     
@@ -68,6 +68,7 @@ class YTLoginViewController: YTBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.time = Date()
         setBarBgHidden()
         setNavigationBarHidden(true, animated: true)
         
@@ -81,7 +82,7 @@ class YTLoginViewController: YTBaseViewController {
         view.add(logoIms) { v in
             v.snp.makeConstraints { make in
                 make.centerX.equalToSuperview()
-                make.top.equalToSuperview().offset(144)
+                make.top.equalToSuperview().offset(YTTools.isIPhone6Series() ? 80 : 144)
             }
         }
         
@@ -183,7 +184,7 @@ class YTLoginViewController: YTBaseViewController {
         view.add(close) { v in
             v.snp.makeConstraints { make in
                 make.left.equalToSuperview().offset(25)
-                make.top.equalToSuperview().offset(56)
+                make.top.equalToSuperview().offset(YTTools.isIPhone6Series() ? 30 : 56)
             }
         }
     
@@ -219,7 +220,11 @@ class YTLoginViewController: YTBaseViewController {
             switch ree {
             case .success(let success):
                 
-                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
+                    if self?.codeView.codeText.canBecomeFirstResponder == true {
+                        self?.codeView.codeText.becomeFirstResponder()
+                    }
+                })
                 SVProgressHUD.showSuccess(withStatus: success?.lip.description ?? "")
                 
                 break
@@ -236,21 +241,14 @@ class YTLoginViewController: YTBaseViewController {
     @objc func smsCode(_ button: CountdownButton) {
 
         if let t = phoneView.phoneText.text,t.isEmpty,t.count == 0 {
-            
-            
-            
             SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter your mobile phone number", b: "Silakan masukkan nomor ponsel Anda"))
-            
             return
         }
-        
-        button.start()
         
         viewModel.suabian(avp: phoneView.phoneText.text!) {[weak self] ree in
             switch ree {
             case .success(let success):
-                
-                
+                button.start()
                 SVProgressHUD.showInfo(withStatus: success?.lip.description ?? "")
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now(), execute: {
                     if self?.codeView.codeText.canBecomeFirstResponder == true {
@@ -269,25 +267,19 @@ class YTLoginViewController: YTBaseViewController {
     @objc func login(_ button: UIButton) {
 
         if let t = phoneView.phoneText.text,t.isEmpty,t.count == 0 {
-
-            
             SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter your mobile phone number", b: "Silakan masukkan nomor ponsel Anda"))
             
             return
         }
         
         if let t = codeView.codeText.text,t.isEmpty,t.count == 0  {
-            
-            
-            
             SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please enter the verification code", b: "Silakan masukkan kode verifikasi"))
-            
             return
         }
         
         if pvB.isSelected == false {
             
-            SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please check the agreement", b: "Silakan periksa kesepakatan"))
+            SVProgressHUD.showInfo(withStatus: YTTools.areaTitle(a: "Please read and agree to the terms of this agreement first.", b: "Harap baca dan setujui ketentuan perjanjian ini terlebih dahulu."))
             return
         }
         

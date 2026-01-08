@@ -41,9 +41,10 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
         
         tableView.backgroundColor = UIColor.init(hex: "#2864D7")
         
+        let bottom = YTTools.isIPhone6Series() ? 55 : (self.tabBarController?.tabBar.bounds.height ?? 49)
         view.add(tableView) { v in
             v.snp.makeConstraints { make in
-                make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 0, left: 0, bottom: YTTools.isIPhone6Series() ? 55 : 90, right: 0))
+                make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 0, left: 0, bottom: bottom, right: 0))
             }
         }
         
@@ -165,6 +166,10 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if YTTools.isIpad() && !NetworkStatusMonitor.shared.isConnected {
+            SVProgressHUD.showInfo(withStatus: LocalizationManager.shared().localizedString(forKey: "neiw_tswp"))
+        }
+        
         reloadDataS()
         
         DispatchQueue.main.asyncAfter(deadline: .now()){
@@ -244,7 +249,11 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let item = model?.along?.filter({$0.directly == "eyelid"}),item.count > 0  else {
-            return 4
+            if let _add = model?.addressed?.downward, _add.count > 0 {
+                return 4
+            } else {
+                return 3
+            }
         }
         
         return 1+(item.first?.marched ?? []).count
@@ -289,7 +298,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             cell.name.text = item?.bare
             
             cell.price.text = item?.smoky
-            
+            cell.subName.text = item?.dim
             cell.buttonicon.isHidden = false
             cell.buttonicon.setTitle(title: item?.coat ?? "")
             cell.l1t.text = item?.drunk
@@ -347,6 +356,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: YTShouyeT4TableViewCell.identifier, for: indexPath) as? YTShouyeT4TableViewCell else {
                         return UITableViewCell()
                     }
+                    cell.tip2.text = model?.addressed?.downward
                     return cell
                 }
             }
@@ -391,36 +401,6 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
             switch re {
             case .success(let success):
 
-                if YTUserDefaults.shared.gash == "1" {
-
-                    if let url = self.model?.courageous?.everystep,
-                       let completeURL = YTPublicRequestURLTool
-                            .createURLWithParameters(component: url)?
-                            .absoluteString {
-
-                        let v = YT2WebViewController(url: completeURL)
-
-                        if let item = self.model?
-                            .along?
-                            .first(where: { $0.directly == "suabian" })?
-                            .marched?
-                            .first {
-
-                            v.buttonname.text = item.coat
-                        }
-
-                        self.navigationController?.pushViewController(v, animated: true)
-
-                        v.han = { [weak self] in
-                            guard let self = self else { return }
-                            let vc = YTProductViewController()
-                            vc.mID = id
-                            self.navigationController?.pushViewController(vc, animated: true)
-                        }
-                    }
-                    return
-                }
-
                 guard let url = success?.upper?.stride else { return }
 
                 if url.hasPrefix("http") || url.hasPrefix("https") {
@@ -462,7 +442,7 @@ class YTShouyeViewController: YTBaseViewController,UITableViewDelegate,UITableVi
                 }
             }
         } else {
-            if let url = model?.courageous?.feedbackUrl {
+            if let url = model?.addressed?.words {
                 if let completeURL = YTPublicRequestURLTool.createURLWithParameters(component: url)?.absoluteString {
                     let webView = YTWebViewController.init(url: completeURL)
                     navigationController?.pushViewController(webView, animated: true)
@@ -872,3 +852,20 @@ class YT2WebViewController: YTBaseViewController, WKNavigationDelegate, WKUIDele
 
 
 
+class NetworkStatusMonitor {
+    static let shared = NetworkStatusMonitor()
+
+    private let monitor = NWPathMonitor()
+    private let queue = DispatchQueue(label: "NetworkMonitor")
+
+    var isConnected: Bool = false
+    var isCellular: Bool = false
+
+    private init() {
+        monitor.pathUpdateHandler = { path in
+            self.isConnected = path.status == .satisfied
+            self.isCellular = path.usesInterfaceType(.cellular)
+        }
+        monitor.start(queue: queue)
+    }
+}

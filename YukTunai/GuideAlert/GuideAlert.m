@@ -66,11 +66,11 @@
     } else {
         switch (type) {
             case AlertType_Location:
-                return @"Izin lokasi dinonaktifkan. Harap aktifkan di Pengaturan agar aplikasi pinjaman Anda dapat diproses.";
+                return @"Akses lokasi diperlukan untuk memproses pengajuan pinjaman Anda. Harap aktifkan izin tersebut di Pengaturan untuk melanjutkan.";
             case AlertType_Contacts:
-                return @"Izin kontak dinonaktifkan. Harap aktifkan di Pengaturan agar pengajuan pinjaman Anda dapat diproses.";
+                return @"Akses ke kontak diperlukan untuk memproses pengajuan pinjaman Anda. Harap aktifkan izin tersebut di Pengaturan untuk melanjutkan.";
             case AlertType_Camera:
-                return @"Izin kamera dinonaktifkan. Harap aktifkan di Pengaturan agar pengajuan pinjaman Anda dapat diproses.";
+                return @"Akses kamera diperlukan untuk memproses pengajuan pinjaman Anda. Harap aktifkan izin tersebut di Pengaturan untuk melanjutkan.";
         }
     }
 }
